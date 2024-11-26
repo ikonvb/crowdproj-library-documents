@@ -1,0 +1,511 @@
+openapi: 3.0.4
+info:
+  title: "Documents card service 0.0.1"
+  description: "Микросервис, предназначенный для создания, хранения и получения ссылок на карточки документов"
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080/v2
+tags:
+  - name: "document card"
+    description: "Карточка документа"
+
+paths:
+
+  /docCard/create:
+    post:
+      tags:
+        - docCard
+      summary: "Create document card"
+      operationId: docCardCreate
+      requestBody:
+        description: "Request body"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocCardCreateRequest'
+        required: true
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocCardCreateResponse'
+
+  /docCard/read:
+    post:
+      tags:
+        - docCard
+      summary: "Read document card"
+      operationId: docCardRead
+      requestBody:
+        description: "Request body"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocCardReadRequest'
+        required: true
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocCardReadResponse'
+
+  /docCard/update:
+    post:
+      tags:
+        - docCard
+      summary: "Update document card"
+      operationId: docCardUpdate
+      requestBody:
+        description: "Request body"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocCardUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocCardUpdateResponse'
+
+  /docCard/delete:
+    post:
+      tags:
+        - docCard
+      summary: "Delete document card"
+      operationId: docCardDelete
+      requestBody:
+        description: "Request body"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocCardDeleteRequest'
+        required: true
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocCardDeleteResponse'
+
+  /docCard/search:
+    post:
+      tags:
+        - docCard
+      summary: "Search document card"
+      operationId: docCardSearch
+      requestBody:
+        description: "Request body"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocCardSearchRequest'
+        required: true
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocCardSearchResponse'
+
+  /docCard/offers:
+    post:
+      tags:
+        - docCard
+      summary: "Search offers"
+      operationId: docCardOffers
+      requestBody:
+        description: "Request body"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocCardOffersRequest'
+        required: true
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocCardOffersResponse'
+
+components:
+  schemas:
+
+    IRequest:
+      type: object
+      description: "Базовый интерфейс для всех запросов"
+      properties:
+        requestType:
+          type: string
+          description: "Поле-описание для вычисления типа запроса"
+          example: create
+      discriminator:
+        propertyName: requestType
+        mapping:
+          create: '#/components/schemas/DocCardCreateRequest'
+          read: '#/components/schemas/DocCardReadRequest'
+          update: '#/components/schemas/DocCardUpdateRequest'
+          delete: '#/components/schemas/DocCardDeleteRequest'
+          search: '#/components/schemas/DocCardSearchRequest'
+          offers: '#/components/schemas/DocCardOffersRequest'
+
+    Error:
+      type: object
+      description: "Базовый объект для ошибок"
+      properties:
+        code:
+          type: string
+        group:
+          type: string
+        field:
+          type: string
+        message:
+          type: string
+
+    ResponseResult:
+      type: string
+      description: "Перечисление статусов ответа"
+      enum:
+        - success
+        - error
+
+    IResponse:
+      type: object
+      description: "Базовый интерфейс для всех ответов"
+      properties:
+        responseType:
+          type: string
+          description: "Поле-описание для вычисления типа запроса"
+          example: create
+        result:
+          $ref: '#/components/schemas/ResponseResult'
+        errors:
+          type: array
+          description: "Список ошибок"
+          items:
+            $ref: '#/components/schemas/Error'
+      discriminator:
+        propertyName: responseType
+        mapping:
+          create: '#/components/schemas/DocCardCreateResponse'
+          read: '#/components/schemas/DocCardReadResponse'
+          update: '#/components/schemas/DocCardUpdateResponse'
+          delete: '#/components/schemas/DocCardDeleteResponse'
+          search: '#/components/schemas/DocCardSearchResponse'
+          offers: '#/components/schemas/DocCardOffersResponse'
+
+
+    OwnerId:
+      type: string
+      description: "Идентификатор владельца документа"
+    DocCardId:
+      type: string
+      description: "Идентификатор карточки документа"
+    DocCardLock:
+      type: string
+      description: "Версия оптимистичной блокировки"
+    BaseDocCard:
+      type: object
+      description: "Объект описывает свойства карточки документа, одинаковые для create и update"
+      properties:
+        title:
+          type: string
+          description: "Наименование документа"
+        description:
+          type: string
+          description: "Описание документа"
+        productId:
+          type: string
+          description: "Уникальный идентификатор продукта для доступа к документу"
+        ownerId:
+          type: string
+          description: "Идентификатор владельца, загрузившего документ"
+        docType:
+          $ref: '#/components/schemas/DocType'
+        size:
+          type: integer
+          description: "Размер документа в байтах."
+        uploadDate:
+          type: string
+          description: "Время загрузки документа."
+        updateDate:
+          type: string
+          description: "Время обновления документа."
+        filePath:
+          type: string
+          description: "Путь, по которому хранится документ."
+        visibility:
+          $ref: '#/components/schemas/DocCardVisibility'
+
+    DocType:
+      type: string
+      description: "MIME-тип документа"
+      enum:
+        - application/pdf
+        - application/msword
+        - image/png
+        - image/jpeg
+
+    DocCardVisibility:
+      type: string
+      description: "Тип видимости карточки документа. Возможные значения: видит только владелец, только зарегистрированный в системе пользователь, видимо всем"
+      enum:
+        - ownerOnly
+        - registeredOnly
+        - public
+
+    DocCardInitResponse:
+      description: "Представляет объект ответа"
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+
+    DocCardCreateObject:
+      description: "Представляет объект создания карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/BaseDocCard'
+
+    DocCardCreateRequest:
+      description: "Представляет объект запроса на создание карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DocCardRequestDebug'
+        - type: object
+          description: "Представляет объект карточки документа"
+          properties:
+            docCard:
+              $ref: '#/components/schemas/DocCardCreateObject'
+
+    DocCardReadObject:
+      description: "Представляет объект на чтение карточки документа"
+      allOf:
+        - type: object
+          description: "Представляет объект id карточки документа"
+          properties:
+            id:
+              $ref: '#/components/schemas/DocCardId'
+
+    DocCardReadRequest:
+      description: "Представляет объект запроса на чтение карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DocCardRequestDebug'
+        - type: object
+          description: "Представляет объект чтения карточки документа"
+          properties:
+            docCard:
+              $ref: '#/components/schemas/DocCardReadObject'
+
+    DocCardUpdateObject:
+      description: "Представляет объект обновления карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/BaseDocCard'
+        - type: object
+          description: "Представляет объект обновления карточки документа"
+          properties:
+            id:
+              $ref: '#/components/schemas/DocCardId'
+            lock:
+              $ref: '#/components/schemas/DocCardLock'
+
+    DocCardUpdateRequest:
+      description: "Представляет объект запроса обновления карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DocCardRequestDebug'
+        - type: object
+          description: "Представляет объект запроса обновления карточки документа"
+          properties:
+            docCard:
+              $ref: '#/components/schemas/DocCardUpdateObject'
+
+    DocCardDeleteObject:
+      description: "Представляет объект удаления карточки документа"
+      allOf:
+        - type: object
+          description: "Представляет объект удаления карточки документа"
+          properties:
+            id:
+              $ref: '#/components/schemas/DocCardId'
+            lock:
+              $ref: '#/components/schemas/DocCardLock'
+
+    DocCardDeleteRequest:
+      description: "Представляет объект запроса на удаление карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DocCardRequestDebug'
+        - type: object
+          properties:
+            docCard:
+              $ref: '#/components/schemas/DocCardDeleteObject'
+
+    DocCardSearchFilter:
+      type: object
+      description: "Набор фильтров для поиска"
+      properties:
+        searchString:
+          type: string
+          description: "Поисковая строка, которая будет искаться в документах"
+
+    DocCardSearchRequest:
+      description: "Представляет объект запроса на поиск карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DocCardRequestDebug'
+        - type: object
+          description: "Представляет объект запроса на поиск карточки документа"
+          properties:
+            docCardFilter:
+              $ref: '#/components/schemas/DocCardSearchFilter'
+
+    DocCardOffersObject:
+      $ref: '#/components/schemas/DocCardReadObject'
+
+    DocCardOffersRequest:
+      description: "Представляет объект запроса предложений карточек документов"
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DocCardRequestDebug'
+        - type: object
+          description: "Представляет объект запроса предложений карточек документов"
+          properties:
+            docCardOffers:
+              $ref: '#/components/schemas/DocCardOffersObject'
+
+    DocCardResponseObject:
+      description: "Представляет объект ответа карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/BaseDocCard'
+        - type: object
+          description: "Объект, который возвращается в ответе от бэк-энда"
+          properties:
+            id:
+              $ref: '#/components/schemas/DocCardId'
+            ownerId:
+              $ref: '#/components/schemas/OwnerId'
+            lock:
+              $ref: '#/components/schemas/DocCardLock'
+            permissions:
+              type: array
+              description: "Список разрешений"
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/DocCardPermissions'
+
+    DocCardPermissions:
+      type: string
+      description: "Доступы для клиента для операций над карточкой документа"
+      enum:
+        - read
+        - update
+        - delete
+        - makeVisiblePublic
+        - makeVisibleOwn
+        - makeVisibleGroup
+
+    DocCardResponseSingle:
+      description: "Объект ответа одной карточки документа"
+      allOf:
+        - type: object
+          description: "Ответ с одним объектом карточки документа"
+          properties:
+            docCard:
+              $ref: '#/components/schemas/DocCardResponseObject'
+
+    DocCardResponseMulti:
+      description: "Объект ответа нескольких карточек документов"
+      allOf:
+        - type: object
+          description: "Список найденных объектов"
+          properties:
+            docCards:
+              type: array
+              description: "Список найденных объектов"
+              items:
+                $ref: '#/components/schemas/DocCardResponseObject'
+
+    DocCardCreateResponse:
+      description: "Объект ответа на создание карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DocCardResponseSingle'
+
+    DocCardReadResponse:
+      description: "Объект ответа на чтение карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DocCardResponseSingle'
+
+    DocCardUpdateResponse:
+      description: "Объект ответа на обновление карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DocCardResponseSingle'
+
+    DocCardDeleteResponse:
+      description: "Объект ответа на удаление карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DocCardResponseSingle'
+
+    DocCardSearchResponse:
+      description: "Объект ответа на поиск карточки документа"
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DocCardResponseMulti'
+
+    DocCardOffersResponse:
+      description: "Объект ответа предложений карточек документов"
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DocCardResponseSingle'
+        - $ref: '#/components/schemas/DocCardResponseMulti'
+
+    DocCardRequestDebugMode:
+      type: string
+      description: "Представляет объект запроса отладочного режима для карточки документа"
+      enum:
+        - prod
+        - test
+        - stub
+
+    DocCardRequestDebug:
+      type: object
+      description: "Представляет объект запроса отладки."
+      properties:
+        debug:
+          $ref: '#/components/schemas/DocCardDebug'
+
+    DocCardDebug:
+      type: object
+      description: "Представляет объект отладки."
+      properties:
+        mode:
+          $ref: '#/components/schemas/DocCardRequestDebugMode'
+        stub:
+          $ref: '#/components/schemas/DocCardRequestDebugStubs'
+
+    DocCardRequestDebugStubs:
+      type: string
+      description: "Перечисления всех заглушек"
+      enum:
+        - success
+        - notFound
+        - badId
+        - badTitle
+        - badDescription
+        - badVisibility
+        - cannotDelete
+        - badSearchString
