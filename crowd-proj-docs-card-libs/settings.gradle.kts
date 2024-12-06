@@ -25,3 +25,4 @@ plugins {
 }
 
 include(":crowd-proj-docs-card-lib-logging-common")
+include(":crowd-proj-docs-card-lib-logging-kermit")
