@@ -8,4 +8,6 @@ enum class MkPlcDocCardCommand {
     DELETE,
     SEARCH,
     OFFERS,
+    INIT,
+    FINISH
 }

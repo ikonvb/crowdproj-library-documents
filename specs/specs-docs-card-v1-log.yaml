@@ -1,0 +1,105 @@
+openapi: 3.0.4
+info:
+  title: Doc cards log models
+  description: Log models for logging services of doc cards
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+paths: { }
+
+components:
+  schemas:
+    CommonLogModel:
+      title: Общая модель лога
+      description: Общая модель лога для всех микросервисов системы
+      type: object
+      properties:
+        messageTime:
+          type: string
+        logId:
+          type: string
+        source:
+          type: string
+        docCard:
+          $ref: '#/components/schemas/MkPlcDocCardLogModel'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorLogModel'
+
+    MkPlcDocCardLogModel:
+      title: Модель лога для микросервиса DocCards
+      type: object
+      properties:
+        requestId:
+          type: string
+        operation:
+          type: string
+          enum:
+            - create
+            - read
+            - update
+            - delete
+            - search
+            - offers
+            - init
+            - finish
+        requestDocCard:
+          $ref: '#/components/schemas/DocCardLog'
+        requestFilter:
+          $ref: '#/components/schemas/DocCardFilterLog'
+        responseDocCard:
+          $ref: '#/components/schemas/DocCardLog'
+        responseDocCards:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocCardLog'
+
+    ErrorLogModel:
+      title: Модель лога для ошибки
+      type: object
+      properties:
+        message:
+          type: string
+        field:
+          type: string
+        code:
+          type: string
+        level:
+          type: string
+
+    DocCardLog:
+      title: Модель лога для карточки документа
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        docType:
+          type: string
+        visibility:
+          type: string
+        ownerId:
+          type: string
+        productId:
+          type: string
+        permissions:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+
+    DocCardFilterLog:
+      title: Модель лога фильтра
+      properties:
+        searchString:
+          type: string
+        ownerId:
+          type: string
+        docType:
+          type: string
+

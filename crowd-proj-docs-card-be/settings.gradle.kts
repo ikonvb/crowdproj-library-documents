@@ -25,7 +25,14 @@ plugins {
 }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-include(":crowd-proj-docs-cards-api-v1-jackson")
+
+include(":crowd-proj-docs-cards-biz")
+include(":crowd-proj-docs-cards-stubs")
+include(":crowd-proj-docs-cards-common")
+include(":crowd-proj-docs-cards-app-ktor")
+include(":crowd-proj-docs-cards-api-logV1")
+include(":crowd-proj-docs-cards-app-kafka")
+include(":crowd-proj-docs-cards-app-common")
 include(":crowd-proj-docs-cards-api-v2-kmp")
 include(":crowd-proj-docs-cards-api-v1-mappers")
-include(":crowd-proj-docs-cards-common")
+include(":crowd-proj-docs-cards-api-v1-jackson")
