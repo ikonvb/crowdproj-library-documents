@@ -10,7 +10,6 @@ ktor:
     - resources
   application:
     modules:
-      #      - "ru.otus.otuskotlin.marketplace.app.ktor.ApplicationKt.module"
       - "ru.otus.crowd.proj.docs.cards.app.ktor.ApplicationKt.module"
   #  urls:
   #    - "http://127.0.0.1:8080/v1"
