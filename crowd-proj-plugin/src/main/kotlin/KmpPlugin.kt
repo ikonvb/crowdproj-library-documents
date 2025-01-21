@@ -15,18 +15,13 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 internal class KmpPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = with(project) {
-
         pluginManager.apply("org.jetbrains.kotlin.multiplatform")
-
         group = rootProject.group
         version = rootProject.version
 
         plugins.withId("org.jetbrains.kotlin.multiplatform") {
-
             extensions.configure<KotlinMultiplatformExtension> {
-
                 configureTargets(this@with)
-
                 sourceSets.configureEach {
                     languageSettings.apply {
                         languageVersion = "2.0"
@@ -48,7 +43,7 @@ private fun KotlinMultiplatformExtension.configureTargets(project: Project) {
     val libs = project.the<LibrariesForLibs>()
 
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(libs.versions.jvm.compiler.get()))
+        languageVersion.set(JavaLanguageVersion.of(libs.versions.jvm.language.get()))
     }
 
     jvm {
@@ -64,7 +59,7 @@ private fun KotlinMultiplatformExtension.configureTargets(project: Project) {
     macosArm64()
     macosX64()
     project.tasks.withType(JavaCompile::class.java) {
-        sourceCompatibility = libs.versions.jvm.compiler.get()
+        sourceCompatibility = libs.versions.jvm.language.get()
         targetCompatibility = libs.versions.jvm.compiler.get()
     }
 }

@@ -1,7 +1,8 @@
 [versions]
 ktor = "2.3.12"
 kermit = "2.0.3"
-kotest = "5.9.1"
+#kotest = "5.9.1"
+kotest = "6.0.0"
 kotlin = "2.0.21"
 muschko = "9.4.0"
 logback = "1.5.3"
@@ -65,8 +66,8 @@ kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.1" }
 # Testing
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.2.1" }
-kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
-kotest-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version = "5.9.1" }
+kotest-core = { module = "io.kotest:kotest-assertions-core", version = "5.9.1" }
 kotest-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 testcontainers-rabbitmq = { module = "org.testcontainers:rabbitmq", version.ref = "testcontainers" }

@@ -5,6 +5,7 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 
 fun Route.v1DocCard(appSettings: MkPlcAppSettings) {
+
     route("docCard") {
         post("create") {
             call.createDocCard(appSettings)
