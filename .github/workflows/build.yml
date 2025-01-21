@@ -22,6 +22,8 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     runs-on: ubuntu-22.04
+    env:
+      GRADLE_OPTS: "-Xmx2g -XX:MaxMetaspaceSize=512m"
     steps:
       - uses: actions/checkout@v3
 
