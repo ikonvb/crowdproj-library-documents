@@ -5,6 +5,12 @@ plugins {
 group = rootProject.group
 version = rootProject.version
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(project(":crowd-proj-docs-cards-api-v1-jackson"))
