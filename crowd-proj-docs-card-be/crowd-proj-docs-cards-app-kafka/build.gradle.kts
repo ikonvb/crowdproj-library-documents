@@ -10,7 +10,6 @@ application {
 
 docker {
     javaApplication {
-        //baseImage.set("openjdk:21-slim")
         baseImage.set("openjdk:17.0.2-slim")
     }
 }
