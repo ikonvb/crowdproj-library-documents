@@ -9,8 +9,14 @@ group = "ru.otus.crowd.proj.docs.be"
 version = "0.0.1"
 
 allprojects {
+
     repositories {
         mavenCentral()
+    }
+
+    tasks.withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
 }
 

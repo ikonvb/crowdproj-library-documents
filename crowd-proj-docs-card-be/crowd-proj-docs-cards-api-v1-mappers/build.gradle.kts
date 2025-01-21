@@ -11,6 +11,10 @@ java {
     }
 }
 
+tasks.withType<JavaCompile> {
+    options.release.set(17)
+}
+
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(project(":crowd-proj-docs-cards-api-v1-jackson"))
