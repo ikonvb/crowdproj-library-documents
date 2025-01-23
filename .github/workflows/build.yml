@@ -23,7 +23,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     env:
-      GRADLE_OPTS: "-Xmx2g -XX:MaxMetaspaceSize=512m"
+      GRADLE_OPTS: "-Xmx2g -XX:MaxMetaspaceSize=256m"
     steps:
       - uses: actions/checkout@v3
 

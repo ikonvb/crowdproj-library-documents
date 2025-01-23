@@ -104,38 +104,11 @@ kotlin {
                 implementation(kotlin("test-junit"))
             }
         }
-
-
-//        val nativeMain by creating {
-//            dependencies {
-//                //implementation(libs.kotest.native)
-//            }
-//        }
-//
-//        val nativeTest by creating {
-//            dependsOn(nativeMain)
-//            dependencies {
-//                implementation(kotlin("test"))
-//                implementation(libs.kotest.native)
-//            }
-//        }
-//
-//        val linuxMain by getting {
-//            dependsOn(nativeMain)
-//        }
-//        val macosMain by getting {
-//            dependsOn(nativeMain)
-//        }
-//        val linuxTest by getting {
-//            dependsOn(nativeTest)
-//        }
-//        val macosTest by getting {
-//            dependsOn(nativeTest)
-//        }
     }
 }
 
 tasks {
+
     shadowJar {
         isZip64 = true
         configurations = listOf(project.configurations.runtimeClasspath.get())
@@ -182,6 +155,7 @@ tasks {
         images.add("$imageName-x64:latest")
         platform.set("linux/amd64")
     }
+
     val dockerPushX64Image by creating(DockerPushImage::class) {
         group = "docker"
         dependsOn(dockerBuildX64Image)
