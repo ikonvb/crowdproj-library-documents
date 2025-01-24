@@ -22,8 +22,8 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     runs-on: ubuntu-22.04
-    env:
-      GRADLE_OPTS: "-Xmx2g -XX:MaxMetaspaceSize=256m"
+#    env:
+#      GRADLE_OPTS: "-Xmx2g -XX:MaxMetaspaceSize=256m"
     steps:
       - uses: actions/checkout@v3
 
@@ -40,4 +40,4 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 8.6
-          arguments: check -i
+          arguments: check -i --no-daemon
