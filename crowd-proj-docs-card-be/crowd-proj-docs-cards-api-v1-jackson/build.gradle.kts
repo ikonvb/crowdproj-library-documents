@@ -9,6 +9,15 @@ sourceSets {
     }
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
+tasks.withType<JavaCompile> {
+    options.release.set(17)
+}
 /**
  * Настройка генерации
  */

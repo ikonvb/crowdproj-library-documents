@@ -25,6 +25,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.serialization.json)
+                implementation(project(":crowd-proj-docs-cards-common"))
             }
         }
         val commonTest by getting {

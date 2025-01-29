@@ -13,6 +13,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
                 api(libs.kotlinx.datetime)
+                api("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-common")
             }
         }
 

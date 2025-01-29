@@ -12,13 +12,20 @@ fun MkPlcDocCardContext.toTransportDocCard(): IResponse = when (val cmd = comman
     MkPlcDocCardCommand.DELETE -> toTransportDelete()
     MkPlcDocCardCommand.SEARCH -> toTransportSearch()
     MkPlcDocCardCommand.OFFERS -> toTransportOffers()
+    MkPlcDocCardCommand.INIT -> toTransportInit()
     MkPlcDocCardCommand.NONE -> throw UnknownMkPlcCommand(cmd)
+    MkPlcDocCardCommand.FINISH -> throw UnknownMkPlcCommand(cmd)
 }
 
 fun MkPlcDocCardContext.toTransportCreate() = DocCardCreateResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     docCard = mkPlcDocCardResponse.toTransportDocCard()
+)
+
+fun MkPlcDocCardContext.toTransportInit() = DocCardInitResponse(
+    result = state.toResult(),
+    errors = errors.toTransportErrors(),
 )
 
 fun MkPlcDocCardContext.toTransportRead() = DocCardReadResponse(

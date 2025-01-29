@@ -5,6 +5,7 @@ data class MkPlcDocCard(
     var title: String = "",
     var description: String = "",
     var ownerId: MkPlcOwnerId = MkPlcOwnerId.Companion.NONE,
+    var docCardType: MkPlcDocCardType = MkPlcDocCardType.UNKNOWN,
     var visibility: MkPlcVisibility = MkPlcVisibility.NONE,
     var productId: MkPlcProductId = MkPlcProductId.Companion.NONE,
     var lock: MkPlcDocCardLock = MkPlcDocCardLock.Companion.NONE,
