@@ -27,3 +27,4 @@ plugins {
 include(":crowd-proj-docs-card-lib-logging-common")
 include(":crowd-proj-docs-card-lib-logging-kermit")
 include(":crowd-proj-docs-card-lib-logging-logback")
+include(":crowd-proj-docs-card-lib-chainof")
