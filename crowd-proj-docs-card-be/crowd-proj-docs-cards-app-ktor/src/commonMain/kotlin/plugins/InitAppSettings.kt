@@ -2,7 +2,7 @@ package plugins
 
 import config.MkPlcAppSettings
 import io.ktor.server.application.Application
-import ru.otus.crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
+import MkPlcDocCardProcessor
 import ru.otus.crowd.proj.docs.cards.common.MkPlcCorSettings
 
 fun Application.initAppSettings(): MkPlcAppSettings {

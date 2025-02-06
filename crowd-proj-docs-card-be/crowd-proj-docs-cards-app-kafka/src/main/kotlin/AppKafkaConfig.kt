@@ -1,7 +1,7 @@
 package ru.otus.crowd.proj.docs.be
 
 import IMkPlcAppSettings
-import ru.otus.crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
+import MkPlcDocCardProcessor
 import ru.otus.crowd.proj.docs.cards.common.MkPlcCorSettings
 import ru.otus.crowd.proj.logging.common.MkPlcLoggerProvider
 import ru.otus.crowd.proj.logging.logback.mpLoggerLogback

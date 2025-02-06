@@ -39,6 +39,7 @@ object MkPlcDocCardStubSingleton {
     private fun mkPlcDocCard(base: MkPlcDocCard, id: String, filter: String, docType: MkPlcDocCardType) = base.copy(
         id = MkPlcDocCardId(id),
         title = "$filter $id",
-        description = "desc $filter $id"
+        description = "desc $filter $id",
+        docCardType = docType
     )
 }

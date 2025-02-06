@@ -16,7 +16,9 @@ openapi-generator = "7.3.0"
 kotlinx-serialization = "1.6.3"
 binaryCompabilityValidator = "0.13.2"
 
+
 [libraries]
+cor = "com.crowdproj:kotlin-cor:0.6.0"
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-binaryCompatibilityValidator = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binaryCompabilityValidator" }
 kotest-native = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }

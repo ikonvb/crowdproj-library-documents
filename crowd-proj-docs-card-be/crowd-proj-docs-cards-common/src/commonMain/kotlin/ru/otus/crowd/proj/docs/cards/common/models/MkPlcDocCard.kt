@@ -11,6 +11,9 @@ data class MkPlcDocCard(
     var lock: MkPlcDocCardLock = MkPlcDocCardLock.Companion.NONE,
     val permissionsClient: MutableSet<MkPlcDocCardPermissionClient> = mutableSetOf()
 ) {
+
+    fun deepCopy(): MkPlcDocCard = copy(permissionsClient = permissionsClient.toMutableSet())
+
     fun isEmpty() = this == NONE
 
     companion object {
