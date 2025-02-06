@@ -1,4 +1,3 @@
-import MkPlcDocCardProcessor
 import ru.otus.crowd.proj.docs.cards.common.MkPlcCorSettings
 
 interface IMkPlcAppSettings {

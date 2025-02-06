@@ -2,6 +2,8 @@ package ru.otus.crowd.proj.cor.chains
 
 import ru.otus.crowd.proj.cor.icor.ICorChainDsl
 import ru.otus.crowd.proj.cor.icor.ICorWorkerDsl
+import ru.otus.crowd.proj.cor.workers.corchain.CorChainDsl
+import ru.otus.crowd.proj.cor.workers.corworker.CorWorkerDsl
 
 fun <T> rootChain(function: ICorChainDsl<T>.() -> Unit): ICorChainDsl<T> = CorChainDsl<T>().apply(function)
 
