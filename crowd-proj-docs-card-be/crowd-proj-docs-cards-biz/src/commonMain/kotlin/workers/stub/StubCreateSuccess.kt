@@ -25,6 +25,8 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.successCreateStub(title: String, corS
 
             logger.doWithLogging(id = this.requestId.asString(), LogLevel.DEBUG) {
 
+                state = MkPlcDocCardState.FINISHING
+
                 val stub = MkPlcDocCardStubSingleton.prepareResult {
                     mkPlcDocCardRequest.title.takeIf { it.isNotBlank() }?.also { this.title = it }
                     mkPlcDocCardRequest.description.takeIf { it.isNotBlank() }?.also { this.description = it }
@@ -35,7 +37,6 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.successCreateStub(title: String, corS
                 }
 
                 mkPlcDocCardResponse = stub
-                state = MkPlcDocCardState.FINISHING
 
             }
         }

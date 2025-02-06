@@ -25,9 +25,9 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
 
             chainStubs("Создание документа в режиме заглушек") {
                 successCreateStub("Успешная обработка", corSettings)
-                stubValidationBadTitle("Имитация ошибки валидации названия", corSettings)
-                stubValidationBadDescription("Имитация ошибки валидации описания", corSettings)
-                stubDbError("Имитация ошибки базы данных", corSettings)
+                stubValidationBadTitle("Имитация ошибки валидации названия")
+                stubValidationBadDescription("Имитация ошибки валидации описания")
+                stubDbError("Имитация ошибки базы данных")
             }
 
             startValidation {
@@ -50,9 +50,9 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
 
             chainStubs("Получение документа в режиме заглушек") {
                 stubReadSuccess("Успешная обработка", corSettings)
-                stubValidationBadId("Имитация ошибки валидации id", corSettings)
-                stubDbError("Имитация ошибки работы с БД", corSettings)
-                stubValidationBadDescription("Имитация ошибки валидации описания", corSettings)
+                stubValidationBadId("Имитация ошибки валидации id")
+                stubDbError("Имитация ошибки работы с БД")
+                stubValidationBadDescription("Имитация ошибки валидации описания")
             }
 
             startValidation {
@@ -67,10 +67,10 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
 
             chainStubs("Обработка заглушек") {
                 stubUpdateSuccess("Имитация успешной обработки", corSettings)
-                stubValidationBadId("Имитация ошибки валидации id", corSettings)
-                stubValidationBadTitle("Имитация ошибки валидации заголовка", corSettings)
-                stubValidationBadDescription("Имитация ошибки валидации описания", corSettings)
-                stubDbError("Имитация ошибки работы с БД", corSettings)
+                stubValidationBadId("Имитация ошибки валидации id")
+                stubValidationBadTitle("Имитация ошибки валидации заголовка")
+                stubValidationBadDescription("Имитация ошибки валидации описания")
+                stubDbError("Имитация ошибки работы с БД")
 
             }
 
@@ -97,8 +97,8 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
 
             chainStubs("Обработка заглушек") {
                 stubDeleteSuccess("Имитация успешной обработки", corSettings)
-                stubValidationBadId("Имитация ошибки валидации id", corSettings)
-                stubDbError("Имитация ошибки работы с БД", corSettings)
+                stubValidationBadId("Имитация ошибки валидации id")
+                stubDbError("Имитация ошибки работы с БД")
 
             }
 
@@ -121,8 +121,8 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
 
             chainStubs("Обработка заглушек") {
                 stubSearchSuccess("Имитация успешной обработки", corSettings)
-                stubValidationBadId("Имитация ошибки валидации id", corSettings)
-                stubDbError("Имитация ошибки работы с БД", corSettings)
+                stubValidationBadId("Имитация ошибки валидации id")
+                stubDbError("Имитация ошибки работы с БД")
 
             }
 
@@ -138,8 +138,8 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
 
             chainStubs("Обработка заглушек") {
                 stubOffersSuccess("Имитация успешной обработки", corSettings)
-                stubValidationBadId("Имитация ошибки валидации id", corSettings)
-                stubDbError("Имитация ошибки работы с БД", corSettings)
+                stubValidationBadId("Имитация ошибки валидации id")
+                stubDbError("Имитация ошибки работы с БД")
             }
 
             startValidation {
