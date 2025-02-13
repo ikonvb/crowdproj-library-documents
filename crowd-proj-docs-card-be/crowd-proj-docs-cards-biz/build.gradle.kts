@@ -14,6 +14,7 @@ kotlin {
                 implementation(project(":crowd-proj-docs-cards-stubs"))
             }
         }
+
         commonTest {
             dependencies {
                 implementation(kotlin("test-common"))
