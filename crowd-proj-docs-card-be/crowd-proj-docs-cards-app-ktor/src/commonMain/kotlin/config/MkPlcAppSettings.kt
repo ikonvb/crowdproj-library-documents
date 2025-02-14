@@ -1,7 +1,9 @@
 package config
 
 import IMkPlcAppSettings
-import ru.otus.crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
+import crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
+
+
 import ru.otus.crowd.proj.docs.cards.common.MkPlcCorSettings
 
 data class MkPlcAppSettings(

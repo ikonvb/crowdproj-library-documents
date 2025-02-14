@@ -127,7 +127,7 @@ class DocCardV1StubApiTest {
     ) { response ->
         assertEquals(HttpStatusCode.OK, response.status)
         val responseObj = response.body<DocCardOffersResponse>()
-        assertEquals("d-666-01", responseObj.docCards?.first()?.id)
+        assertEquals("s-666-01", responseObj.docCards?.first()?.id)
     }
 }
 

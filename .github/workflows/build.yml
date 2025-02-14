@@ -40,4 +40,4 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 8.6
-          arguments: check -i --no-daemon
+          arguments: check -i

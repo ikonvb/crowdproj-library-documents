@@ -128,7 +128,7 @@ class DocCardV2StubApiTest {
     ) { response ->
         val responseObj = response.body<DocCardOffersResponse>()
         assertEquals(200, response.status.value)
-        assertEquals("d-666-01", responseObj.docCards?.first()?.id)
+        assertEquals("s-666-01", responseObj.docCards?.first()?.id)
     }
 
     private inline fun <reified T : IRequest> v2TestApplication(
