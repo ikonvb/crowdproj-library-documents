@@ -18,9 +18,16 @@ fun Throwable.asMkPlcError(
 )
 
 fun MkPlcDocCardContext.addError(error: MkPlcDocCardError) = errors.add(error)
+fun MkPlcDocCardContext.addErrors(error: Collection<MkPlcDocCardError>) = errors.addAll(error)
+
 
 fun MkPlcDocCardContext.fail(error: MkPlcDocCardError) {
     addError(error)
+    state = MkPlcDocCardState.FAILING
+}
+
+fun MkPlcDocCardContext.fail(errors: Collection<MkPlcDocCardError>) {
+    addErrors(errors)
     state = MkPlcDocCardState.FAILING
 }
 

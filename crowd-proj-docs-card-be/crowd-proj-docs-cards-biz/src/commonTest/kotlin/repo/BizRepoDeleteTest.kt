@@ -16,6 +16,7 @@ class BizRepoDeleteTest {
 
     private val userId = MkPlcOwnerId("321")
     private val command = MkPlcDocCardCommand.DELETE
+
     private val initDocCard = MkPlcDocCard(
         id = MkPlcDocCardId("123"),
         title = "abc",
@@ -23,7 +24,9 @@ class BizRepoDeleteTest {
         ownerId = userId,
         docCardType = MkPlcDocCardType.PDF,
         visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+        lock = MkPlcDocCardLock("123-456-789")
     )
+
     private val repo = DocCardRepositoryMock(
         invokeReadDocCard = {
             DbDocCardResponseOk(
@@ -49,7 +52,7 @@ class BizRepoDeleteTest {
     fun repoDeleteSuccessTest() = runTest {
         val docCardToUpdate = MkPlcDocCard(
             id = MkPlcDocCardId("123"),
-            lock = MkPlcDocCardLock("123"),
+            lock = MkPlcDocCardLock("123-456-789")
         )
         val ctx = MkPlcDocCardContext(
             command = command,

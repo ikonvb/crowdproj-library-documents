@@ -1,6 +1,7 @@
 package ru.otus.crowd.proj.docs.cards.common.repo
 
 interface IRepoDocCard {
+
     suspend fun createDocCard(rq: DbDocCardRequest): IDbDocCardResponse
     suspend fun readDocCard(rq: DbDocCardIdRequest): IDbDocCardResponse
     suspend fun updateDocCard(rq: DbDocCardRequest): IDbDocCardResponse

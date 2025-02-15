@@ -2,13 +2,16 @@ package crowd.proj.docs.cards.biz
 
 import chains.chainOperation
 import chains.chainStubs
+import com.crowdproj.kotlin.cor.handlers.chain
 import com.crowdproj.kotlin.cor.handlers.worker
 import com.crowdproj.kotlin.cor.rootChain
+import crowd.proj.docs.cards.biz.repo.*
 import ru.otus.crowd.proj.docs.cards.common.MkPlcCorSettings
 import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardCommand
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardId
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardLock
+import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardState
 import validation.fields.*
 import validation.startValidation
 import workers.init.initStatus
@@ -22,6 +25,8 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
     val chain = rootChain<MkPlcDocCardContext> {
 
         initStatus("Инициализация статуса запроса")
+        initRepo("Инициализация репозитория")
+
 
         chainOperation("Создание документа", MkPlcDocCardCommand.CREATE) {
 
@@ -46,6 +51,13 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
                 validateDescriptionNotEmpty("Проверка описания")
                 validateDescriptionHasContent("Проверка символов")
             }
+
+            chain {
+                title = "Логика сохранения"
+                repoPrepareCreate("Подготовка объекта для сохранения")
+                repoCreate("Создание документа в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
 
         chainOperation("Получение документа", MkPlcDocCardCommand.READ) {
@@ -63,6 +75,17 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
                 validateIdNotEmpty("Проверка на непустой id")
                 validateIdProperFormat("Проверка формата id")
             }
+
+            chain {
+                title = "Логика чтения"
+                repoRead("Чтение документа из БД")
+                worker {
+                    title = "Подготовка ответа для Read"
+                    on { state == MkPlcDocCardState.RUNNING }
+                    handle { docCardRepoDone = docCardRepoRead }
+                }
+            }
+            prepareResult("Подготовка ответа")
         }
 
         chainOperation("Изменить документ", MkPlcDocCardCommand.UPDATE) {
@@ -93,6 +116,15 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
                 validateDescriptionNotEmpty("Проверка на непустое описание")
                 validateDescriptionHasContent("Проверка на наличие содержания в описании")
             }
+
+            chain {
+                title = "Логика сохранения"
+                repoRead("Чтение документа из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareUpdate("Подготовка объекта для обновления")
+                repoUpdate("Обновление документа в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
 
         chainOperation("Удалить документ", MkPlcDocCardCommand.DELETE) {
@@ -117,6 +149,15 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
                 validateLockNotEmpty("Проверка на непустой lock")
                 validateLockProperFormat("Проверка формата lock")
             }
+
+            chain {
+                title = "Логика удаления"
+                repoRead("Чтение документа из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareDelete("Подготовка объекта для удаления")
+                repoDelete("Удаление документа из БД")
+            }
+            prepareResult("Подготовка ответа")
         }
 
         chainOperation("Поиск документов", MkPlcDocCardCommand.SEARCH) {
@@ -134,6 +175,9 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
                 }
                 validateSearchStringLength("Валидация длины строки поиска в фильтре")
             }
+
+            repoSearch("Поиск документа в БД по фильтру")
+            prepareResult("Подготовка ответа")
         }
 
         chainOperation("Поиск подходящих предложений для документов", MkPlcDocCardCommand.OFFERS) {
@@ -150,6 +194,15 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings
                 validateIdNotEmpty("Проверка на непустой id")
                 validateIdProperFormat("Проверка формата id")
             }
+
+            chain {
+                title = "Логика поиска в БД"
+                repoRead("Чтение документа из БД")
+                repoPrepareOffers("Подготовка данных для поиска предложений")
+                repoOffers("Поиск предложений для документа в БД")
+            }
+            prepareResult("Подготовка ответа")
+
         }
     }.build()
 }

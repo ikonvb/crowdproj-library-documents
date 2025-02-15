@@ -2,6 +2,7 @@ package ru.otus.crowd.proj.docs.cards.common
 
 import kotlinx.datetime.Instant
 import ru.otus.crowd.proj.docs.cards.common.models.*
+import ru.otus.crowd.proj.docs.cards.common.repo.IRepoDocCard
 import ru.otus.crowd.proj.docs.cards.common.stubs.MkPlcDocCardStubs
 
 data class MkPlcDocCardContext(
@@ -21,5 +22,11 @@ data class MkPlcDocCardContext(
     var mkPlcDocCardRequest: MkPlcDocCard = MkPlcDocCard(),
     var mkPlcDocCardFilterRequest: MkPlcDocCardFilter = MkPlcDocCardFilter(),
     var mkPlcDocCardResponse: MkPlcDocCard = MkPlcDocCard(),
-    var mkPlcDocCardsResponse: MutableList<MkPlcDocCard> = mutableListOf()
+    var mkPlcDocCardsResponse: MutableList<MkPlcDocCard> = mutableListOf(),
+
+    var docCardRepo: IRepoDocCard = IRepoDocCard.NONE,
+    var docCardRepoRead: MkPlcDocCard = MkPlcDocCard(),
+    var docCardRepoPrepare: MkPlcDocCard = MkPlcDocCard(),
+    var docCardRepoDone: MkPlcDocCard = MkPlcDocCard(),
+    var docCardsRepoDone: MutableList<MkPlcDocCard> = mutableListOf(),
 )

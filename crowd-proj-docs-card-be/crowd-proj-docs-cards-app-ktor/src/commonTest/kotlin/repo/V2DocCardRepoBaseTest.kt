@@ -108,6 +108,7 @@ abstract class V2DocCardRepoBaseTest {
             assertEquals(docCard.description, responseObj.docCard?.description)
             assertEquals(docCard.docType, responseObj.docCard?.docType)
             assertEquals(docCard.visibility, responseObj.docCard?.visibility)
+            assertEquals(uuidNew, responseObj.docCard?.lock)
         }
     }
 

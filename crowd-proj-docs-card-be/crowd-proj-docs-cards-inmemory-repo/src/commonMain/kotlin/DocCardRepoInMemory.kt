@@ -5,11 +5,9 @@ import crowd.proj.docs.cards.common.repo.IDocCardRepoInitializable
 import io.github.reactivecircus.cache4k.Cache
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCard
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardId
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardType
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcOwnerId
+import ru.otus.crowd.proj.docs.cards.common.models.*
 import ru.otus.crowd.proj.docs.cards.common.repo.*
+import ru.otus.crowd.proj.docs.cards.common.repo.exceptions.RepoEmptyLockException
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
@@ -42,6 +40,7 @@ class DocCardRepoInMemory(
     }
 
     override suspend fun readDocCard(rq: DbDocCardIdRequest): IDbDocCardResponse = tryDocCardMethod {
+
         val key = rq.id.takeIf { it != MkPlcDocCardId.NONE }?.asString() ?: return@tryDocCardMethod errorEmptyId
         mutex.withLock {
             cache.get(key)
@@ -55,13 +54,20 @@ class DocCardRepoInMemory(
         val rqDocCard = rq.docCard
         val id = rqDocCard.id.takeIf { it != MkPlcDocCardId.NONE } ?: return@tryDocCardMethod errorEmptyId
         val key = id.asString()
+        val oldLock =
+            rqDocCard.lock.takeIf { it != MkPlcDocCardLock.NONE } ?: return@tryDocCardMethod errorEmptyLock(id)
 
         mutex.withLock {
+
             val oldDocCard = cache.get(key)?.toInternal()
+
             when {
                 oldDocCard == null -> errorNotFound(id)
+                oldDocCard.lock == MkPlcDocCardLock.NONE -> errorDb(RepoEmptyLockException(id))
+                oldDocCard.lock != oldLock -> errorRepoConcurrency(oldDocCard, oldLock)
+
                 else -> {
-                    val newDocCard = rqDocCard.copy()
+                    val newDocCard = rqDocCard.copy(lock = MkPlcDocCardLock(randomUuid()))
                     val entity = DocCardEntity(newDocCard)
                     cache.put(key, entity)
                     DbDocCardResponseOk(newDocCard)
@@ -72,13 +78,20 @@ class DocCardRepoInMemory(
 
 
     override suspend fun deleteDocCard(rq: DbDocCardIdRequest): IDbDocCardResponse = tryDocCardMethod {
+
         val id = rq.id.takeIf { it != MkPlcDocCardId.NONE } ?: return@tryDocCardMethod errorEmptyId
         val key = id.asString()
+
+        val oldLock = rq.lock.takeIf { it != MkPlcDocCardLock.NONE } ?: return@tryDocCardMethod errorEmptyLock(id)
 
         mutex.withLock {
             val oldDocCard = cache.get(key)?.toInternal()
             when {
+
                 oldDocCard == null -> errorNotFound(id)
+                oldDocCard.lock == MkPlcDocCardLock.NONE -> errorDb(RepoEmptyLockException(id))
+                oldDocCard.lock != oldLock -> errorRepoConcurrency(oldDocCard, oldLock)
+
                 else -> {
                     cache.invalidate(key)
                     DbDocCardResponseOk(oldDocCard)
@@ -88,7 +101,7 @@ class DocCardRepoInMemory(
     }
 
     /**
-     * Поиск объявлений по фильтру
+     * Поиск документов по фильтру
      * Если в фильтре не установлен какой-либо из параметров - по нему фильтрация не идет
      */
     override suspend fun searchDocCard(rq: DbDocCardFilterRequest): IDbDocCardsResponse = tryDocCardsMethod {

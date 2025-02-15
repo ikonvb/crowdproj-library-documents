@@ -21,6 +21,7 @@ class BizRepoUpdateTest {
         ownerId = userId,
         docCardType = MkPlcDocCardType.PDF,
         visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+        lock = MkPlcDocCardLock("123-456-789")
     )
 
     private val repo = DocCardRepositoryMock(
@@ -37,6 +38,7 @@ class BizRepoUpdateTest {
                     description = "xyz",
                     docCardType = MkPlcDocCardType.PDF,
                     visibility = MkPlcVisibility.VISIBLE_TO_GROUP,
+                    lock = MkPlcDocCardLock("123-456-789")
                 )
             )
         }
@@ -53,7 +55,7 @@ class BizRepoUpdateTest {
             description = "xyz",
             docCardType = MkPlcDocCardType.PDF,
             visibility = MkPlcVisibility.VISIBLE_TO_GROUP,
-            lock = MkPlcDocCardLock("123"),
+            lock = MkPlcDocCardLock("123-456-789")
         )
         val ctx = MkPlcDocCardContext(
             command = command,
