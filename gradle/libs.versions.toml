@@ -36,6 +36,11 @@ jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", ver
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 jackson-datatype = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
 
+# Databases
+db-cache4k = "io.github.reactivecircus.cache4k:cache4k:0.13.0"
+
+uuid = "com.benasher44:uuid:0.8.4"
+
 # Logging
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 logger-fluentd = { module = "org.fluentd:fluent-logger", version = "0.3.4" }

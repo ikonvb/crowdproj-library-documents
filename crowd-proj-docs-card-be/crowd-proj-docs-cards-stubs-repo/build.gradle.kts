@@ -4,14 +4,14 @@ plugins {
 
 kotlin {
     sourceSets {
-        val commonMain by getting {
+        val coroutinesVersion: String by project
 
+        val commonMain by getting {
             dependencies {
-                api(projects.crowdProjDocsCardsCommonRepo)
                 implementation(projects.crowdProjDocsCardsCommon)
+                implementation(projects.crowdProjDocsCardsStubs)
+
                 implementation(libs.coroutines.core)
-                implementation(libs.db.cache4k)
-                implementation(libs.uuid)
             }
         }
         val commonTest by getting {

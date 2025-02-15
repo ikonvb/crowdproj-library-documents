@@ -86,11 +86,19 @@ private fun MkPlcDocCardPermissionClient.toTransportDocCard() = when (this) {
     MkPlcDocCardPermissionClient.DELETE -> DocCardPermissions.DELETE
 }
 
-private fun MkPlcVisibility.toTransportDocCard(): DocCardVisibility? = when (this) {
+internal fun MkPlcVisibility.toTransportDocCard(): DocCardVisibility? = when (this) {
     MkPlcVisibility.VISIBLE_PUBLIC -> DocCardVisibility.PUBLIC
     MkPlcVisibility.VISIBLE_TO_GROUP -> DocCardVisibility.REGISTERED_ONLY
     MkPlcVisibility.VISIBLE_TO_OWNER -> DocCardVisibility.OWNER_ONLY
     MkPlcVisibility.NONE -> null
+}
+
+internal fun MkPlcDocCardType.toTransportDocCard(): DocType? = when (this) {
+    MkPlcDocCardType.PDF -> DocType.APPLICATION_SLASH_PDF
+    MkPlcDocCardType.PNG -> DocType.IMAGE_SLASH_PNG
+    MkPlcDocCardType.JPEG -> DocType.IMAGE_SLASH_JPEG
+    MkPlcDocCardType.MS_WORD -> DocType.APPLICATION_SLASH_MSWORD
+    MkPlcDocCardType.UNKNOWN -> null
 }
 
 private fun List<MkPlcDocCardError>.toTransportErrors(): List<Error>? = this
