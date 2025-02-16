@@ -16,3 +16,15 @@ ktor:
   #    - "http://0.0.0.0:8080/v1"
   #    - "http://192.168.0.182:8080/v1"
   logger: kmp
+
+  marketplace:
+    repository:
+      test: "inmemory"
+      prod: "$DB_TYPE_PROD:inmemory"
+      psql:
+        schema: public
+        database: "$MKPL_DOC_CARDS_DB:mk_plc_doc_cards"
+        host: "$MKPL_DOC_CARDS_HOST:localhost"
+        port: "$MKPL_DOC_CARDS_PORT:5432"
+        user: "$MKPL_DOC_CARDS_USER:postgres"
+        password: "$MKPL_DOC_CARDS_PASS:marketplace-pass"

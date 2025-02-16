@@ -20,16 +20,13 @@ pluginManagement {
     }
 }
 
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
-}
-
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":crowd-proj-docs-cards-biz")
 include(":crowd-proj-docs-cards-stubs")
 include(":crowd-proj-docs-cards-common")
 include(":crowd-proj-docs-cards-app-ktor")
+include(":crowd-proj-docs-cards-app-ktor:linuxX64Main")
 include(":crowd-proj-docs-cards-api-logV1")
 include(":crowd-proj-docs-cards-app-kafka")
 include(":crowd-proj-docs-cards-app-common")
@@ -40,3 +37,4 @@ include(":crowd-proj-docs-cards-inmemory-repo")
 include(":crowd-proj-docs-cards-common-repo")
 include(":crowd-proj-docs-cards-tests-repo")
 include(":crowd-proj-docs-cards-stubs-repo")
+include(":crowd-proj-docs-cards-pgsql-repo")

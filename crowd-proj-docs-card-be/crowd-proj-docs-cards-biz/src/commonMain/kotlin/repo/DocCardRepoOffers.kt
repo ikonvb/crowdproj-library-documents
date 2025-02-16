@@ -7,7 +7,7 @@ import ru.otus.crowd.proj.docs.cards.common.helpers.fail
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardError
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardState
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardType
-import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardFilterRequest
+import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardSearchRequest
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardsResponseError
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardsResponseOk
 
@@ -18,7 +18,8 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.repoOffers(title: String) = worker {
     on { state == MkPlcDocCardState.RUNNING }
     handle {
         val docCardRequest = docCardRepoPrepare
-        val filter = DbDocCardFilterRequest(
+
+        val filter = DbDocCardSearchRequest(
             // Здесь должен быть более умный поиск. Такой примитив слишком плохо работает
             //TODO("improve search")
             docCardType = when (docCardRequest.docCardType) {

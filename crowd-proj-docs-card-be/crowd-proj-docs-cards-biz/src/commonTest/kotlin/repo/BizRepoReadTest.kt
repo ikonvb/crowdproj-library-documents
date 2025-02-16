@@ -3,7 +3,7 @@ package repo
 import crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
 import crowd.proj.docs.cards.tests.repo.DocCardRepositoryMock
 import kotlinx.coroutines.test.runTest
-import ru.otus.crowd.proj.docs.cards.common.MkPlcCorSettings
+import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardCorSettings
 import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
 import ru.otus.crowd.proj.docs.cards.common.models.*
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardResponseOk
@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 
 class BizRepoReadTest {
 
-    private val userId = MkPlcOwnerId("321")
+    private val userId = MkPlcDocCardOwnerId("321")
     private val command = MkPlcDocCardCommand.READ
     private val initDocCard = MkPlcDocCard(
         id = MkPlcDocCardId("123"),
@@ -20,7 +20,7 @@ class BizRepoReadTest {
         description = "abc",
         ownerId = userId,
         docCardType = MkPlcDocCardType.PDF,
-        visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+        visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
     )
     private val repo = DocCardRepositoryMock(
         invokeReadDocCard = {
@@ -29,7 +29,7 @@ class BizRepoReadTest {
             )
         }
     )
-    private val settings = MkPlcCorSettings(repoTest = repo)
+    private val settings = MkPlcDocCardCorSettings(repoTest = repo)
     private val processor = MkPlcDocCardProcessor(settings)
 
     @Test

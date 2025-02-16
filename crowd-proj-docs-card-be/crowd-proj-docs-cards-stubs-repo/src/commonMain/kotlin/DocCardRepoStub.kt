@@ -7,31 +7,31 @@ import ru.otus.crowd.proj.docs.cards.common.repo.*
 
 class DocCardRepoStub() : IRepoDocCard {
 
-    override suspend fun createDocCard(rq: DbDocCardRequest): IDbDocCardResponse {
+    override suspend fun createDocCard(rq: DbDocCardCreateRequest): IDbDocCardResponse {
         return DbDocCardResponseOk(
             data = MkPlcDocCardStubSingleton.get(),
         )
     }
 
-    override suspend fun readDocCard(rq: DbDocCardIdRequest): IDbDocCardResponse {
+    override suspend fun readDocCard(rq: DbDocCardReadRequest): IDbDocCardResponse {
         return DbDocCardResponseOk(
             data = MkPlcDocCardStubSingleton.get(),
         )
     }
 
-    override suspend fun updateDocCard(rq: DbDocCardRequest): IDbDocCardResponse {
+    override suspend fun updateDocCard(rq: DbDocCardUpdateRequest): IDbDocCardResponse {
         return DbDocCardResponseOk(
             data = MkPlcDocCardStubSingleton.get(),
         )
     }
 
-    override suspend fun deleteDocCard(rq: DbDocCardIdRequest): IDbDocCardResponse {
+    override suspend fun deleteDocCard(rq: DbDocCardDeleteRequest): IDbDocCardResponse {
         return DbDocCardResponseOk(
             data = MkPlcDocCardStubSingleton.get(),
         )
     }
 
-    override suspend fun searchDocCard(rq: DbDocCardFilterRequest): IDbDocCardsResponse {
+    override suspend fun searchDocCard(rq: DbDocCardSearchRequest): IDbDocCardsResponse {
         return DbDocCardsResponseOk(
             data = MkPlcDocCardStubSingleton.prepareSearchList(filter = "", MkPlcDocCardType.PDF),
         )

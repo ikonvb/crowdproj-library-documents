@@ -3,7 +3,7 @@ package crowd.proj.docs.cards.common.repo
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCard
 
 class DocCardRepoInitialized(
-    private val repo: IDocCardRepoInitializable,
+    val repo: IDocCardRepoInitializable,
     initObjects: Collection<MkPlcDocCard> = emptyList(),
 ) : IDocCardRepoInitializable by repo {
     @Suppress("unused")

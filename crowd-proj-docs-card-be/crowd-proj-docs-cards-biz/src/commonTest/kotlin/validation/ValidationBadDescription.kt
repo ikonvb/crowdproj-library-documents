@@ -21,7 +21,7 @@ fun validationDescriptionCorrect(command: MkPlcDocCardCommand, processor: MkPlcD
             title = "abc",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
@@ -41,7 +41,7 @@ fun validationDescriptionTrim(command: MkPlcDocCardCommand, processor: MkPlcDocC
             title = "abc",
             description = " \n\tabc \n\t",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
@@ -62,7 +62,7 @@ fun validationDescriptionEmpty(command: MkPlcDocCardCommand, processor: MkPlcDoc
             title = "abc",
             description = "",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
@@ -84,7 +84,7 @@ fun validationDescriptionSymbols(command: MkPlcDocCardCommand, processor: MkPlcD
             title = "abc",
             description = "!@#$%^&*(),.{}",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )

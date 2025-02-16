@@ -2,9 +2,9 @@ package crowd.proj.docs.cards.tests.repo
 
 
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCard
+import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardOwnerId
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardType
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcOwnerId
-import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardFilterRequest
+import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardSearchRequest
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardsResponseOk
 import ru.otus.crowd.proj.docs.cards.common.repo.IRepoDocCard
 import kotlin.test.Test
@@ -19,7 +19,7 @@ abstract class RepoDocCardSearchTest {
 
     @Test
     fun searchOwner() = runRepoTest {
-        val result = repo.searchDocCard(DbDocCardFilterRequest(ownerId = searchOwnerId))
+        val result = repo.searchDocCard(DbDocCardSearchRequest(ownerId = searchOwnerId))
         assertIs<DbDocCardsResponseOk>(result)
         val expected = listOf(initializedObjects[1], initializedObjects[3]).sortedBy { it.id.asString() }
         assertEquals(expected, result.data.sortedBy { it.id.asString() })
@@ -27,7 +27,7 @@ abstract class RepoDocCardSearchTest {
 
     @Test
     fun searchDealSide() = runRepoTest {
-        val result = repo.searchDocCard(DbDocCardFilterRequest(docCardType = MkPlcDocCardType.PDF))
+        val result = repo.searchDocCard(DbDocCardSearchRequest(docCardType = MkPlcDocCardType.PDF))
         assertIs<DbDocCardsResponseOk>(result)
         val expected = listOf(initializedObjects[2], initializedObjects[4]).sortedBy { it.id.asString() }
         assertEquals(expected, result.data.sortedBy { it.id.asString() })
@@ -35,7 +35,7 @@ abstract class RepoDocCardSearchTest {
 
     companion object : BaseInitDocCards("search") {
 
-        val searchOwnerId = MkPlcOwnerId("owner-124")
+        val searchOwnerId = MkPlcDocCardOwnerId("owner-124")
         override val initObjects: List<MkPlcDocCard> = listOf(
             createInitTestModel("docCard1"),
             createInitTestModel("docCard2", ownerId = searchOwnerId),

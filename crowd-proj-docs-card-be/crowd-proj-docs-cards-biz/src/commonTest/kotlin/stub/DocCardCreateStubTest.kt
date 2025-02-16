@@ -16,7 +16,7 @@ class DocCardCreateStubTest {
     val title = "title 111"
     val description = "desc 111"
     val docType = MkPlcDocCardType.PDF
-    val visibility = MkPlcVisibility.VISIBLE_PUBLIC
+    val visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC
 
     @Test
     fun create() = runTest {

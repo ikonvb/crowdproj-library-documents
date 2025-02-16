@@ -12,7 +12,7 @@ data class MkPlcDocCardContext(
     var docCardValidated: MkPlcDocCard = MkPlcDocCard(),
     var docCardFilterValidated: MkPlcDocCardFilter = MkPlcDocCardFilter(),
     var command: MkPlcDocCardCommand = MkPlcDocCardCommand.NONE,
-    var corSettings: MkPlcCorSettings = MkPlcCorSettings(),
+    var corSettings: MkPlcDocCardCorSettings = MkPlcDocCardCorSettings(),
     var state: MkPlcDocCardState = MkPlcDocCardState.NONE,
     val errors: MutableList<MkPlcDocCardError> = mutableListOf(),
     var workMode: MkPlcDocCardWorkMode = MkPlcDocCardWorkMode.TEST,

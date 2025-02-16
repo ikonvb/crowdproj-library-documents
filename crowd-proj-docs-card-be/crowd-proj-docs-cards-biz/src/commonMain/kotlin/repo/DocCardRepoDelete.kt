@@ -5,7 +5,7 @@ import com.crowdproj.kotlin.cor.handlers.worker
 import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
 import ru.otus.crowd.proj.docs.cards.common.helpers.fail
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardState
-import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardIdRequest
+import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardDeleteRequest
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardResponseError
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardResponseErrorWithData
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardResponseOk
@@ -17,7 +17,7 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.repoDelete(title: String) = worker {
 
     on { state == MkPlcDocCardState.RUNNING }
     handle {
-        val request = DbDocCardIdRequest(docCardRepoPrepare)
+        val request = DbDocCardDeleteRequest(docCardRepoPrepare)
         when (val result = docCardRepo.deleteDocCard(request)) {
             is DbDocCardResponseOk -> docCardRepoDone = result.data
             is DbDocCardResponseError -> {

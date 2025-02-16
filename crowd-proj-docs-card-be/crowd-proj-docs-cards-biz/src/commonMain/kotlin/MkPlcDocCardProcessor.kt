@@ -6,7 +6,7 @@ import com.crowdproj.kotlin.cor.handlers.chain
 import com.crowdproj.kotlin.cor.handlers.worker
 import com.crowdproj.kotlin.cor.rootChain
 import crowd.proj.docs.cards.biz.repo.*
-import ru.otus.crowd.proj.docs.cards.common.MkPlcCorSettings
+import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardCorSettings
 import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardCommand
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardId
@@ -18,7 +18,7 @@ import workers.init.initStatus
 import workers.stub.*
 
 @Suppress("unused")
-class MkPlcDocCardProcessor(val corSettings: MkPlcCorSettings = MkPlcCorSettings.Companion.NONE) {
+class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocCardCorSettings.Companion.NONE) {
 
     suspend fun exec(ctx: MkPlcDocCardContext) = chain.exec(ctx.also { it.corSettings = corSettings })
 

@@ -28,7 +28,7 @@ class DocCardRepoInMemory(
         docCard
     }
 
-    override suspend fun createDocCard(rq: DbDocCardRequest): IDbDocCardResponse = tryDocCardMethod {
+    override suspend fun createDocCard(rq: DbDocCardCreateRequest): IDbDocCardResponse = tryDocCardMethod {
 
         val key = randomUuid()
         val docCard = rq.docCard.copy(id = MkPlcDocCardId(key))
@@ -39,7 +39,7 @@ class DocCardRepoInMemory(
         DbDocCardResponseOk(docCard)
     }
 
-    override suspend fun readDocCard(rq: DbDocCardIdRequest): IDbDocCardResponse = tryDocCardMethod {
+    override suspend fun readDocCard(rq: DbDocCardReadRequest): IDbDocCardResponse = tryDocCardMethod {
 
         val key = rq.id.takeIf { it != MkPlcDocCardId.NONE }?.asString() ?: return@tryDocCardMethod errorEmptyId
         mutex.withLock {
@@ -50,7 +50,7 @@ class DocCardRepoInMemory(
         }
     }
 
-    override suspend fun updateDocCard(rq: DbDocCardRequest): IDbDocCardResponse = tryDocCardMethod {
+    override suspend fun updateDocCard(rq: DbDocCardUpdateRequest): IDbDocCardResponse = tryDocCardMethod {
         val rqDocCard = rq.docCard
         val id = rqDocCard.id.takeIf { it != MkPlcDocCardId.NONE } ?: return@tryDocCardMethod errorEmptyId
         val key = id.asString()
@@ -77,7 +77,7 @@ class DocCardRepoInMemory(
     }
 
 
-    override suspend fun deleteDocCard(rq: DbDocCardIdRequest): IDbDocCardResponse = tryDocCardMethod {
+    override suspend fun deleteDocCard(rq: DbDocCardDeleteRequest): IDbDocCardResponse = tryDocCardMethod {
 
         val id = rq.id.takeIf { it != MkPlcDocCardId.NONE } ?: return@tryDocCardMethod errorEmptyId
         val key = id.asString()
@@ -104,11 +104,11 @@ class DocCardRepoInMemory(
      * Поиск документов по фильтру
      * Если в фильтре не установлен какой-либо из параметров - по нему фильтрация не идет
      */
-    override suspend fun searchDocCard(rq: DbDocCardFilterRequest): IDbDocCardsResponse = tryDocCardsMethod {
+    override suspend fun searchDocCard(rq: DbDocCardSearchRequest): IDbDocCardsResponse = tryDocCardsMethod {
 
         val result: List<MkPlcDocCard> = cache.asMap().asSequence()
             .filter { entry ->
-                rq.ownerId.takeIf { it != MkPlcOwnerId.NONE }?.let {
+                rq.ownerId.takeIf { it != MkPlcDocCardOwnerId.NONE }?.let {
                     it.asString() == entry.value.ownerId
                 } != false
             }

@@ -2,10 +2,7 @@ package crowd.proj.docs.cards.tests.repo
 
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCard
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardId
-import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardIdRequest
-import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardResponseError
-import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardResponseOk
-import ru.otus.crowd.proj.docs.cards.common.repo.IRepoDocCard
+import ru.otus.crowd.proj.docs.cards.common.repo.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -18,7 +15,7 @@ abstract class RepoDocCardDeleteTest {
 
     @Test
     fun deleteSuccess() = runRepoTest {
-        val result = repo.deleteDocCard(DbDocCardIdRequest(deleteSuccess.id))
+        val result = repo.deleteDocCard(DbDocCardDeleteRequest(deleteSuccess.id))
         assertIs<DbDocCardResponseOk>(result)
         assertEquals(deleteSuccess.title, result.data.title)
         assertEquals(deleteSuccess.description, result.data.description)
@@ -26,7 +23,7 @@ abstract class RepoDocCardDeleteTest {
 
     @Test
     fun deleteNotFound() = runRepoTest {
-        val result = repo.readDocCard(DbDocCardIdRequest(notFoundId))
+        val result = repo.readDocCard(DbDocCardReadRequest(notFoundId))
 
         assertIs<DbDocCardResponseError>(result)
         val error = result.errors.find { it.code == "repo-not-found" }

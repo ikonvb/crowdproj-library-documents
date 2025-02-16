@@ -5,7 +5,7 @@ import com.crowdproj.kotlin.cor.handlers.worker
 import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
 import ru.otus.crowd.proj.docs.cards.common.helpers.fail
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardState
-import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardFilterRequest
+import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardSearchRequest
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardsResponseError
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardsResponseOk
 
@@ -15,7 +15,7 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.repoSearch(title: String) = worker {
     description = "Поиск документов в БД по фильтру"
     on { state == MkPlcDocCardState.RUNNING }
     handle {
-        val request = DbDocCardFilterRequest(
+        val request = DbDocCardSearchRequest(
             titleFilter = docCardFilterValidated.searchString,
             ownerId = docCardFilterValidated.ownerId,
             docCardType = docCardFilterValidated.docCardType,

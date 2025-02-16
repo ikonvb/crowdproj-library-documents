@@ -3,7 +3,7 @@ package repo
 import crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
 import crowd.proj.docs.cards.tests.repo.DocCardRepositoryMock
 import kotlinx.coroutines.test.runTest
-import ru.otus.crowd.proj.docs.cards.common.MkPlcCorSettings
+import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardCorSettings
 import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
 import ru.otus.crowd.proj.docs.cards.common.models.*
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardResponseOk
@@ -13,7 +13,7 @@ import kotlin.test.assertNotEquals
 
 class BizRepoCreateTest {
 
-    private val userId = MkPlcOwnerId("321")
+    private val userId = MkPlcDocCardOwnerId("321")
     private val command = MkPlcDocCardCommand.CREATE
     private val uuid = "10000000-0000-0000-0000-000000000001"
     private val repo = DocCardRepositoryMock(
@@ -30,7 +30,7 @@ class BizRepoCreateTest {
             )
         }
     )
-    private val settings = MkPlcCorSettings(
+    private val settings = MkPlcDocCardCorSettings(
         repoTest = repo
     )
     private val processor = MkPlcDocCardProcessor(settings)
@@ -45,7 +45,7 @@ class BizRepoCreateTest {
                 title = "abc",
                 description = "abc",
                 docCardType = MkPlcDocCardType.PDF,
-                visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+                visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             ),
         )
         processor.exec(ctx)
@@ -54,6 +54,6 @@ class BizRepoCreateTest {
         assertEquals("abc", ctx.mkPlcDocCardResponse.title)
         assertEquals("abc", ctx.mkPlcDocCardResponse.description)
         assertEquals(MkPlcDocCardType.PDF, ctx.mkPlcDocCardResponse.docCardType)
-        assertEquals(MkPlcVisibility.VISIBLE_PUBLIC, ctx.mkPlcDocCardResponse.visibility)
+        assertEquals(MkPlcDocCardVisibility.VISIBLE_PUBLIC, ctx.mkPlcDocCardResponse.visibility)
     }
 }

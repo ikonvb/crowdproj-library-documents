@@ -4,6 +4,7 @@ import com.crowdproj.kotlin.cor.handlers.CorChainDsl
 import com.crowdproj.kotlin.cor.handlers.worker
 import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardState
+import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardOwnerId
 
 
 fun CorChainDsl<MkPlcDocCardContext, Unit>.repoPrepareCreate(title: String) = worker {
@@ -12,6 +13,6 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.repoPrepareCreate(title: String) = wo
     on { state == MkPlcDocCardState.RUNNING }
     handle {
         docCardRepoPrepare = docCardValidated.deepCopy()
-        //adRepoPrepare.ownerId = MkplUserId.NONE
+        docCardRepoPrepare.ownerId = MkPlcDocCardOwnerId.NONE
     }
 }

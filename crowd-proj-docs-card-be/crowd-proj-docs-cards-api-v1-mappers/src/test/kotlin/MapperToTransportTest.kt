@@ -20,7 +20,7 @@ class MapperToTransportTest : FunSpec({
                 mkPlcDocCardResponse = MkPlcDocCard(
                     title = "title",
                     description = "desc",
-                    visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+                    visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
                 ),
                 errors = mutableListOf(
                     MkPlcDocCardError(

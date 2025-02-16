@@ -15,7 +15,7 @@ class DocCardUpdateStubTest {
     val title = "title 666"
     val description = "desc 666"
     val dockType = MkPlcDocCardType.PDF
-    val visibility = MkPlcVisibility.VISIBLE_PUBLIC
+    val visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC
 
     @Test
     fun create() = runTest {

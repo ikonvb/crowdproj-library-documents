@@ -18,7 +18,7 @@ fun validationIdCorrect(command: MkPlcDocCardCommand, processor: MkPlcDocCardPro
             title = "abc",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
@@ -37,7 +37,7 @@ fun validationIdTrim(command: MkPlcDocCardCommand, processor: MkPlcDocCardProces
             title = "abc",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
@@ -56,7 +56,7 @@ fun validationIdEmpty(command: MkPlcDocCardCommand, processor: MkPlcDocCardProce
             title = "abc",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
@@ -79,7 +79,7 @@ fun validationIdFormat(command: MkPlcDocCardCommand, processor: MkPlcDocCardProc
             title = "abc",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )

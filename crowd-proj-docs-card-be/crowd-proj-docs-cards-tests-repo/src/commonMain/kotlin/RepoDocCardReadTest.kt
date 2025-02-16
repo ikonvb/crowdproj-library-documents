@@ -2,7 +2,7 @@ package crowd.proj.docs.cards.tests.repo
 
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCard
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardId
-import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardIdRequest
+import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardReadRequest
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardResponseError
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardResponseOk
 import ru.otus.crowd.proj.docs.cards.common.repo.IRepoDocCard
@@ -17,7 +17,7 @@ abstract class RepoDocCardReadTest {
 
     @Test
     fun readSuccess() = runRepoTest {
-        val result = repo.readDocCard(DbDocCardIdRequest(readSuccess.id))
+        val result = repo.readDocCard(DbDocCardReadRequest(readSuccess.id))
 
         assertIs<DbDocCardResponseOk>(result)
         assertEquals(readSuccess, result.data)
@@ -25,7 +25,7 @@ abstract class RepoDocCardReadTest {
 
     @Test
     fun readNotFound() = runRepoTest {
-        val result = repo.readDocCard(DbDocCardIdRequest(notFoundId))
+        val result = repo.readDocCard(DbDocCardReadRequest(notFoundId))
 
         assertIs<DbDocCardResponseError>(result)
         val error = result.errors.find { it.code == "repo-not-found" }

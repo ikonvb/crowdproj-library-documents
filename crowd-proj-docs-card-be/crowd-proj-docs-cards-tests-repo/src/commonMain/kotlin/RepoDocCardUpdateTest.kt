@@ -21,8 +21,8 @@ abstract class RepoDocCardUpdateTest {
             id = updateSuccess.id,
             title = "update object",
             description = "update object description",
-            ownerId = MkPlcOwnerId("owner-123"),
-            visibility = MkPlcVisibility.VISIBLE_TO_GROUP,
+            ownerId = MkPlcDocCardOwnerId("owner-123"),
+            visibility = MkPlcDocCardVisibility.VISIBLE_TO_GROUP,
             docCardType = MkPlcDocCardType.PDF,
             lock = initObjects.first().lock,
         )
@@ -31,8 +31,8 @@ abstract class RepoDocCardUpdateTest {
         id = updateIdNotFound,
         title = "update object not found",
         description = "update object not found description",
-        ownerId = MkPlcOwnerId("owner-123"),
-        visibility = MkPlcVisibility.VISIBLE_TO_GROUP,
+        ownerId = MkPlcDocCardOwnerId("owner-123"),
+        visibility = MkPlcDocCardVisibility.VISIBLE_TO_GROUP,
         docCardType = MkPlcDocCardType.PDF,
         lock = initObjects.first().lock,
     )
@@ -42,8 +42,8 @@ abstract class RepoDocCardUpdateTest {
             id = updateConcurrency.id,
             title = "update object not found",
             description = "update object not found description",
-            ownerId = MkPlcOwnerId("owner-123"),
-            visibility = MkPlcVisibility.VISIBLE_TO_GROUP,
+            ownerId = MkPlcDocCardOwnerId("owner-123"),
+            visibility = MkPlcDocCardVisibility.VISIBLE_TO_GROUP,
             docCardType = MkPlcDocCardType.PDF,
             lock = lockBad,
         )
@@ -51,7 +51,7 @@ abstract class RepoDocCardUpdateTest {
 
     @Test
     fun updateSuccess() = runRepoTest {
-        val result = repo.updateDocCard(DbDocCardRequest(reqUpdateSuccess))
+        val result = repo.updateDocCard(DbDocCardUpdateRequest(reqUpdateSuccess))
         assertIs<DbDocCardResponseOk>(result)
         assertEquals(reqUpdateSuccess.id, result.data.id)
         assertEquals(reqUpdateSuccess.title, result.data.title)
@@ -62,7 +62,7 @@ abstract class RepoDocCardUpdateTest {
 
     @Test
     fun updateNotFound() = runRepoTest {
-        val result = repo.updateDocCard(DbDocCardRequest(reqUpdateNotFound))
+        val result = repo.updateDocCard(DbDocCardUpdateRequest(reqUpdateNotFound))
         assertIs<DbDocCardResponseError>(result)
         val error = result.errors.find { it.code == "repo-not-found" }
         assertEquals("id", error?.field)
@@ -71,7 +71,7 @@ abstract class RepoDocCardUpdateTest {
 
     @Test
     fun updateConcurrencyError() = runRepoTest {
-        val result = repo.updateDocCard(DbDocCardRequest(reqUpdateConcurrency))
+        val result = repo.updateDocCard(DbDocCardUpdateRequest(reqUpdateConcurrency))
         assertIs<DbDocCardResponseErrorWithData>(result)
         val error = result.errors.find { it.code == "repo-concurrency" }
         assertEquals("lock", error?.field)

@@ -59,11 +59,11 @@ fun MkPlcDocCardContext.fromTransport(request: DocCardOffersRequest) {
     stubCase = request.debug.transportToStubCase()
 }
 
-private fun DocCardVisibility?.fromTransport(): MkPlcVisibility = when (this) {
-    DocCardVisibility.PUBLIC -> MkPlcVisibility.VISIBLE_PUBLIC
-    DocCardVisibility.OWNER_ONLY -> MkPlcVisibility.VISIBLE_TO_OWNER
-    DocCardVisibility.REGISTERED_ONLY -> MkPlcVisibility.VISIBLE_TO_GROUP
-    null -> MkPlcVisibility.NONE
+private fun DocCardVisibility?.fromTransport(): MkPlcDocCardVisibility = when (this) {
+    DocCardVisibility.PUBLIC -> MkPlcDocCardVisibility.VISIBLE_PUBLIC
+    DocCardVisibility.OWNER_ONLY -> MkPlcDocCardVisibility.VISIBLE_TO_OWNER
+    DocCardVisibility.REGISTERED_ONLY -> MkPlcDocCardVisibility.VISIBLE_TO_GROUP
+    null -> MkPlcDocCardVisibility.NONE
 }
 
 private fun DocCardReadObject?.toInternal(): MkPlcDocCard = if (this != null) {

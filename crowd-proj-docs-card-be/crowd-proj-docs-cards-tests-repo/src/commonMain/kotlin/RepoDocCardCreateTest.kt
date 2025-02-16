@@ -3,7 +3,7 @@ package crowd.proj.docs.cards.tests.repo
 
 import crowd.proj.docs.cards.common.repo.IDocCardRepoInitializable
 import ru.otus.crowd.proj.docs.cards.common.models.*
-import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardRequest
+import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardCreateRequest
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardResponseOk
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -15,18 +15,19 @@ abstract class RepoDocCardCreateTest {
 
     abstract val repo: IDocCardRepoInitializable
     protected open val uuidNew = MkPlcDocCardId("10000000-0000-0000-0000-000000000001")
+    protected open val lockNew = MkPlcDocCardLock("20000000-0000-0000-0000-000000000002")
 
     private val createObj = MkPlcDocCard(
         title = "create object",
         description = "create object description",
-        ownerId = MkPlcOwnerId("owner-123"),
-        visibility = MkPlcVisibility.VISIBLE_TO_GROUP,
+        ownerId = MkPlcDocCardOwnerId("owner-123"),
+        visibility = MkPlcDocCardVisibility.VISIBLE_TO_GROUP,
         docCardType = MkPlcDocCardType.PDF,
     )
 
     @Test
     fun createSuccess() = runRepoTest {
-        val result = repo.createDocCard(DbDocCardRequest(createObj))
+        val result = repo.createDocCard(DbDocCardCreateRequest(createObj))
         val expected = createObj
         assertIs<DbDocCardResponseOk>(result)
         assertEquals(uuidNew, result.data.id)

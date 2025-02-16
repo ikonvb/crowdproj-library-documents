@@ -23,35 +23,35 @@ class DocCardRepositoryMockTest {
 
     @Test
     fun mockCreate() = runTest {
-        val result = repo.createDocCard(DbDocCardRequest(MkPlcDocCard()))
+        val result = repo.createDocCard(DbDocCardCreateRequest(MkPlcDocCard()))
         assertIs<DbDocCardResponseOk>(result)
         assertEquals("create", result.data.title)
     }
 
     @Test
     fun mockRead() = runTest {
-        val result = repo.readDocCard(DbDocCardIdRequest(MkPlcDocCard()))
+        val result = repo.readDocCard(DbDocCardReadRequest(MkPlcDocCard()))
         assertIs<DbDocCardResponseOk>(result)
         assertEquals("read", result.data.title)
     }
 
     @Test
     fun mockUpdate() = runTest {
-        val result = repo.updateDocCard(DbDocCardRequest(MkPlcDocCard()))
+        val result = repo.updateDocCard(DbDocCardUpdateRequest(MkPlcDocCard()))
         assertIs<DbDocCardResponseOk>(result)
         assertEquals("update", result.data.title)
     }
 
     @Test
     fun mockDelete() = runTest {
-        val result = repo.deleteDocCard(DbDocCardIdRequest(MkPlcDocCard()))
+        val result = repo.deleteDocCard(DbDocCardDeleteRequest(MkPlcDocCard()))
         assertIs<DbDocCardResponseOk>(result)
         assertEquals("delete", result.data.title)
     }
 
     @Test
     fun mockSearch() = runTest {
-        val result = repo.searchDocCard(DbDocCardFilterRequest())
+        val result = repo.searchDocCard(DbDocCardSearchRequest())
         assertIs<DbDocCardsResponseOk>(result)
         assertEquals("search", result.data.first().title)
     }

@@ -67,11 +67,11 @@ private fun MkPlcDocCard.toTransportDocCard(): DocCardResponseObject = DocCardRe
     id = id.takeIf { it != MkPlcDocCardId.NONE }?.asString(),
     title = title.takeIf { it.isNotBlank() },
     description = description.takeIf { it.isNotBlank() },
-    ownerId = ownerId.takeIf { it != MkPlcOwnerId.NONE }?.asString(),
+    ownerId = ownerId.takeIf { it != MkPlcDocCardOwnerId.NONE }?.asString(),
     docType = docCardType.toTransportDocCard(),
     visibility = visibility.toTransportDocCard(),
     permissions = permissionsClient.toTransportDocCard(),
-    productId = productId.takeIf { it != MkPlcProductId.NONE }?.asString(),
+    productId = productId.takeIf { it != MkPlcDocCardProductId.NONE }?.asString(),
     lock = lock.takeIf { it != MkPlcDocCardLock.NONE }?.asString()
 )
 
@@ -89,11 +89,11 @@ private fun MkPlcDocCardPermissionClient.toTransportDocCard() = when (this) {
     MkPlcDocCardPermissionClient.DELETE -> DocCardPermissions.DELETE
 }
 
-internal fun MkPlcVisibility.toTransportDocCard(): DocCardVisibility? = when (this) {
-    MkPlcVisibility.VISIBLE_PUBLIC -> DocCardVisibility.PUBLIC
-    MkPlcVisibility.VISIBLE_TO_GROUP -> DocCardVisibility.REGISTERED_ONLY
-    MkPlcVisibility.VISIBLE_TO_OWNER -> DocCardVisibility.OWNER_ONLY
-    MkPlcVisibility.NONE -> null
+internal fun MkPlcDocCardVisibility.toTransportDocCard(): DocCardVisibility? = when (this) {
+    MkPlcDocCardVisibility.VISIBLE_PUBLIC -> DocCardVisibility.PUBLIC
+    MkPlcDocCardVisibility.VISIBLE_TO_GROUP -> DocCardVisibility.REGISTERED_ONLY
+    MkPlcDocCardVisibility.VISIBLE_TO_OWNER -> DocCardVisibility.OWNER_ONLY
+    MkPlcDocCardVisibility.NONE -> null
 }
 
 internal fun MkPlcDocCardType.toTransportDocCard(): DocType? = when (this) {

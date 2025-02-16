@@ -17,7 +17,7 @@ data class DocCardEntity(
         description = model.description.takeIf { it.isNotBlank() },
         ownerId = model.ownerId.asString().takeIf { it.isNotBlank() },
         docCardType = model.docCardType.takeIf { it != MkPlcDocCardType.UNKNOWN }?.name,
-        visibility = model.visibility.takeIf { it != MkPlcVisibility.NONE }?.name,
+        visibility = model.visibility.takeIf { it != MkPlcDocCardVisibility.NONE }?.name,
         lock = model.lock.asString().takeIf { it.isNotBlank() }
     )
 
@@ -25,9 +25,9 @@ data class DocCardEntity(
         id = id?.let { MkPlcDocCardId(it) } ?: MkPlcDocCardId.NONE,
         title = title ?: "",
         description = description ?: "",
-        ownerId = ownerId?.let { MkPlcOwnerId(it) } ?: MkPlcOwnerId.NONE,
+        ownerId = ownerId?.let { MkPlcDocCardOwnerId(it) } ?: MkPlcDocCardOwnerId.NONE,
         docCardType = docCardType?.let { MkPlcDocCardType.valueOf(it) } ?: MkPlcDocCardType.UNKNOWN,
-        visibility = visibility?.let { MkPlcVisibility.valueOf(it) } ?: MkPlcVisibility.NONE,
+        visibility = visibility?.let { MkPlcDocCardVisibility.valueOf(it) } ?: MkPlcDocCardVisibility.NONE,
         lock = lock?.let { MkPlcDocCardLock(it) } ?: MkPlcDocCardLock.NONE,
     )
 }
