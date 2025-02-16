@@ -1,5 +1,7 @@
 package ru.otus.crowd.proj.docs.cards.common.repo
 
+import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardError
+
 interface IRepoDocCard {
 
     suspend fun createDocCard(rq: DbDocCardCreateRequest): IDbDocCardResponse
@@ -12,23 +14,53 @@ interface IRepoDocCard {
 
         val NONE = object : IRepoDocCard {
             override suspend fun createDocCard(rq: DbDocCardCreateRequest): IDbDocCardResponse {
-                throw NotImplementedError("Must not be used")
+                return DbDocCardResponseError(
+                    MkPlcDocCardError(
+                        code = "err",
+                        group = "request",
+                        message = "Not implemented",
+                    )
+                )
             }
 
             override suspend fun readDocCard(rq: DbDocCardReadRequest): IDbDocCardResponse {
-                throw NotImplementedError("Must not be used")
+                return DbDocCardResponseError(
+                    MkPlcDocCardError(
+                        code = "err",
+                        group = "request",
+                        message = "Not implemented",
+                    )
+                )
             }
 
             override suspend fun updateDocCard(rq: DbDocCardUpdateRequest): IDbDocCardResponse {
-                throw NotImplementedError("Must not be used")
+                return DbDocCardResponseError(
+                    MkPlcDocCardError(
+                        code = "err",
+                        group = "request",
+                        message = "Not implemented",
+                    )
+                )
             }
 
             override suspend fun deleteDocCard(rq: DbDocCardDeleteRequest): IDbDocCardResponse {
-                throw NotImplementedError("Must not be used")
+                return DbDocCardResponseError(
+                    MkPlcDocCardError(
+                        code = "err",
+                        group = "request",
+                        message = "Not implemented",
+                    )
+                )
             }
 
             override suspend fun searchDocCard(rq: DbDocCardSearchRequest): IDbDocCardsResponse {
-                throw NotImplementedError("Must not be used")
+                return DbDocCardsResponseError(
+                    MkPlcDocCardError(
+                        code = "err",
+                        group = "request",
+                        message = "Not implemented",
+                    )
+                )
             }
         }
     }
