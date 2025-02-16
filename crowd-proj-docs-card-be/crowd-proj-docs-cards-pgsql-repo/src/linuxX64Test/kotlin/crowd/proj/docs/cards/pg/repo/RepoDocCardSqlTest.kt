@@ -5,6 +5,7 @@ import kotlinx.cinterop.toKString
 import kotlinx.coroutines.test.runTest
 import platform.posix.getenv
 import ru.otus.crowd.proj.docs.cards.common.models.*
+import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardCreateRequest
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardSearchRequest
 import kotlin.test.Test
 
@@ -18,7 +19,7 @@ class RepoDocCardSqlTest {
             properties = SqlProperties(port = pgPort)
         )
         val res = repo.createDocCard(
-            rq = DbDocCardRequest(
+            rq = DbDocCardCreateRequest(
                 MkPlcDocCard(
                     title = "tttt",
                     description = "zzzz",
