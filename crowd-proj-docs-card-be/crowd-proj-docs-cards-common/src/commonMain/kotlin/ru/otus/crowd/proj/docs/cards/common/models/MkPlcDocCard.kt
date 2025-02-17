@@ -4,10 +4,10 @@ data class MkPlcDocCard(
     var id: MkPlcDocCardId = MkPlcDocCardId.Companion.NONE,
     var title: String = "",
     var description: String = "",
-    var ownerId: MkPlcOwnerId = MkPlcOwnerId.Companion.NONE,
+    var ownerId: MkPlcDocCardOwnerId = MkPlcDocCardOwnerId.Companion.NONE,
     var docCardType: MkPlcDocCardType = MkPlcDocCardType.UNKNOWN,
-    var visibility: MkPlcVisibility = MkPlcVisibility.NONE,
-    var productId: MkPlcProductId = MkPlcProductId.Companion.NONE,
+    var visibility: MkPlcDocCardVisibility = MkPlcDocCardVisibility.NONE,
+    var productId: MkPlcDocCardProductId = MkPlcDocCardProductId.Companion.NONE,
     var lock: MkPlcDocCardLock = MkPlcDocCardLock.Companion.NONE,
     val permissionsClient: MutableSet<MkPlcDocCardPermissionClient> = mutableSetOf()
 ) {

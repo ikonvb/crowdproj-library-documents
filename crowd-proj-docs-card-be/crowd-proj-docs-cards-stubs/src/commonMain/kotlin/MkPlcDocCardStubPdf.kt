@@ -9,8 +9,10 @@ object MkPlcDocCardStubPdf {
             id = MkPlcDocCardId("111"),
             title = "Документ №33",
             description = "Документ об очень важном",
-            ownerId = MkPlcOwnerId("user-1"),
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            ownerId = MkPlcDocCardOwnerId("user-1"),
+            docCardType = MkPlcDocCardType.PDF,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
+            lock = MkPlcDocCardLock("123-234-abc-ABC"),
             permissionsClient = mutableSetOf(
                 MkPlcDocCardPermissionClient.READ,
                 MkPlcDocCardPermissionClient.UPDATE,

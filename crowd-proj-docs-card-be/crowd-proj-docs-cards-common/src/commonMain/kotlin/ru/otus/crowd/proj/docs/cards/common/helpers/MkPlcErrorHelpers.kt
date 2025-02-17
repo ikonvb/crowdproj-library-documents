@@ -18,9 +18,16 @@ fun Throwable.asMkPlcError(
 )
 
 fun MkPlcDocCardContext.addError(error: MkPlcDocCardError) = errors.add(error)
+fun MkPlcDocCardContext.addErrors(error: Collection<MkPlcDocCardError>) = errors.addAll(error)
+
 
 fun MkPlcDocCardContext.fail(error: MkPlcDocCardError) {
     addError(error)
+    state = MkPlcDocCardState.FAILING
+}
+
+fun MkPlcDocCardContext.fail(errors: Collection<MkPlcDocCardError>) {
+    addErrors(errors)
     state = MkPlcDocCardState.FAILING
 }
 
@@ -35,4 +42,16 @@ fun errorValidation(
     group = "validation",
     message = "Validation error for field $field: $description",
     level = level,
+)
+
+fun errorSystem(
+    violationCode: String,
+    level: LogLevel = LogLevel.ERROR,
+    e: Throwable,
+) = MkPlcDocCardError(
+    code = "system-$violationCode",
+    group = "system",
+    message = "System error occurred. Our stuff has been informed, please retry later",
+    level = level,
+    exception = e,
 )

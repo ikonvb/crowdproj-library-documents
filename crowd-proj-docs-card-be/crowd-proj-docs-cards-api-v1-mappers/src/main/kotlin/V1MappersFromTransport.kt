@@ -59,11 +59,11 @@ fun MkPlcDocCardContext.fromTransport(request: DocCardOffersRequest) {
     stubCase = request.debug.transportToStubCase()
 }
 
-private fun DocCardVisibility?.fromTransport(): MkPlcVisibility = when (this) {
-    DocCardVisibility.PUBLIC -> MkPlcVisibility.VISIBLE_PUBLIC
-    DocCardVisibility.OWNER_ONLY -> MkPlcVisibility.VISIBLE_TO_OWNER
-    DocCardVisibility.REGISTERED_ONLY -> MkPlcVisibility.VISIBLE_TO_GROUP
-    null -> MkPlcVisibility.NONE
+private fun DocCardVisibility?.fromTransport(): MkPlcDocCardVisibility = when (this) {
+    DocCardVisibility.PUBLIC -> MkPlcDocCardVisibility.VISIBLE_PUBLIC
+    DocCardVisibility.OWNER_ONLY -> MkPlcDocCardVisibility.VISIBLE_TO_OWNER
+    DocCardVisibility.REGISTERED_ONLY -> MkPlcDocCardVisibility.VISIBLE_TO_GROUP
+    null -> MkPlcDocCardVisibility.NONE
 }
 
 private fun DocCardReadObject?.toInternal(): MkPlcDocCard = if (this != null) {
@@ -88,6 +88,7 @@ private fun DocCardSearchFilter?.toInternal(): MkPlcDocCardFilter = MkPlcDocCard
 private fun DocCardCreateObject.toInternal(): MkPlcDocCard = MkPlcDocCard(
     title = this.title ?: "",
     description = this.description ?: "",
+    docCardType = this.docType.fromTransport(),
     visibility = this.visibility.fromTransport(),
 )
 
@@ -95,6 +96,7 @@ private fun DocCardUpdateObject.toInternal(): MkPlcDocCard = MkPlcDocCard(
     id = this.id.toDocCardId(),
     title = this.title ?: "",
     description = this.description ?: "",
+    docCardType = this.docType.fromTransport(),
     visibility = this.visibility.fromTransport(),
     lock = lock.toDocCardLock(),
 )
@@ -120,4 +122,12 @@ private fun DocCardDebug?.transportToStubCase(): MkPlcDocCardStubs = when (this?
     DocCardRequestDebugStubs.CANNOT_DELETE -> MkPlcDocCardStubs.CANNOT_DELETE
     DocCardRequestDebugStubs.BAD_SEARCH_STRING -> MkPlcDocCardStubs.BAD_SEARCH_STRING
     null -> MkPlcDocCardStubs.NONE
+}
+
+private fun DocType?.fromTransport(): MkPlcDocCardType = when (this) {
+    DocType.APPLICATION_SLASH_PDF -> MkPlcDocCardType.PDF
+    DocType.IMAGE_SLASH_PNG -> MkPlcDocCardType.PNG
+    DocType.APPLICATION_SLASH_MSWORD -> MkPlcDocCardType.MS_WORD
+    DocType.IMAGE_SLASH_JPEG -> MkPlcDocCardType.JPEG
+    null -> MkPlcDocCardType.UNKNOWN
 }

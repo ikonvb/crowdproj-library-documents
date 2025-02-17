@@ -2,6 +2,7 @@ package validation
 
 import crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
 import kotlinx.coroutines.test.runTest
+import ru.otus.crowd.proj.docs.cards.be.stubs.MkPlcDocCardStubSingleton
 import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
 import ru.otus.crowd.proj.docs.cards.common.models.*
 import kotlin.test.assertContains
@@ -13,14 +14,7 @@ fun validationLockCorrect(command: MkPlcDocCardCommand, processor: MkPlcDocCardP
         command = command,
         state = MkPlcDocCardState.NONE,
         workMode = MkPlcDocCardWorkMode.TEST,
-        mkPlcDocCardRequest = MkPlcDocCard(
-            id = MkPlcDocCardId("123-234-abc-ABC"),
-            title = "abc",
-            description = "abc",
-            docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
-            lock = MkPlcDocCardLock("123-234-abc-ABC"),
-        ),
+        mkPlcDocCardRequest = MkPlcDocCardStubSingleton.get()
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -32,14 +26,9 @@ fun validationLockTrim(command: MkPlcDocCardCommand, processor: MkPlcDocCardProc
         command = command,
         state = MkPlcDocCardState.NONE,
         workMode = MkPlcDocCardWorkMode.TEST,
-        mkPlcDocCardRequest = MkPlcDocCard(
-            id = MkPlcDocCardId("123-234-abc-ABC"),
-            title = "abc",
-            description = "abc",
-            docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
-            lock = MkPlcDocCardLock(" \n\t 123-234-abc-ABC \n\t "),
-        ),
+        mkPlcDocCardRequest = MkPlcDocCardStubSingleton.prepareResult {
+            lock = MkPlcDocCardLock(" \n\t 123-234-abc-ABC \n\t ")
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -56,7 +45,7 @@ fun validationLockEmpty(command: MkPlcDocCardCommand, processor: MkPlcDocCardPro
             title = "abc",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock(""),
         ),
     )
@@ -78,7 +67,7 @@ fun validationLockFormat(command: MkPlcDocCardCommand, processor: MkPlcDocCardPr
             title = "abc",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("!@#\$%^&*(),.{}"),
         ),
     )

@@ -1,9 +1,10 @@
 package ru.otus.crowd.proj.docs.be
 
 import IMkPlcAppSettings
-import crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
 
-import ru.otus.crowd.proj.docs.cards.common.MkPlcCorSettings
+
+import crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
+import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardCorSettings
 import ru.otus.crowd.proj.logging.common.MkPlcLoggerProvider
 import ru.otus.crowd.proj.logging.logback.mpLoggerLogback
 
@@ -15,7 +16,7 @@ class AppKafkaConfig(
     val kafkaTopicOutV1: String = KAFKA_TOPIC_OUT_V1,
     val kafkaTopicInV2: String = KAFKA_TOPIC_IN_V2,
     val kafkaTopicOutV2: String = KAFKA_TOPIC_OUT_V2,
-    override val corSettings: MkPlcCorSettings = MkPlcCorSettings(
+    override val corSettings: MkPlcDocCardCorSettings = MkPlcDocCardCorSettings(
         loggerProvider = MkPlcLoggerProvider { mpLoggerLogback(it) }
     ),
     override val processor: MkPlcDocCardProcessor = MkPlcDocCardProcessor(corSettings)

@@ -1,52 +1,43 @@
 package validation
 
 import crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
-import kotlinx.coroutines.test.runTest
+import ru.otus.crowd.proj.docs.cards.be.stubs.MkPlcDocCardStubSingleton
 import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
 import ru.otus.crowd.proj.docs.cards.common.models.*
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-fun validationIdCorrect(command: MkPlcDocCardCommand, processor: MkPlcDocCardProcessor) = runTest {
+fun validationIdCorrect(command: MkPlcDocCardCommand, processor: MkPlcDocCardProcessor) = runBizTest {
+
     val ctx = MkPlcDocCardContext(
         command = command,
         state = MkPlcDocCardState.NONE,
         workMode = MkPlcDocCardWorkMode.TEST,
-        mkPlcDocCardRequest = MkPlcDocCard(
-            id = MkPlcDocCardId("123-234-abc-ABC"),
-            title = "abc",
-            description = "abc",
-            docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
-            lock = MkPlcDocCardLock("123-234-abc-ABC"),
-        ),
+        mkPlcDocCardRequest = MkPlcDocCardStubSingleton.get()
+    )
+
+    processor.exec(ctx)
+    assertEquals(0, ctx.errors.size)
+    assertNotEquals(MkPlcDocCardState.FAILING, ctx.state)
+}
+
+fun validationIdTrim(command: MkPlcDocCardCommand, processor: MkPlcDocCardProcessor) = runBizTest {
+
+    val ctx = MkPlcDocCardContext(
+        command = command,
+        state = MkPlcDocCardState.NONE,
+        workMode = MkPlcDocCardWorkMode.TEST,
+        mkPlcDocCardRequest = MkPlcDocCardStubSingleton.prepareResult {
+            id = MkPlcDocCardId(" \n\t ${id.asString()} \n\t ")
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(MkPlcDocCardState.FAILING, ctx.state)
 }
 
-fun validationIdTrim(command: MkPlcDocCardCommand, processor: MkPlcDocCardProcessor) = runTest {
-    val ctx = MkPlcDocCardContext(
-        command = command,
-        state = MkPlcDocCardState.NONE,
-        workMode = MkPlcDocCardWorkMode.TEST,
-        mkPlcDocCardRequest = MkPlcDocCard(
-            id = MkPlcDocCardId(" \n\t 123-234-abc-ABC \n\t "),
-            title = "abc",
-            description = "abc",
-            docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
-            lock = MkPlcDocCardLock("123-234-abc-ABC"),
-        ),
-    )
-    processor.exec(ctx)
-    assertEquals(0, ctx.errors.size)
-    assertNotEquals(MkPlcDocCardState.FAILING, ctx.state)
-}
-
-fun validationIdEmpty(command: MkPlcDocCardCommand, processor: MkPlcDocCardProcessor) = runTest {
+fun validationIdEmpty(command: MkPlcDocCardCommand, processor: MkPlcDocCardProcessor) = runBizTest {
     val ctx = MkPlcDocCardContext(
         command = command,
         state = MkPlcDocCardState.NONE,
@@ -56,7 +47,7 @@ fun validationIdEmpty(command: MkPlcDocCardCommand, processor: MkPlcDocCardProce
             title = "abc",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
@@ -68,7 +59,7 @@ fun validationIdEmpty(command: MkPlcDocCardCommand, processor: MkPlcDocCardProce
     assertContains(error?.message ?: "", "id")
 }
 
-fun validationIdFormat(command: MkPlcDocCardCommand, processor: MkPlcDocCardProcessor) = runTest {
+fun validationIdFormat(command: MkPlcDocCardCommand, processor: MkPlcDocCardProcessor) = runBizTest {
 
     val ctx = MkPlcDocCardContext(
         command = command,
@@ -79,7 +70,7 @@ fun validationIdFormat(command: MkPlcDocCardCommand, processor: MkPlcDocCardProc
             title = "abc",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
