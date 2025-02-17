@@ -4,7 +4,6 @@ import IMkPlcAppSettings
 
 
 import crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
-
 import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardCorSettings
 import ru.otus.crowd.proj.logging.common.MkPlcLoggerProvider
 import ru.otus.crowd.proj.logging.logback.mpLoggerLogback
