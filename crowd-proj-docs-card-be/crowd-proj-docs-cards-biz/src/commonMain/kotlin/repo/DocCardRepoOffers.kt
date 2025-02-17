@@ -17,26 +17,29 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.repoOffers(title: String) = worker {
     description = "Поиск предложений для документа по названию"
     on { state == MkPlcDocCardState.RUNNING }
     handle {
+
         val docCardRequest = docCardRepoPrepare
 
-        val filter = DbDocCardSearchRequest(
-            // Здесь должен быть более умный поиск. Такой примитив слишком плохо работает
-            //TODO("improve search")
-            docCardType = when (docCardRequest.docCardType) {
-                MkPlcDocCardType.PDF -> MkPlcDocCardType.PDF
-                MkPlcDocCardType.PNG -> MkPlcDocCardType.PNG
-                MkPlcDocCardType.JPEG -> MkPlcDocCardType.JPEG
-                MkPlcDocCardType.MS_WORD -> MkPlcDocCardType.MS_WORD
-                MkPlcDocCardType.UNKNOWN -> {
-                    fail(
-                        MkPlcDocCardError(
-                            field = "docCardType",
-                            message = "Type of docCard must not be empty"
-                        )
+        val docCardType = when (docCardRequest.docCardType) {
+            MkPlcDocCardType.PDF -> MkPlcDocCardType.PDF
+            MkPlcDocCardType.PNG -> MkPlcDocCardType.PNG
+            MkPlcDocCardType.JPEG -> MkPlcDocCardType.JPEG
+            MkPlcDocCardType.MS_WORD -> MkPlcDocCardType.MS_WORD
+            MkPlcDocCardType.UNKNOWN -> {
+                fail(
+                    MkPlcDocCardError(
+                        field = "docCardType",
+                        message = "Type of docCard must not be empty"
                     )
-                    return@handle
-                }
+                )
+                return@handle
             }
+        }
+
+        val filter = DbDocCardSearchRequest(
+            docCardType = docCardType,
+            titleFilter = docCardRequest.title,
+            ownerId = docCardRequest.ownerId
         )
 
         when (val dbResponse = docCardRepo.searchDocCard(filter)) {

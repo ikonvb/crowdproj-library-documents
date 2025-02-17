@@ -16,6 +16,6 @@ abstract class BaseBizValidationTest {
             MkPlcDocCardStubSingleton.get(),
         ),
     )
-    private val settings by lazy { MkPlcDocCardCorSettings() }
+    private val settings by lazy { MkPlcDocCardCorSettings(repoTest = repo) }
     protected val processor by lazy { MkPlcDocCardProcessor(settings) }
 }

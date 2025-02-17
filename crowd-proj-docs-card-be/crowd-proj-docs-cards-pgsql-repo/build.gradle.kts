@@ -1,18 +1,11 @@
-import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
-import com.bmuschko.gradle.docker.tasks.container.DockerInspectContainer
-import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
-import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
-import com.bmuschko.gradle.docker.tasks.container.DockerWaitContainer
+import com.bmuschko.gradle.docker.tasks.container.*
 import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
 import com.github.dockerjava.api.command.InspectContainerResponse
 import com.github.dockerjava.api.model.ExposedPort
-import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 import java.util.concurrent.atomic.AtomicBoolean
-import kotlin.collections.first
 
 plugins {
-    //id("build-pgContainer")
     id("build-kmp")
     alias(libs.plugins.muschko.remote)
     alias(libs.plugins.liquibase)
@@ -21,7 +14,7 @@ repositories {
     google()
     mavenCentral()
 }
-//crowd.proj.docs.cards.pg.repo
+
 
 kotlin {
 
@@ -57,11 +50,13 @@ kotlin {
                 implementation(kotlin("test-junit"))
             }
         }
+
         nativeMain {
             dependencies {
                 implementation(kotlin("stdlib"))
             }
         }
+
         linuxX64Main {
             dependencies {
                 implementation(kotlin("stdlib"))
@@ -94,6 +89,7 @@ tasks {
         group = taskGroup
         image.set(postgresImage)
     }
+
     val dbContainer by creating(DockerCreateContainer::class) {
         group = taskGroup
         dependsOn(pullImage)
@@ -102,10 +98,11 @@ tasks {
         withEnvVar("POSTGRES_USER", pgUsername)
         withEnvVar("POSTGRES_DB", pgDbName)
         healthCheck.cmd("pg_isready")
-        hostConfig.portBindings.set(listOf(":5432"))
+        hostConfig.portBindings.set(listOf("5432:5432"))
         exposePorts("tcp", listOf(5432))
         hostConfig.autoRemove.set(true)
     }
+
     val stopPg by creating(DockerStopContainer::class) {
         group = taskGroup
         targetContainerId(dbContainer.containerId)
@@ -138,9 +135,9 @@ tasks {
         dependsOn(inspectPg)
         finalizedBy(stopPg)
         doFirst {
-            println("waiting for a while ${System.currentTimeMillis()/1000000}")
+            println("waiting for a while ${System.currentTimeMillis() / 1000000}")
             Thread.sleep(30000)
-            println("LQB: \"jdbc:postgresql://localhost:$pgPort/$pgDbName\" ${System.currentTimeMillis()/1000000}")
+            println("LQB: \"jdbc:postgresql://localhost:$pgPort/$pgDbName\" ${System.currentTimeMillis() / 1000000}")
             liquibase {
                 activities {
                     register("main") {

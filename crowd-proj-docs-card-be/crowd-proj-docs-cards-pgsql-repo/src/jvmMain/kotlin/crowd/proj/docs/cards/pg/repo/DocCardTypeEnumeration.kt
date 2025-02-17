@@ -20,24 +20,32 @@ fun Table.docCardTypeEnumeration(
         when (value) {
             MkPlcDocCardType.PDF -> PgDocCardTypePDF
             MkPlcDocCardType.PNG -> PgDocCArdTypePNG
-            MkPlcDocCardType.JPEG -> TODO()
-            MkPlcDocCardType.MS_WORD -> TODO()
+            MkPlcDocCardType.JPEG -> PgDocCArdTypeJPEG
+            MkPlcDocCardType.MS_WORD -> PgDocCArdTypePNG
             MkPlcDocCardType.UNKNOWN -> throw Exception("Wrong value of doc card Type. UNKNOWN is unsupported")
         }
     }
 )
 
-sealed class PgDocCardTypeValue(enVal: String): PGobject() {
+sealed class PgDocCardTypeValue(enVal: String) : PGobject() {
     init {
         type = SqlFields.DOC_TYPE_TYPE
         value = enVal
     }
 }
 
-object PgDocCardTypePDF: PgDocCardTypeValue(SqlFields.DOC_TYPE_PDF) {
+object PgDocCardTypePDF : PgDocCardTypeValue(SqlFields.DOC_TYPE_PDF) {
     private fun readResolve(): Any = PgDocCardTypePDF
 }
 
-object PgDocCArdTypePNG: PgDocCardTypeValue(SqlFields.DOC_TYPE_PNG) {
+object PgDocCArdTypePNG : PgDocCardTypeValue(SqlFields.DOC_TYPE_PNG) {
     private fun readResolve(): Any = PgDocCArdTypePNG
+}
+
+object PgDocCArdTypeJPEG : PgDocCardTypeValue(SqlFields.DOC_TYPE_JPEG) {
+    private fun readResolve(): Any = PgDocCArdTypeJPEG
+}
+
+object PgDocCArdTypeMSWORD : PgDocCardTypeValue(SqlFields.DOC_TYPE_MS_WORD) {
+    private fun readResolve(): Any = PgDocCArdTypeMSWORD
 }

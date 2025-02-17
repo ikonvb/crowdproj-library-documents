@@ -18,7 +18,7 @@ import workers.init.initStatus
 import workers.stub.*
 
 @Suppress("unused")
-class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocCardCorSettings.Companion.NONE) {
+class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocCardCorSettings.NONE) {
 
     suspend fun exec(ctx: MkPlcDocCardContext) = chain.exec(ctx.also { it.corSettings = corSettings })
 
@@ -26,7 +26,6 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocC
 
         initStatus("Инициализация статуса запроса")
         initRepo("Инициализация репозитория")
-
 
         chainOperation("Создание документа", MkPlcDocCardCommand.CREATE) {
 
@@ -129,14 +128,18 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocC
 
         chainOperation("Удалить документ", MkPlcDocCardCommand.DELETE) {
 
+            println("MkPlcDocCardCommand.DELETE called 1")
+
             chainStubs("Обработка заглушек") {
                 stubDeleteSuccess("Имитация успешной обработки", corSettings)
                 stubValidationBadId("Имитация ошибки валидации id")
                 stubDbError("Имитация ошибки работы с БД")
-
             }
 
+            println("MkPlcDocCardCommand.DELETE called 2")
+
             startValidation {
+
                 worker("Копируем поля в docCardValidating") {
                     docCardValidating = mkPlcDocCardRequest.deepCopy()
                 }
@@ -150,13 +153,18 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocC
                 validateLockProperFormat("Проверка формата lock")
             }
 
+            println("MkPlcDocCardCommand.DELETE called 3")
+
             chain {
+                println("MkPlcDocCardCommand.DELETE called 4")
                 title = "Логика удаления"
                 repoRead("Чтение документа из БД")
                 checkLock("Проверяем консистентность по оптимистичной блокировке")
                 repoPrepareDelete("Подготовка объекта для удаления")
                 repoDelete("Удаление документа из БД")
             }
+
+            println("MkPlcDocCardCommand.DELETE called 5")
             prepareResult("Подготовка ответа")
         }
 

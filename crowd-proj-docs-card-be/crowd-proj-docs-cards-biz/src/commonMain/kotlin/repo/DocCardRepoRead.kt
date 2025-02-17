@@ -15,12 +15,35 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.repoRead(title: String) = worker {
     this.title = title
     description = "Чтение документа из БД"
     on { state == MkPlcDocCardState.RUNNING }
+
     handle {
+
+        println("DbDocCardReadRequest docCardValidated = ${docCardValidated} ")
+        println("DbDocCardReadRequest docCardValidating = ${docCardValidating} ")
+
         val request = DbDocCardReadRequest(docCardValidated)
-        when (val result = docCardRepo.readDocCard(request)) {
-            is DbDocCardResponseOk -> docCardRepoRead = result.data
-            is DbDocCardResponseError -> fail(result.errors)
+
+        println("DbDocCardReadRequest = ${request} ")
+        //DbAdIdRequest = DbAdIdRequest(id=MkplAdId(id=666), lock=MkplAdLock(id=123-234-abc-ABC))
+        //DbDocCardReadRequest(id=MkPlcDocCardId(id=123-234-abc-ABC), lock=MkPlcDocCardLock(id=123-234-abc-ABC))
+        val result = docCardRepo.readDocCard(request)
+
+        println("docCardRepo.readDocCard = ${result} ")
+
+        when (result) {
+
+            is DbDocCardResponseOk -> {
+                println("DbDocCardResponseOk result.errors = ${result.data} ")
+                docCardRepoRead = result.data
+            }
+
+            is DbDocCardResponseError -> {
+                println("DbDocCardResponseError result.errors = ${result.errors} ")
+                fail(result.errors)
+            }
+
             is DbDocCardResponseErrorWithData -> {
+                println("repoRead result.errors = ${result.errors} ")
                 fail(result.errors)
                 docCardRepoRead = result.data
             }

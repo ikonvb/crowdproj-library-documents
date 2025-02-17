@@ -70,7 +70,7 @@ class V2MapperUpdateTest {
         assertEquals("title", req.docCard?.title)
         assertEquals("desc", req.docCard?.description)
         assertEquals(DocCardVisibility.PUBLIC, req.docCard?.visibility)
-        assertEquals(DocType.APPLICATION_SLASH_PDF, req.docCard?.docType)
+        assertEquals(DocType.IMAGE_SLASH_JPEG, req.docCard?.docType)
         assertEquals(1, req.errors?.size)
         assertEquals("err", req.errors?.firstOrNull()?.code)
         assertEquals("request", req.errors?.firstOrNull()?.group)

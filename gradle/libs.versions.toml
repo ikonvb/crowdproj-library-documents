@@ -1,11 +1,10 @@
 [versions]
 ktor = "2.3.12"
 kermit = "2.0.3"
-kotest = "6.0.0"
+kotest = "5.9.1"
 kotlin = "2.0.21"
 muschko = "9.4.0"
 exposed = "0.50.0"
-cassandra = "4.17.0"
 logback = "1.5.3"
 jackson = "2.16.1"
 jvm-language = "21"
@@ -99,7 +98,6 @@ ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 liquibase = { id = "org.liquibase.gradle", version = "2.2.2" }
-
 shadowJar = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
 crowdproj-generator = { id = "com.crowdproj.generator", version = "0.2.0" }
 

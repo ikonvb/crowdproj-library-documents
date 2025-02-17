@@ -33,9 +33,9 @@ internal fun DbDocCardSearchRequest.toDb() = mapOf(
 private fun MkPlcDocCardType.toDb() = when (this) {
     MkPlcDocCardType.PDF -> SqlFields.DOC_TYPE_PDF
     MkPlcDocCardType.PNG -> SqlFields.DOC_TYPE_PNG
+    MkPlcDocCardType.JPEG -> SqlFields.DOC_TYPE_JPEG
+    MkPlcDocCardType.MS_WORD -> SqlFields.DOC_TYPE_MS_WORD
     MkPlcDocCardType.UNKNOWN -> null
-    MkPlcDocCardType.JPEG -> TODO()
-    MkPlcDocCardType.MS_WORD -> TODO()
 }
 
 private fun MkPlcDocCardVisibility.toDb() = when (this) {

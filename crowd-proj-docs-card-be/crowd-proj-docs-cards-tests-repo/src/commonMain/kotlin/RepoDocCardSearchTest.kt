@@ -6,6 +6,7 @@ import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardOwnerId
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardType
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardSearchRequest
 import ru.otus.crowd.proj.docs.cards.common.repo.DbDocCardsResponseOk
+import ru.otus.crowd.proj.docs.cards.common.repo.IDbDocCardsResponse
 import ru.otus.crowd.proj.docs.cards.common.repo.IRepoDocCard
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -13,6 +14,7 @@ import kotlin.test.assertIs
 
 
 abstract class RepoDocCardSearchTest {
+
     abstract val repo: IRepoDocCard
 
     protected open val initializedObjects: List<MkPlcDocCard> = initObjects
@@ -26,22 +28,28 @@ abstract class RepoDocCardSearchTest {
     }
 
     @Test
-    fun searchDealSide() = runRepoTest {
-        val result = repo.searchDocCard(DbDocCardSearchRequest(docCardType = MkPlcDocCardType.PDF))
+    fun searchDocType() = runRepoTest {
+
+        val result: IDbDocCardsResponse = repo.searchDocCard(DbDocCardSearchRequest(docCardType = MkPlcDocCardType.PNG))
+
         assertIs<DbDocCardsResponseOk>(result)
-        val expected = listOf(initializedObjects[2], initializedObjects[4]).sortedBy { it.id.asString() }
+
+        val expected: List<MkPlcDocCard> =
+            listOf(initializedObjects[2], initializedObjects[4]).sortedBy { it.id.asString() }
+
         assertEquals(expected, result.data.sortedBy { it.id.asString() })
     }
 
     companion object : BaseInitDocCards("search") {
 
         val searchOwnerId = MkPlcDocCardOwnerId("owner-124")
+
         override val initObjects: List<MkPlcDocCard> = listOf(
             createInitTestModel("docCard1"),
             createInitTestModel("docCard2", ownerId = searchOwnerId),
-            createInitTestModel("docCard3", docCardType = MkPlcDocCardType.PDF),
+            createInitTestModel("docCard3", docCardType = MkPlcDocCardType.PNG),
             createInitTestModel("docCard4", ownerId = searchOwnerId),
-            createInitTestModel("docCard5", docCardType = MkPlcDocCardType.PDF),
+            createInitTestModel("docCard5", docCardType = MkPlcDocCardType.PNG),
         )
     }
 }

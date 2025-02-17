@@ -5,7 +5,9 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import ru.otus.crowd.proj.docs.cards.common.models.*
 
+
 class DocCardTable(tableName: String) : Table(tableName) {
+
     val id = text(SqlFields.ID)
     val title = text(SqlFields.TITLE).nullable()
     val description = text(SqlFields.DESCRIPTION).nullable()
@@ -14,7 +16,6 @@ class DocCardTable(tableName: String) : Table(tableName) {
     val docType = docCardTypeEnumeration(SqlFields.DOC_TYPE)
     val lock = text(SqlFields.LOCK)
     val productId = text(SqlFields.PRODUCT_ID).nullable()
-
     override val primaryKey = PrimaryKey(id)
 
     fun from(res: ResultRow) = MkPlcDocCard(

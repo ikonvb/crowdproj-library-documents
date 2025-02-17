@@ -1,6 +1,7 @@
 package crowd.proj.docs.cards.pg.repo
 
 import crowd.proj.docs.cards.common.repo.IDocCardRepoInitializable
+import kotlinx.coroutines.runBlocking
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCard
 import ru.otus.crowd.proj.docs.cards.common.repo.*
 
@@ -11,32 +12,42 @@ actual class RepoDocCardSql actual constructor(
     randomUuid: () -> String
 ) : IRepoDocCard, IDocCardRepoInitializable {
 
+    private val driver = when {
+        properties.url.startsWith("jdbc:postgresql://") -> "org.postgresql.Driver"
+        else -> throw IllegalArgumentException("Unknown driver for url ${properties.url}")
+    }
+
+
     actual override suspend fun createDocCard(rq: DbDocCardCreateRequest): IDbDocCardResponse {
-        TODO("Not yet implemented")
+        TODO("not implemented yet")
     }
 
     actual override suspend fun readDocCard(rq: DbDocCardReadRequest): IDbDocCardResponse {
-        TODO("Not yet implemented")
+        TODO("not implemented yet")
     }
 
     actual override suspend fun updateDocCard(rq: DbDocCardUpdateRequest): IDbDocCardResponse {
-        TODO("Not yet implemented")
+        TODO("not implemented yet")
     }
 
     actual override suspend fun deleteDocCard(rq: DbDocCardDeleteRequest): IDbDocCardResponse {
-        TODO("Not yet implemented")
+        TODO("not implemented yet")
     }
 
     actual override suspend fun searchDocCard(rq: DbDocCardSearchRequest): IDbDocCardsResponse {
-        TODO("Not yet implemented")
+        TODO("not implemented yet")
     }
 
     actual override fun save(docCards: Collection<MkPlcDocCard>): Collection<MkPlcDocCard> {
-        TODO("Not yet implemented")
+        return docCards.map {
+            runBlocking {
+                createDocCard(DbDocCardCreateRequest(it))
+            }.let { (it as DbDocCardResponseOk).data }
+        }
     }
 
     actual fun clear() {
-
+        TODO("not implemented yet")
     }
 
 }

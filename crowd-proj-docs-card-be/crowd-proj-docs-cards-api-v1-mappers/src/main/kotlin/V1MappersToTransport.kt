@@ -14,7 +14,11 @@ fun MkPlcDocCardContext.toTransportDocCard(): IResponse = when (val cmd = comman
     MkPlcDocCardCommand.OFFERS -> toTransportOffers()
     MkPlcDocCardCommand.INIT -> toTransportInit()
     MkPlcDocCardCommand.NONE -> throw UnknownMkPlcCommand(cmd)
-    MkPlcDocCardCommand.FINISH -> throw UnknownMkPlcCommand(cmd)
+    MkPlcDocCardCommand.FINISH ->  object: IResponse {
+        override val responseType: String? = null
+        override val result: ResponseResult? = null
+        override val errors: List<Error>? = null
+    }
 }
 
 fun MkPlcDocCardContext.toTransportCreate() = DocCardCreateResponse(
@@ -55,6 +59,7 @@ fun MkPlcDocCardContext.toTransportSearch() = DocCardSearchResponse(
 fun MkPlcDocCardContext.toTransportOffers() = DocCardOffersResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
+    docCard = mkPlcDocCardResponse.toTransportDocCard(),
     docCards = mkPlcDocCardsResponse.toTransportDocCard()
 )
 
@@ -70,8 +75,11 @@ private fun MkPlcDocCard.toTransportDocCard(): DocCardResponseObject = DocCardRe
     description = description.takeIf { it.isNotBlank() },
     visibility = visibility.toTransportDocCard(),
     permissions = permissionsClient.toTransportDocCard(),
-    lock = lock.takeIf { it != MkPlcDocCardLock.NONE }?.asString()
-)
+    lock = lock.takeIf { it != MkPlcDocCardLock.NONE }?.asString(),
+    ownerId = ownerId.takeIf { it != MkPlcDocCardOwnerId.NONE }?.asString(),
+    docType = docCardType.toTransportDocCard(),
+
+    )
 
 private fun Set<MkPlcDocCardPermissionClient>.toTransportDocCard(): Set<DocCardPermissions>? = this
     .map { it.toTransportDocCard() }

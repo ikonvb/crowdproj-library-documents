@@ -2,7 +2,7 @@
 
 --changeset bulygink:1 labels:v0.0.1
 CREATE TYPE "doc_types_type" AS ENUM ('pdf', 'png', 'jpeg', 'ms_word');
-CREATE TYPE "d0c_visibilities_type" AS ENUM ('public', 'owner', 'group');
+CREATE TYPE "doc_visibilities_type" AS ENUM ('public', 'owner', 'group');
 
 CREATE TABLE "doc_cards"
 (

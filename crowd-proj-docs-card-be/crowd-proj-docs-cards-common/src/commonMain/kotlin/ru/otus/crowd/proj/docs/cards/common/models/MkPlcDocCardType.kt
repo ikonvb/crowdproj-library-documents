@@ -6,5 +6,5 @@ enum class MkPlcDocCardType {
     PNG,
     JPEG,
     MS_WORD,
-    UNKNOWN
+    UNKNOWN;
 }

@@ -14,6 +14,8 @@ object SqlFields {
     const val DOC_TYPE_TYPE = "doc_types_type"
     const val DOC_TYPE_PDF = "pdf"
     const val DOC_TYPE_PNG = "png"
+    const val DOC_TYPE_JPEG = "jpeg"
+    const val DOC_TYPE_MS_WORD = "ms_word"
 
     const val VISIBILITY_TYPE = "doc_visibilities_type"
     const val VISIBILITY_PUBLIC = "public"

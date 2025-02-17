@@ -15,6 +15,7 @@ import ru.otus.crowd.proj.docs.cards.api.v1.mappers.toTransportDelete
 import ru.otus.crowd.proj.docs.cards.api.v1.mappers.toTransportRead
 import ru.otus.crowd.proj.docs.cards.api.v1.mappers.toTransportUpdate
 import ru.otus.crowd.proj.docs.cards.be.stubs.MkPlcDocCardStubSingleton
+import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCard
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardId
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardLock
 import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardType
@@ -34,15 +35,15 @@ abstract class V1DocCardRepoBaseTest {
 
     protected val uuidOld = "10000000-0000-0000-0000-000000000001"
     protected val uuidNew = "10000000-0000-0000-0000-000000000002"
-    protected val uuidSup = "10000000-0000-0000-0000-000000000003"
+    protected val uuidImg = "10000000-0000-0000-0000-000000000003"
 
-    protected val initDocCard = MkPlcDocCardStubSingleton.prepareResult {
+    protected val initDocCard: MkPlcDocCard = MkPlcDocCardStubSingleton.prepareResult {
         id = MkPlcDocCardId(uuidOld)
         docCardType = MkPlcDocCardType.PDF
         lock = MkPlcDocCardLock(uuidOld)
     }
     protected val initDocCardImg = MkPlcDocCardStubSingleton.prepareResult {
-        id = MkPlcDocCardId(uuidSup)
+        id = MkPlcDocCardId(uuidImg)
         docCardType = MkPlcDocCardType.PNG
     }
 
@@ -50,7 +51,7 @@ abstract class V1DocCardRepoBaseTest {
     @Test
     fun create() {
 
-        val docCard = initDocCard.toTransportCreate()
+        val docCard : DocCardCreateObject = initDocCard.toTransportCreate()
 
         v1TestApplication(
             conf = appSettingsCreate,
@@ -60,7 +61,11 @@ abstract class V1DocCardRepoBaseTest {
                 debug = DocCardDebug(mode = workMode),
             ),
         ) { response ->
-            val responseObj = response.body<DocCardCreateResponse>()
+
+            val responseObj: DocCardCreateResponse = response.body<DocCardCreateResponse>()
+
+            println("responseObj = ${responseObj.docCard}")
+
             assertEquals(200, response.status.value)
             assertEquals(uuidNew, responseObj.docCard?.id)
             assertEquals(docCard.title, responseObj.docCard?.title)
@@ -155,10 +160,14 @@ abstract class V1DocCardRepoBaseTest {
         ),
     ) { response ->
         val responseObj = response.body<DocCardOffersResponse>()
+
+        println("responseObj = $responseObj")
         assertEquals(200, response.status.value)
         assertNotEquals(0, responseObj.docCards?.size)
-        assertEquals(uuidSup, responseObj.docCards?.first()?.id)
+        assertEquals(uuidOld, responseObj.docCards?.first()?.id)
     }
+
+
 
     private inline fun <reified T : IRequest> v1TestApplication(
         conf: MkPlcAppSettings,

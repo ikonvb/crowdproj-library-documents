@@ -23,7 +23,7 @@ abstract class RepoDocCardUpdateTest {
             description = "update object description",
             ownerId = MkPlcDocCardOwnerId("owner-123"),
             visibility = MkPlcDocCardVisibility.VISIBLE_TO_GROUP,
-            docCardType = MkPlcDocCardType.PDF,
+            docCardType = MkPlcDocCardType.PNG,
             lock = initObjects.first().lock,
         )
     }
@@ -33,7 +33,7 @@ abstract class RepoDocCardUpdateTest {
         description = "update object not found description",
         ownerId = MkPlcDocCardOwnerId("owner-123"),
         visibility = MkPlcDocCardVisibility.VISIBLE_TO_GROUP,
-        docCardType = MkPlcDocCardType.PDF,
+        docCardType = MkPlcDocCardType.PNG,
         lock = initObjects.first().lock,
     )
 
@@ -44,7 +44,7 @@ abstract class RepoDocCardUpdateTest {
             description = "update object not found description",
             ownerId = MkPlcDocCardOwnerId("owner-123"),
             visibility = MkPlcDocCardVisibility.VISIBLE_TO_GROUP,
-            docCardType = MkPlcDocCardType.PDF,
+            docCardType = MkPlcDocCardType.PNG,
             lock = lockBad,
         )
     }
@@ -71,11 +71,19 @@ abstract class RepoDocCardUpdateTest {
 
     @Test
     fun updateConcurrencyError() = runRepoTest {
+
         val result = repo.updateDocCard(DbDocCardUpdateRequest(reqUpdateConcurrency))
+
         assertIs<DbDocCardResponseErrorWithData>(result)
+
         val error = result.errors.find { it.code == "repo-concurrency" }
+
         assertEquals("lock", error?.field)
-        assertEquals(reqUpdateConcurrency, result.data)
+
+        println("reqUpdateConcurrency = $reqUpdateConcurrency")
+        println("result.data = ${result.data}")
+
+        assertEquals(updateConcurrency, result.data)
     }
 
     companion object : BaseInitDocCards("update") {

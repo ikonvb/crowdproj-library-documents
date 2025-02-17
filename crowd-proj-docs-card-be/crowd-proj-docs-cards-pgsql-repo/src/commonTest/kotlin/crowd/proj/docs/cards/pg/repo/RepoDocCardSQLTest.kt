@@ -13,6 +13,7 @@ private fun IRepoDocCard.clear() {
 }
 
 class RepoDocCardSQLCreateTest : RepoDocCardCreateTest() {
+
     override val repo: IDocCardRepoInitializable = SqlTestCompanion.repoUnderTestContainer(
         initObjects,
         randomUuid = { uuidNew.asString() },
@@ -30,6 +31,7 @@ class RepoDocCardSQLReadTest : RepoDocCardReadTest() {
 }
 
 class RepoDocCardSQLUpdateTest : RepoDocCardUpdateTest() {
+
     override val repo: IRepoDocCard = SqlTestCompanion.repoUnderTestContainer(
         initObjects,
         randomUuid = { lockNew.asString() },
@@ -42,6 +44,7 @@ class RepoDocCardSQLUpdateTest : RepoDocCardUpdateTest() {
 }
 
 class RepoDocCardSQLDeleteTest : RepoDocCardDeleteTest() {
+
     override val repo: IRepoDocCard = SqlTestCompanion.repoUnderTestContainer(initObjects)
 
     @AfterTest
@@ -49,6 +52,7 @@ class RepoDocCardSQLDeleteTest : RepoDocCardDeleteTest() {
 }
 
 class RepoDocCardSQLSearchTest : RepoDocCardSearchTest() {
+
     override val repo: IRepoDocCard = SqlTestCompanion.repoUnderTestContainer(initObjects)
 
     @AfterTest

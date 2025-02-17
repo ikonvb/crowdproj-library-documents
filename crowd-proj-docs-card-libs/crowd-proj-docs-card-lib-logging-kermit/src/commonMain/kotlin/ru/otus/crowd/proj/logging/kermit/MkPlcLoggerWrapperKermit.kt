@@ -34,7 +34,6 @@ class MkPlcLoggerWrapperKermit(
         LogLevel.TRACE -> Severity.Verbose
     }
 
-    // TODO("Нужно для data придумать сериализацию или трансформацию в map")
     private fun formatMessage(
         msg: String = "",
         data: Any? = null,
