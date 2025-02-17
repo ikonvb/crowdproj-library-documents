@@ -18,9 +18,6 @@ fun validationIdCorrect(command: MkPlcDocCardCommand, processor: MkPlcDocCardPro
     )
 
     processor.exec(ctx)
-
-    println("ctx.error = ${ctx.errors}")
-
     assertEquals(0, ctx.errors.size)
     assertNotEquals(MkPlcDocCardState.FAILING, ctx.state)
 }
@@ -36,8 +33,6 @@ fun validationIdTrim(command: MkPlcDocCardCommand, processor: MkPlcDocCardProces
         },
     )
     processor.exec(ctx)
-
-    println("ctx.error = ${ctx.errors}")
     assertEquals(0, ctx.errors.size)
     assertNotEquals(MkPlcDocCardState.FAILING, ctx.state)
 }

@@ -36,10 +36,6 @@ class DocCardCreateStubTest {
         )
 
         processor.exec(ctx)
-
-        println("ctx.mkPlcDocCardResponse = ${ctx.mkPlcDocCardResponse}")
-        println("MkPlcDocCardStubSingleton = ${MkPlcDocCardStubSingleton.get().id}")
-
         assertEquals(MkPlcDocCardStubSingleton.get().id, ctx.mkPlcDocCardResponse.id)
         assertEquals(title, ctx.mkPlcDocCardResponse.title)
         assertEquals(description, ctx.mkPlcDocCardResponse.description)

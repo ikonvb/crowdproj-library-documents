@@ -28,9 +28,6 @@ fun validationTitleCorrect(command: MkPlcDocCardCommand, processor: MkPlcDocCard
     )
 
     processor.exec(ctx)
-
-    println("ctx.errors = ${ctx.errors}")
-
     assertEquals(0, ctx.errors.size)
     assertNotEquals(MkPlcDocCardState.FAILING, ctx.state)
     assertEquals("abc", ctx.docCardValidated.title)

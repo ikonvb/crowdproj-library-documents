@@ -128,15 +128,11 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocC
 
         chainOperation("Удалить документ", MkPlcDocCardCommand.DELETE) {
 
-            println("MkPlcDocCardCommand.DELETE called 1")
-
             chainStubs("Обработка заглушек") {
                 stubDeleteSuccess("Имитация успешной обработки", corSettings)
                 stubValidationBadId("Имитация ошибки валидации id")
                 stubDbError("Имитация ошибки работы с БД")
             }
-
-            println("MkPlcDocCardCommand.DELETE called 2")
 
             startValidation {
 
@@ -153,18 +149,13 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocC
                 validateLockProperFormat("Проверка формата lock")
             }
 
-            println("MkPlcDocCardCommand.DELETE called 3")
-
             chain {
-                println("MkPlcDocCardCommand.DELETE called 4")
                 title = "Логика удаления"
                 repoRead("Чтение документа из БД")
                 checkLock("Проверяем консистентность по оптимистичной блокировке")
                 repoPrepareDelete("Подготовка объекта для удаления")
                 repoDelete("Удаление документа из БД")
             }
-
-            println("MkPlcDocCardCommand.DELETE called 5")
             prepareResult("Подготовка ответа")
         }
 
