@@ -51,11 +51,11 @@ kotlin {
             }
         }
 
-        nativeMain {
-            dependencies {
-                implementation(kotlin("stdlib"))
-            }
-        }
+//        nativeMain {
+//            dependencies {
+//                implementation(kotlin("stdlib"))
+//            }
+//        }
 //
 //        linuxX64Main {
 //            dependencies {
