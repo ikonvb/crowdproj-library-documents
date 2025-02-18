@@ -1,12 +1,12 @@
 package ru.otus.crowd.proj.docs.be
 
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
 import ru.otus.crowd.proj.docs.api.v1.apiV1RequestDeserialize
 import ru.otus.crowd.proj.docs.api.v1.apiV1ResponseSerialize
 import ru.otus.crowd.proj.docs.be.api.v1.models.IRequest
 import ru.otus.crowd.proj.docs.be.api.v1.models.IResponse
 import ru.otus.crowd.proj.docs.cards.api.v1.mappers.fromTransport
 import ru.otus.crowd.proj.docs.cards.api.v1.mappers.toTransportDocCard
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
 
 class ConsumerStrategyV1 : IConsumerStrategy {
 

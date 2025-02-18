@@ -1,17 +1,17 @@
 package ru.otus.otuskotlin.marketplace.mappers.v1
 
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.models.MkPlcDocCardCommand
+import crowd.proj.docs.cards.common.models.MkPlcDocCardId
+import crowd.proj.docs.cards.common.models.MkPlcDocCardVisibility
+import crowd.proj.docs.cards.common.models.MkPlcDocCardWorkMode
+import crowd.proj.docs.cards.common.stubs.MkPlcDocCardStubs
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.assertions.throwables.shouldThrow
 import ru.otus.crowd.proj.docs.be.api.v1.models.*
-import ru.otus.crowd.proj.docs.cards.api.v1.mappers.fromTransport
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardCommand
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardWorkMode
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardId
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcVisibility
 import ru.otus.crowd.proj.docs.cards.api.v1.mappers.exceptions.UnknownRequestError
-import ru.otus.crowd.proj.docs.cards.common.stubs.MkPlcDocCardStubs
+import ru.otus.crowd.proj.docs.cards.api.v1.mappers.fromTransport
 
 class MapperFromTransportTest : FunSpec({
 
@@ -37,7 +37,7 @@ class MapperFromTransportTest : FunSpec({
             context.stubCase shouldBe MkPlcDocCardStubs.SUCCESS
             context.workMode shouldBe MkPlcDocCardWorkMode.STUB
             context.mkPlcDocCardRequest.title shouldBe "title"
-            context.mkPlcDocCardRequest.visibility shouldBe MkPlcVisibility.VISIBLE_PUBLIC
+            context.mkPlcDocCardRequest.visibility shouldBe MkPlcDocCardVisibility.VISIBLE_PUBLIC
         }
     }
 
@@ -65,7 +65,7 @@ class MapperFromTransportTest : FunSpec({
             context.workMode shouldBe MkPlcDocCardWorkMode.STUB
             context.stubCase shouldBe MkPlcDocCardStubs.SUCCESS
             context.mkPlcDocCardRequest.title shouldBe "title"
-            context.mkPlcDocCardRequest.visibility shouldBe MkPlcVisibility.VISIBLE_PUBLIC
+            context.mkPlcDocCardRequest.visibility shouldBe MkPlcDocCardVisibility.VISIBLE_PUBLIC
         }
 
         test("should handle DocCardReadRequest") {

@@ -2,9 +2,9 @@ package ru.otus.crowd.proj.docs.cards.be.stubs
 
 import ru.otus.crowd.proj.docs.cards.be.stubs.MkPlcDocCardStubPdf.DOC_CARD_DEMAND_PDF1
 import ru.otus.crowd.proj.docs.cards.be.stubs.MkPlcDocCardStubPdf.DOC_CARD_SUPPLY_PDF1
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCard
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardId
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardType
+import crowd.proj.docs.cards.common.models.MkPlcDocCard
+import crowd.proj.docs.cards.common.models.MkPlcDocCardId
+import crowd.proj.docs.cards.common.models.MkPlcDocCardType
 
 object MkPlcDocCardStubSingleton {
 

@@ -1,11 +1,11 @@
 package validation
 
 import kotlinx.coroutines.test.runTest
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardCommand
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardFilter
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardState
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardWorkMode
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.models.MkPlcDocCardCommand
+import crowd.proj.docs.cards.common.models.MkPlcDocCardFilter
+import crowd.proj.docs.cards.common.models.MkPlcDocCardState
+import crowd.proj.docs.cards.common.models.MkPlcDocCardWorkMode
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals

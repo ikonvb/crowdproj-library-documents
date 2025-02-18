@@ -29,12 +29,14 @@ fun Application.moduleJvm(
 
     routing {
         route("v1") {
+
             install(ContentNegotiation) {
                 jackson {
                     setConfig(apiV1Mapper.serializationConfig)
                     setConfig(apiV1Mapper.deserializationConfig)
                 }
             }
+
             v1DocCard(appSettings)
         }
     }

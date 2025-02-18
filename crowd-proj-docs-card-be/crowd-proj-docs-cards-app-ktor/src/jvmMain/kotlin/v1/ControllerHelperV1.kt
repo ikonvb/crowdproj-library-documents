@@ -16,8 +16,12 @@ suspend inline fun <reified T : IRequest, @Suppress("unused") reified R : IRespo
     clazz: KClass<*>,
     logId: String,
 ) = appSettings.controllerHelper(
-    { fromTransport(receive<T>()) },
-    { respond(toTransportDocCard()) },
+    {
+        fromTransport(receive<T>())
+    },
+    {
+        respond(toTransportDocCard())
+    },
     clazz,
     logId,
 )

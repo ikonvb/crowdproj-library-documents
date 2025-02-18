@@ -11,7 +11,7 @@ import io.ktor.server.testing.*
 import module
 import ru.otus.crowd.proj.docs.api.v2.apiV2Mapper
 import ru.otus.crowd.proj.docs.be.api.v2.models.*
-import ru.otus.crowd.proj.docs.cards.common.MkPlcCorSettings
+import crowd.proj.docs.cards.common.MkPlcDocCardCorSettings
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -136,7 +136,7 @@ class DocCardV2StubApiTest {
         request: T,
         crossinline function: suspend (HttpResponse) -> Unit,
     ): Unit = testApplication {
-        application { module(MkPlcAppSettings(corSettings = MkPlcCorSettings())) }
+        application { module(MkPlcAppSettings(corSettings = MkPlcDocCardCorSettings())) }
         val client = createClient {
             install(ContentNegotiation) {
                 json(apiV2Mapper)

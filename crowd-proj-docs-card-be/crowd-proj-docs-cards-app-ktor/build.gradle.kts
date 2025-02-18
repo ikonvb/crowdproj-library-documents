@@ -66,6 +66,13 @@ kotlin {
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.ktor.serialization.json)
+                implementation(projects.crowdProjDocsCardsStubsRepo)
+                implementation(projects.crowdProjDocsCardsInmemoryRepo)
+
+                implementation(libs.uuid)
+                implementation(projects.crowdProjDocsCardsCommonRepo)
+                implementation(projects.crowdProjDocsCardsPgsqlRepo)
+
                 implementation(project(":crowd-proj-docs-cards-api-logV1"))
                 implementation("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-common")
                 implementation("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-kermit")

@@ -1,9 +1,9 @@
 package ru.otus.crowd.proj.docs.api.v2.mappers
 
 import ru.otus.crowd.proj.docs.be.api.v2.models.*
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
-import ru.otus.crowd.proj.docs.cards.common.models.*
-import ru.otus.crowd.proj.docs.cards.common.stubs.MkPlcDocCardStubs
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.models.*
+import crowd.proj.docs.cards.common.stubs.MkPlcDocCardStubs
 
 fun MkPlcDocCardContext.fromTransport(request: IRequest) = when (request) {
     is DocCardCreateRequest -> fromTransport(request)
@@ -26,7 +26,7 @@ private fun DocCardReadObject?.toInternal() = if (this != null) {
     MkPlcDocCard()
 }
 
-private fun String?.toProductId() = this?.let { MkPlcProductId(it) } ?: MkPlcProductId.NONE
+private fun String?.toProductId() = this?.let { MkPlcDocCardProductId(it) } ?: MkPlcDocCardProductId.NONE
 
 private fun DocCardDebug?.transportToWorkMode(): MkPlcDocCardWorkMode = when (this?.mode) {
     DocCardRequestDebugMode.PROD -> MkPlcDocCardWorkMode.PROD
@@ -120,11 +120,11 @@ private fun DocCardUpdateObject.toInternal(): MkPlcDocCard = MkPlcDocCard(
     lock = this.lock.toDocCardLock(),
 )
 
-private fun DocCardVisibility?.fromTransport(): MkPlcVisibility = when (this) {
-    DocCardVisibility.PUBLIC -> MkPlcVisibility.VISIBLE_PUBLIC
-    DocCardVisibility.OWNER_ONLY -> MkPlcVisibility.VISIBLE_TO_OWNER
-    DocCardVisibility.REGISTERED_ONLY -> MkPlcVisibility.VISIBLE_TO_GROUP
-    null -> MkPlcVisibility.NONE
+private fun DocCardVisibility?.fromTransport(): MkPlcDocCardVisibility = when (this) {
+    DocCardVisibility.PUBLIC -> MkPlcDocCardVisibility.VISIBLE_PUBLIC
+    DocCardVisibility.OWNER_ONLY -> MkPlcDocCardVisibility.VISIBLE_TO_OWNER
+    DocCardVisibility.REGISTERED_ONLY -> MkPlcDocCardVisibility.VISIBLE_TO_GROUP
+    null -> MkPlcDocCardVisibility.NONE
 }
 
 private fun DocType?.fromTransport(): MkPlcDocCardType = when (this) {

@@ -6,7 +6,7 @@ import ru.otus.crowd.proj.docs.api.v2.mappers.fromTransport
 import ru.otus.crowd.proj.docs.api.v2.mappers.toTransportDocCard
 import ru.otus.crowd.proj.docs.be.api.v2.models.IRequest
 import ru.otus.crowd.proj.docs.be.api.v2.models.IResponse
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
 
 class ConsumerStrategyV2 : IConsumerStrategy {
     override fun topics(config: AppKafkaConfig): InputOutputTopics {

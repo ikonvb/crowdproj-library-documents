@@ -20,6 +20,9 @@ kotlin {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
                 api(libs.coroutines.test)
+
+                implementation(projects.crowdProjDocsCardsTestsRepo)
+                implementation(projects.crowdProjDocsCardsInmemoryRepo)
             }
         }
         jvmMain {

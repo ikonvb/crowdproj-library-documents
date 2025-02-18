@@ -3,8 +3,8 @@ package validation
 import crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
 import kotlinx.coroutines.test.runTest
 import ru.otus.crowd.proj.docs.cards.be.stubs.MkPlcDocCardStubSingleton
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
-import ru.otus.crowd.proj.docs.cards.common.models.*
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.models.*
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -22,15 +22,12 @@ fun validationTitleCorrect(command: MkPlcDocCardCommand, processor: MkPlcDocCard
             title = "abc",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
 
     processor.exec(ctx)
-
-    println("ctx.errors = ${ctx.errors}")
-
     assertEquals(0, ctx.errors.size)
     assertNotEquals(MkPlcDocCardState.FAILING, ctx.state)
     assertEquals("abc", ctx.docCardValidated.title)
@@ -46,7 +43,7 @@ fun validationTitleTrim(command: MkPlcDocCardCommand, processor: MkPlcDocCardPro
             title = " \n\t abc \t\n ",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
@@ -67,7 +64,7 @@ fun validationTitleEmpty(command: MkPlcDocCardCommand, processor: MkPlcDocCardPr
             title = "",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )
@@ -89,7 +86,7 @@ fun validationTitleSymbols(command: MkPlcDocCardCommand, processor: MkPlcDocCard
             title = "!@#$%^&*(),.{}",
             description = "abc",
             docCardType = MkPlcDocCardType.PDF,
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
             lock = MkPlcDocCardLock("123-234-abc-ABC"),
         ),
     )

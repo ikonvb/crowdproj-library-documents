@@ -1,8 +1,8 @@
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.helpers.asMkPlcError
+import crowd.proj.docs.cards.common.models.MkPlcDocCardCommand
+import crowd.proj.docs.cards.common.models.MkPlcDocCardState
 import kotlinx.datetime.Clock
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
-import ru.otus.crowd.proj.docs.cards.common.helpers.asMkPlcError
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardCommand
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardState
 import kotlin.reflect.KClass
 
 
