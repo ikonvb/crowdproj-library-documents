@@ -165,7 +165,6 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocC
                 stubSearchSuccess("Имитация успешной обработки", corSettings)
                 stubValidationBadId("Имитация ошибки валидации id")
                 stubDbError("Имитация ошибки работы с БД")
-
             }
 
             startValidation {

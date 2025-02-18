@@ -27,11 +27,18 @@ class DocCardSearchStubTest {
             mkPlcDocCardFilterRequest = filter,
         )
 
+        println("ctx = $ctx")
+
         processor.exec(ctx)
+
+        println("ctx = $ctx")
+        
         assertTrue(ctx.mkPlcDocCardsResponse.size > 1)
         val first = ctx.mkPlcDocCardsResponse.firstOrNull() ?: fail("Empty response list")
+
         assertTrue(first.title.contains(filter.searchString))
         assertTrue(first.description.contains(filter.searchString))
+
         with(MkPlcDocCardStubSingleton.get()) {
             assertEquals(docCardType, first.docCardType)
             assertEquals(visibility, first.visibility)

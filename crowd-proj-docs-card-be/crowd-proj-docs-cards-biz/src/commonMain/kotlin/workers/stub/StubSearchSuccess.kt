@@ -27,7 +27,7 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.stubSearchSuccess(title: String, corS
                 mkPlcDocCardsResponse.addAll(
                     MkPlcDocCardStubSingleton.prepareSearchList(
                         mkPlcDocCardFilterRequest.searchString,
-                        MkPlcDocCardType.UNKNOWN
+                        MkPlcDocCardType.PDF
                     )
                 )
             }
