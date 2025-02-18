@@ -108,10 +108,13 @@ class MapperToTransportTest : FunSpec({
 
         test("should return DocCardOffersResponse for OFFERS command") {
             context.command = MkPlcDocCardCommand.OFFERS
+
             val response = context.toTransportDocCard()
+
             response shouldBe DocCardOffersResponse(
                 result = ResponseResult.SUCCESS,
                 errors = listOf(Error("err", "group", "field", "message")),
+                docCard = DocCardResponseObject(title = "Test title", description = "Test description"),
                 docCards = listOf(DocCardResponseObject(title = "Test title", description = "Test description"))
             )
         }
@@ -190,6 +193,7 @@ class MapperToTransportTest : FunSpec({
             response shouldBe DocCardOffersResponse(
                 result = ResponseResult.SUCCESS,
                 errors = listOf(Error("err", "group", "field", "message")),
+                docCard = DocCardResponseObject(title = "Test title", description = "Test description"),
                 docCards = listOf(DocCardResponseObject(title = "Test title", description = "Test description"))
             )
         }
