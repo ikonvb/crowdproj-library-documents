@@ -6,8 +6,7 @@ import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 import java.util.concurrent.atomic.AtomicBoolean
 
 plugins {
-    kotlin("multiplatform") version "2.0.21"
-    //id("build-kmp")
+    id("build-kmp")
     alias(libs.plugins.muschko.remote)
     alias(libs.plugins.liquibase)
 }
@@ -17,11 +16,6 @@ repositories {
 }
 
 kotlin {
-
-    jvm()
-    linuxX64()
-    macosArm64()
-    macosX64()
 
     sourceSets {
 
@@ -65,7 +59,7 @@ kotlin {
         linuxX64Main {
             dependencies {
                 implementation(kotlin("stdlib"))
-                implementation("io.github.moreirasantos:pgkn:1.1.2")
+                implementation("io.github.moreirasantos:pgkn:1.1.0")
             }
         }
     }
