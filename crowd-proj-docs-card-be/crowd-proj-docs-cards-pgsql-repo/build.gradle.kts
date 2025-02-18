@@ -6,7 +6,8 @@ import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 import java.util.concurrent.atomic.AtomicBoolean
 
 plugins {
-    id("build-kmp")
+    kotlin("multiplatform") version "2.0.21"
+    //id("build-kmp")
     alias(libs.plugins.muschko.remote)
     alias(libs.plugins.liquibase)
 }
@@ -16,6 +17,12 @@ repositories {
 }
 
 kotlin {
+
+//    linuxX64 {
+//        compilations["main"].kotlinOptions {
+//            freeCompilerArgs = listOf("-Xskip-prerelease-check")
+//        }
+//    }
 
     sourceSets {
 
