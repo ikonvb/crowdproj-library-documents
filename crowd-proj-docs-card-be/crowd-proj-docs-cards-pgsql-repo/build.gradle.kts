@@ -15,7 +15,6 @@ repositories {
     mavenCentral()
 }
 
-
 kotlin {
 
     sourceSets {
@@ -51,18 +50,18 @@ kotlin {
             }
         }
 
-//        nativeMain {
-//            dependencies {
-//                implementation(kotlin("stdlib"))
-//            }
-//        }
-//
-//        linuxX64Main {
-//            dependencies {
-//                implementation(kotlin("stdlib"))
-//                implementation("io.github.moreirasantos:pgkn:1.2.0")
-//            }
-//        }
+        nativeMain {
+            dependencies {
+                implementation(kotlin("stdlib"))
+            }
+        }
+
+        linuxX64Main {
+            dependencies {
+                implementation(kotlin("stdlib"))
+                implementation("io.github.moreirasantos:pgkn:1.2.0")
+            }
+        }
     }
 }
 
