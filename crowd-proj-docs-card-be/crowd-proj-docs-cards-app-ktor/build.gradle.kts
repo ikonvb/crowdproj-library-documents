@@ -99,7 +99,11 @@ kotlin {
                 implementation(libs.ktor.serialization.jackson)
                 implementation(libs.ktor.server.calllogging)
                 implementation(libs.ktor.server.headers.default)
+                implementation(projects.crowdProjDocsCardsApiV2Kmp)
+                implementation(projects.crowdProjDocsCardsCassandraRepo)
                 implementation(libs.logback)
+                implementation(libs.testcontainers.cassandra)
+                implementation(libs.testcontainers.core)
                 implementation(project(":crowd-proj-docs-cards-api-v1-jackson"))
                 implementation(project(":crowd-proj-docs-cards-api-v1-mappers"))
                 implementation("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-logback")
@@ -120,12 +124,6 @@ tasks {
         isZip64 = true
         configurations = listOf(project.configurations.runtimeClasspath.get())
     }
-
-    // Если ошибка: "Entry application.yaml is a duplicate but no duplicate handling strategy has been set."
-    // Возникает из-за наличия файлов как в common, так и в jvm платформе
-//    withType(ProcessResources::class) {
-//        duplicatesStrategy = DuplicatesStrategy.INCLUDE
-//    }
 
     val linkReleaseExecutableLinuxX64 by getting(KotlinNativeLink::class)
     val nativeFileX64 = linkReleaseExecutableLinuxX64.binary.outputFile

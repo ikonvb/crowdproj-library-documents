@@ -1,11 +1,11 @@
 package plugins
 
 import config.PostgresConfig
+import crowd.proj.docs.cards.common.repo.IRepoDocCard
 import crowd.proj.docs.cards.inmemory.repo.DocCardRepoInMemory
 import crowd.proj.docs.cards.pg.repo.RepoDocCardSql
 import crowd.proj.docs.cards.pg.repo.SqlProperties
 import io.ktor.server.application.*
-import crowd.proj.docs.cards.common.repo.IRepoDocCard
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
