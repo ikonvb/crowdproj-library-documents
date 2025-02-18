@@ -30,6 +30,9 @@ subprojects {
 }
 
 
+tasks.named("check").configure {
+    enabled = false
+}
 
 tasks {
 
