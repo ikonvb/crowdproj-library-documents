@@ -71,8 +71,6 @@ kotlin {
 
                 implementation(libs.uuid)
                 implementation(projects.crowdProjDocsCardsCommonRepo)
-                implementation(projects.crowdProjDocsCardsPgsqlRepo)
-
                 implementation(project(":crowd-proj-docs-cards-api-logV1"))
                 implementation("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-common")
                 implementation("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-kermit")
@@ -100,6 +98,9 @@ kotlin {
                 implementation(libs.ktor.server.calllogging)
                 implementation(libs.ktor.server.headers.default)
                 implementation(libs.logback)
+                implementation(projects.crowdProjDocsCardsCassandraRepo)
+                implementation(libs.testcontainers.cassandra)
+                implementation(libs.testcontainers.core)
                 implementation(project(":crowd-proj-docs-cards-api-v1-jackson"))
                 implementation(project(":crowd-proj-docs-cards-api-v1-mappers"))
                 implementation("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-logback")
