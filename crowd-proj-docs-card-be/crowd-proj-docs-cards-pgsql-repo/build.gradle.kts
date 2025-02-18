@@ -17,16 +17,6 @@ repositories {
 
 kotlin {
 
-
-    jvm()
-    linuxX64("linuxX64") {
-        compilations.getByName("main") {
-            defaultSourceSet {
-                kotlin.srcDir("src/linuxX64Main/kotlin")
-            }
-        }
-    }
-
     sourceSets {
 
         commonMain {

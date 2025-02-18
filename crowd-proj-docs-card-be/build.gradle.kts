@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.muschko.remote) apply false
     alias(libs.plugins.muschko.java) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
 }
 
 group = "ru.otus.crowd.proj.docs.be"
@@ -38,5 +39,10 @@ tasks {
             group = "build"
             dependsOn(subprojects.map { it.getTasksByName(tsk, false) })
         }
+    }
+
+    create("buildImages") {
+        dependsOn(project("crowd-proj-docs-cards-app-ktor").tasks.getByName("publishImageToLocalRegistry"))
+        dependsOn(project("crowd-proj-docs-cards-app-ktor").tasks.getByName("dockerBuildX64Image"))
     }
 }
