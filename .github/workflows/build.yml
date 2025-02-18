@@ -37,5 +37,5 @@ jobs:
       - name: Run Tests
         uses: gradle/gradle-build-action@v2
         with:
-          gradle-version: 8.6
+          gradle-version: 8.8
           arguments: check -i
