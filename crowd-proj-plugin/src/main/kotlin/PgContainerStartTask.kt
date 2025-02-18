@@ -6,8 +6,6 @@ import org.gradle.work.InputChanges
 
 open class PgContainerStartTask : DefaultTask() {
     override fun getGroup(): String = "containers"
-
-//    var port: Int = 5432
     var pgUrl: String = ""
 
     @TaskAction

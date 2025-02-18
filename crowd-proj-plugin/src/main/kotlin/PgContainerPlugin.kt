@@ -29,7 +29,6 @@ internal class PgContainerPlugin : Plugin<Project> {
 
         tasks.register("pgStart", PgContainerStartTask::class.java) {
             pgContainer.start()
-//            port = pgContainer.getMappedPort(5432)
             pgUrl = pgContainer.jdbcUrl
             finalizedBy(stopTask)
         }
