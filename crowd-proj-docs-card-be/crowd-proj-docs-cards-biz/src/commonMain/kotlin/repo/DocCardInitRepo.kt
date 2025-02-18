@@ -29,8 +29,6 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.initRepo(title: String) = worker {
 
         if (workMode != MkPlcDocCardWorkMode.STUB && docCardRepo == IRepoDocCard.NONE) {
 
-            println("ERRORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR = $workMode")
-
             fail(
 
                 errorSystem(

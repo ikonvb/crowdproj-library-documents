@@ -7,6 +7,7 @@ abstract class DocCardRepoBase : IRepoDocCard {
     protected suspend fun tryDocCardMethod(block: suspend () -> IDbDocCardResponse) = try {
         block()
     } catch (e: Throwable) {
+        println("tryDocCardMethod called error = $e")
         DbDocCardResponseError(errorSystem("methodException", e = e))
     }
 

@@ -7,6 +7,7 @@ muschko = "9.4.0"
 exposed = "0.50.0"
 logback = "1.5.3"
 jackson = "2.16.1"
+cassandra = "4.17.0"
 jvm-language = "21"
 jvm-compiler = "17"
 liquibase = "4.27.0"
@@ -79,8 +80,15 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.2.
 kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version = "5.9.1" }
 kotest-core = { module = "io.kotest:kotest-assertions-core", version = "5.9.1" }
 kotest-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
+
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 testcontainers-postgres = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+testcontainers-cassandra = { module = "org.testcontainers:cassandra", version.ref = "testcontainers" }
+
+db-cassandra-core = { module = "com.datastax.oss:java-driver-core", version.ref = "cassandra" }
+db-cassandra-qbuilder = { module = "com.datastax.oss:java-driver-query-builder", version.ref = "cassandra" }
+db-cassandra-kapt = { module = "com.datastax.oss:java-driver-mapper-processor", version.ref = "cassandra" }
+db-cassandra-mapper = { module = "com.datastax.oss:java-driver-mapper-runtime", version.ref = "cassandra" }
 
 # Liquidbase
 liquibase-core = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
@@ -91,7 +99,7 @@ liquibase-snakeyml = "org.yaml:snakeyaml:2.0"
 [bundles]
 kotest = ["kotest-junit5", "kotest-core", "kotest-property"]
 exposed = ["db-exposed-core", "db-exposed-dao", "db-exposed-jdbc"]
-
+cassandra = ["db-cassandra-core", "db-cassandra-mapper", "db-cassandra-qbuilder"]
 
 [plugins]
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }

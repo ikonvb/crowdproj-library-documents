@@ -13,6 +13,7 @@ interface IRepoDocCard {
     companion object {
 
         val NONE = object : IRepoDocCard {
+
             override suspend fun createDocCard(rq: DbDocCardCreateRequest): IDbDocCardResponse {
                 return DbDocCardResponseError(
                     MkPlcDocCardError(

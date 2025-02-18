@@ -30,7 +30,7 @@ abstract class RepoDocCardCreateTest {
         val result = repo.createDocCard(DbDocCardCreateRequest(createObj))
         val expected = createObj
         assertIs<DbDocCardResponseOk>(result)
-        assertEquals(uuidNew, result.data.id)
+        assertEquals(lockNew, result.data.lock)
         assertEquals(expected.title, result.data.title)
         assertEquals(expected.description, result.data.description)
         assertEquals(expected.docCardType, result.data.docCardType)
