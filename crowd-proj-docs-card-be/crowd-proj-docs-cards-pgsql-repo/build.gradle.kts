@@ -56,13 +56,13 @@ kotlin {
                 implementation(kotlin("stdlib"))
             }
         }
-
-        linuxX64Main {
-            dependencies {
-                implementation(kotlin("stdlib"))
-                implementation("io.github.moreirasantos:pgkn:1.2.0")
-            }
-        }
+//
+//        linuxX64Main {
+//            dependencies {
+//                implementation(kotlin("stdlib"))
+//                implementation("io.github.moreirasantos:pgkn:1.2.0")
+//            }
+//        }
     }
 }
 
