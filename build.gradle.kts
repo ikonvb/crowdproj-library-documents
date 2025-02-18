@@ -23,28 +23,11 @@ subprojects {
     }
     group = rootProject.group
     version = rootProject.version
-
-    tasks.named("check").configure {
-        enabled = true
-    }
-}
-
-
-tasks.named("check").configure {
-    enabled = false
 }
 
 tasks {
-
-    create("clean") {
-        group = "build"
-        gradle.includedBuilds.forEach {
-            dependsOn(it.task(":clean"))
-        }
+    create("check") {
+        group = "verification"
+        dependsOn(gradle.includedBuild("crowd-proj-docs-card-be").task(":check"))
     }
-
-    val buildImages: Task by creating {
-        dependsOn(gradle.includedBuild("crowd-proj-docs-card-be").task(":buildImages"))
-    }
-
 }
