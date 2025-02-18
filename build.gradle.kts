@@ -23,6 +23,10 @@ subprojects {
     }
     group = rootProject.group
     version = rootProject.version
+
+    tasks.named("check").configure {
+        enabled = true
+    }
 }
 
 
