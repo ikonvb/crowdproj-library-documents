@@ -26,8 +26,9 @@ actual class RepoDocCardSql actual constructor(
         }
     }
 
+
     private val dbName: String = "\"${properties.schema}\".\"${properties.table}\"".apply {
-        // Валидируем, что админ не ошибся в имени таблицы
+        "PostgreSQL table name must contain only letters, numbers and underscore symbol '_'"
     }
 
     init {
