@@ -13,4 +13,4 @@ rootProject.name = "crowdproj-library-documents"
 includeBuild("crowd-proj-docs-card-be")
 includeBuild("crowd-proj-docs-card-libs")
 includeBuild("crowd-proj-plugin")
-include("pgkn")
+includeBuild("pgkn")
