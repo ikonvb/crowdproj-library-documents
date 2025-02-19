@@ -3,6 +3,7 @@ import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
 import com.github.dockerjava.api.command.InspectContainerResponse
 import com.github.dockerjava.api.model.ExposedPort
 import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.concurrent.atomic.AtomicBoolean
 
 plugins {
@@ -79,6 +80,11 @@ val pgDbName = "mk_plc_doc_cards"
 val pgUsername = "postgres"
 val pgPassword = "marketplace-pass"
 val containerStarted = AtomicBoolean(false)
+
+
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions.freeCompilerArgs.add("-Xskip-prerelease-check")
+}
 
 tasks {
     // Здесь в тасках запускаем PotgreSQL в контейнере
