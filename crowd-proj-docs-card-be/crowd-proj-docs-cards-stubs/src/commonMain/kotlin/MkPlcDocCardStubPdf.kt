@@ -4,7 +4,7 @@ import crowd.proj.docs.cards.common.models.*
 
 object MkPlcDocCardStubPdf {
 
-    val DOC_CARD_DEMAND_PDF1: MkPlcDocCard
+    val DOC_CARD_PDF1: MkPlcDocCard
         get() = MkPlcDocCard(
             id = MkPlcDocCardId("111"),
             title = "Документ №33",
@@ -23,6 +23,6 @@ object MkPlcDocCardStubPdf {
             )
         )
 
-    val DOC_CARD_SUPPLY_PDF1 = DOC_CARD_DEMAND_PDF1.copy()
+    val DOC_CARD_PNG = DOC_CARD_PDF1.copy(docCardType = MkPlcDocCardType.PNG)
 
 }

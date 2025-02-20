@@ -17,10 +17,8 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.repoRead(title: String) = worker {
     on { state == MkPlcDocCardState.RUNNING }
 
     handle {
-
         val request = DbDocCardReadRequest(docCardValidated)
         val result = docCardRepo.readDocCard(request)
-
         when (result) {
 
             is DbDocCardResponseOk -> {

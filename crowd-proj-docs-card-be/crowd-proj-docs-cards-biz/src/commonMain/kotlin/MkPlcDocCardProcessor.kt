@@ -186,6 +186,7 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocC
                 stubDbError("Имитация ошибки работы с БД")
             }
 
+
             startValidation {
                 worker("Копируем поля в docCardValidating") { docCardValidating = mkPlcDocCardRequest.deepCopy() }
                 worker("Очистка id") { docCardValidating.id = MkPlcDocCardId(docCardValidating.id.asString().trim()) }
@@ -194,11 +195,13 @@ class MkPlcDocCardProcessor(val corSettings: MkPlcDocCardCorSettings = MkPlcDocC
             }
 
             chain {
+
                 title = "Логика поиска в БД"
                 repoRead("Чтение документа из БД")
                 repoPrepareOffers("Подготовка данных для поиска предложений")
                 repoOffers("Поиск предложений для документа в БД")
             }
+
             prepareResult("Подготовка ответа")
 
         }

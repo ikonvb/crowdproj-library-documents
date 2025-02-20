@@ -31,7 +31,7 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.stubOffersSuccess(title: String, corS
                 mkPlcDocCardsResponse.addAll(
                     MkPlcDocCardStubSingleton.prepareOffersList(
                         mkPlcDocCardResponse.title,
-                        MkPlcDocCardType.PDF
+                        MkPlcDocCardType.PNG
                     )
                 )
             }

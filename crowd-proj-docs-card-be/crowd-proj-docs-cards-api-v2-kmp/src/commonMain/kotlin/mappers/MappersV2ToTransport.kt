@@ -65,7 +65,6 @@ fun List<MkPlcDocCard>.toTransportDocCard(): List<DocCardResponseObject>? = this
     .takeIf { it.isNotEmpty() }
 
 
-
 private fun MkPlcDocCard.toTransportDocCard(): DocCardResponseObject = DocCardResponseObject(
     id = id.takeIf { it != MkPlcDocCardId.NONE }?.asString(),
     title = title.takeIf { it.isNotBlank() },

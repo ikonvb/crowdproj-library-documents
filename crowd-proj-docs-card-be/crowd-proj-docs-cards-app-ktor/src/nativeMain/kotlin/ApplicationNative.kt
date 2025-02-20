@@ -10,8 +10,6 @@ fun main() {
         val conf = YamlConfigLoader().load("./application.yaml")
             ?: throw RuntimeException("Cannot read application.yaml")
 
-        println(conf)
-
         config = conf
 
         println("File read")

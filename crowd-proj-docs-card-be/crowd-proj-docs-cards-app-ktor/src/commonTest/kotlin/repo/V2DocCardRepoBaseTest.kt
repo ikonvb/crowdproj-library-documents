@@ -163,11 +163,7 @@ abstract class V2DocCardRepoBaseTest {
 
         assertEquals(200, response.status.value)
         assertNotEquals(0, responseObj.docCards?.size)
-
-        println("uuidPng = $uuidPng")
-        println("docCards = ${responseObj.docCards}")
-
-        assertEquals(uuidOld, responseObj.docCards?.first()?.id)
+        assertEquals(uuidPng, responseObj.docCards?.first()?.id)
     }
 
     private inline fun <reified T : IRequest> v2TestApplication(

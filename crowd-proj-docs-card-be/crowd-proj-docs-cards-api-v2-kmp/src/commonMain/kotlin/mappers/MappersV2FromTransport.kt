@@ -1,9 +1,9 @@
 package ru.otus.crowd.proj.docs.api.v2.mappers
 
-import ru.otus.crowd.proj.docs.be.api.v2.models.*
 import crowd.proj.docs.cards.common.MkPlcDocCardContext
 import crowd.proj.docs.cards.common.models.*
 import crowd.proj.docs.cards.common.stubs.MkPlcDocCardStubs
+import ru.otus.crowd.proj.docs.be.api.v2.models.*
 
 fun MkPlcDocCardContext.fromTransport(request: IRequest) = when (request) {
     is DocCardCreateRequest -> fromTransport(request)
@@ -11,10 +11,8 @@ fun MkPlcDocCardContext.fromTransport(request: IRequest) = when (request) {
     is DocCardUpdateRequest -> fromTransport(request)
     is DocCardDeleteRequest -> fromTransport(request)
     is DocCardSearchRequest -> fromTransport(request)
-    is DocCardOffersRequest -> {
-        println("request.docCardOffers = ${request.docCardOffers}")
-        fromTransport(request)
-    }
+    is DocCardOffersRequest -> fromTransport(request)
+
 
 }
 

@@ -20,26 +20,22 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.repoOffers(title: String) = worker {
 
         val docCardRequest = docCardRepoPrepare
 
-        val docCardType = when (docCardRequest.docCardType) {
-            MkPlcDocCardType.PDF -> MkPlcDocCardType.PDF
-            MkPlcDocCardType.PNG -> MkPlcDocCardType.PNG
-            MkPlcDocCardType.JPEG -> MkPlcDocCardType.JPEG
-            MkPlcDocCardType.MS_WORD -> MkPlcDocCardType.MS_WORD
-            MkPlcDocCardType.UNKNOWN -> {
-                fail(
-                    MkPlcDocCardError(
-                        field = "docCardType",
-                        message = "Type of docCard must not be empty"
-                    )
-                )
-                return@handle
-            }
-        }
-
         val filter = DbDocCardSearchRequest(
-            docCardType = docCardType,
-            titleFilter = docCardRequest.title,
-            ownerId = docCardRequest.ownerId
+            docCardType = when (docCardRequest.docCardType) {
+                MkPlcDocCardType.PDF -> MkPlcDocCardType.PNG
+                MkPlcDocCardType.PNG -> MkPlcDocCardType.PDF
+                MkPlcDocCardType.JPEG -> MkPlcDocCardType.MS_WORD
+                MkPlcDocCardType.MS_WORD -> MkPlcDocCardType.JPEG
+                MkPlcDocCardType.UNKNOWN -> {
+                    fail(
+                        MkPlcDocCardError(
+                            field = "docCardType",
+                            message = "Type of docCard must not be empty"
+                        )
+                    )
+                    return@handle
+                }
+            }
         )
 
         when (val dbResponse = docCardRepo.searchDocCard(filter)) {

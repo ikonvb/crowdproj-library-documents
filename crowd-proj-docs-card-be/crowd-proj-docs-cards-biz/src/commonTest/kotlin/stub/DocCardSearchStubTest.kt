@@ -27,12 +27,8 @@ class DocCardSearchStubTest {
             mkPlcDocCardFilterRequest = filter,
         )
 
-        println("ctx = $ctx")
-
         processor.exec(ctx)
 
-        println("ctx = $ctx")
-        
         assertTrue(ctx.mkPlcDocCardsResponse.size > 1)
         val first = ctx.mkPlcDocCardsResponse.firstOrNull() ?: fail("Empty response list")
 

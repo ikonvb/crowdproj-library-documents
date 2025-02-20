@@ -79,10 +79,6 @@ abstract class RepoDocCardUpdateTest {
         val error = result.errors.find { it.code == "repo-concurrency" }
 
         assertEquals("lock", error?.field)
-
-        println("reqUpdateConcurrency = $reqUpdateConcurrency")
-        println("result.data = ${result.data}")
-
         assertEquals(updateConcurrency, result.data)
     }
 

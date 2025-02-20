@@ -63,9 +63,6 @@ abstract class V1DocCardRepoBaseTest {
         ) { response ->
 
             val responseObj: DocCardCreateResponse = response.body<DocCardCreateResponse>()
-
-            println("responseObj = ${responseObj.docCard}")
-
             assertEquals(200, response.status.value)
             assertEquals(uuidNew, responseObj.docCard?.id)
             assertEquals(docCard.title, responseObj.docCard?.title)
@@ -160,8 +157,6 @@ abstract class V1DocCardRepoBaseTest {
         ),
     ) { response ->
         val responseObj = response.body<DocCardOffersResponse>()
-
-        println("responseObj = $responseObj")
         assertEquals(200, response.status.value)
         assertNotEquals(0, responseObj.docCards?.size)
         assertEquals(uuidOld, responseObj.docCards?.first()?.id)
