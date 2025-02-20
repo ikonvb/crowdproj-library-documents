@@ -43,7 +43,7 @@ class DocCardOffersStubTest {
         val first = ctx.mkPlcDocCardsResponse.firstOrNull() ?: fail("Empty response list")
         assertTrue(first.title.contains(ctx.mkPlcDocCardResponse.title))
         assertTrue(first.description.contains(ctx.mkPlcDocCardResponse.title))
-        assertEquals(MkPlcDocCardType.PDF, first.docCardType)
+        assertEquals(MkPlcDocCardType.PNG, first.docCardType)
         assertEquals(MkPlcDocCardStubSingleton.get().visibility, first.visibility)
     }
 
