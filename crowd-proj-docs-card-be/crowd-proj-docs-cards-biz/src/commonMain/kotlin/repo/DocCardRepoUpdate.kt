@@ -16,6 +16,7 @@ fun CorChainDsl<MkPlcDocCardContext, Unit>.repoUpdate(title: String) = worker {
     on { state == MkPlcDocCardState.RUNNING }
     handle {
         val request = DbDocCardUpdateRequest(docCardRepoPrepare)
+
         when (val result = docCardRepo.updateDocCard(request)) {
             is DbDocCardResponseOk -> docCardRepoDone = result.data
             is DbDocCardResponseError -> fail(result.errors)

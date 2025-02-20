@@ -33,7 +33,7 @@ class DocCardRepoInMemorySearchTest : RepoDocCardSearchTest() {
 
 class DocCardRepoInMemoryUpdateTest : RepoDocCardUpdateTest() {
     override val repo = DocCardRepoInitialized(
-        DocCardRepoInMemory(),
+        DocCardRepoInMemory(randomUuid = { lockNew.asString() }),
         initObjects = initObjects,
     )
 }

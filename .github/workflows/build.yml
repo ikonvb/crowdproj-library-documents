@@ -39,3 +39,9 @@ jobs:
         with:
           gradle-version: 8.8
           arguments: check -i
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: crowd-proj-docs-card-be/crowd-proj-docs-cards-inmemory-repo/build/reports/tests/allTests
