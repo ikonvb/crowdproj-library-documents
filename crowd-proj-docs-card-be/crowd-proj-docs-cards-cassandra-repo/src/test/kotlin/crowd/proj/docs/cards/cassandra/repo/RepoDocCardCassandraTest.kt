@@ -18,7 +18,7 @@ class CassandraTest {
     class RepoDocCardCassandraCreateTest : RepoDocCardCreateTest() {
         override val repo: IDocCardRepoInitializable = DocCardRepoInitialized(
             initObjects = initObjects,
-            repo = repository("ks_create", lockNew.asString())
+            repo = repository("ks_create", uuidNew.asString())
         )
     }
 

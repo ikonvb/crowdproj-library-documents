@@ -8,7 +8,7 @@ dependencies {
 
     implementation(projects.crowdProjDocsCardsCommon)
     implementation(projects.crowdProjDocsCardsCommonRepo)
-
+    testImplementation("org.slf4j:slf4j-simple:2.0.9")
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.jdk9)
     implementation(libs.uuid)
