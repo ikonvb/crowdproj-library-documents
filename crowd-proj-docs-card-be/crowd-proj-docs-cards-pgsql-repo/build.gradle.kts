@@ -7,7 +7,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.concurrent.atomic.AtomicBoolean
 
 plugins {
-    id("build-kmp")
+    id("build-jvm")
     alias(libs.plugins.muschko.remote)
     alias(libs.plugins.liquibase)
 }
@@ -17,54 +17,41 @@ repositories {
     mavenCentral()
 }
 
-kotlin {
+group = rootProject.group
+version = rootProject.version
 
-    sourceSets {
-
-        commonMain {
-
-            dependencies {
-                implementation(projects.crowdProjDocsCardsCommon)
-                api(projects.crowdProjDocsCardsCommonRepo)
-                implementation(libs.coroutines.core)
-                implementation(libs.uuid)
-            }
-        }
-
-        commonTest {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-                implementation(projects.crowdProjDocsCardsTestsRepo)
-            }
-        }
-
-        jvmMain {
-            dependencies {
-                implementation(kotlin("stdlib-jdk8"))
-                implementation(libs.db.postgres)
-                implementation(libs.bundles.exposed)
-            }
-        }
-        jvmTest {
-            dependencies {
-                implementation(kotlin("test-junit"))
-            }
-        }
-
-        nativeMain {
-            dependencies {
-                implementation(kotlin("stdlib"))
-            }
-        }
-
-        linuxX64Main {
-            dependencies {
-                implementation(kotlin("stdlib"))
-                implementation("io.github.moreirasantos:pgkn:1.1.0")
-            }
-        }
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
+}
+
+tasks.withType<JavaCompile> {
+    options.release.set(17)
+}
+
+dependencies {
+    implementation(projects.crowdProjDocsCardsCommon)
+    api(projects.crowdProjDocsCardsCommonRepo)
+    implementation(libs.coroutines.core)
+    implementation(libs.uuid)
+    implementation(kotlin("test-common"))
+    implementation(kotlin("test-annotations-common"))
+    implementation(projects.crowdProjDocsCardsTestsRepo)
+    implementation(kotlin("stdlib"))
+    implementation(project(":crowd-proj-docs-cards-api-v1-jackson"))
+    implementation(project(":crowd-proj-docs-cards-common"))
+    implementation(libs.kotest.core)
+    implementation(libs.kotest.junit5)
+    testImplementation(kotlin("test-junit"))
+    testImplementation(libs.testcontainers.core)
+    testImplementation(libs.testcontainers.postgres)
+    implementation(libs.db.postgres)
+    implementation(libs.bundles.exposed)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 dependencies {

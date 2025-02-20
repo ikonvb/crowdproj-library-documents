@@ -1,21 +1,18 @@
 package crowd.proj.docs.cards.pg.repo
 
-import crowd.proj.docs.cards.common.repo.IDocCardRepoInitializable
+import crowd.proj.docs.cards.common.helpers.asMkPlcError
+import crowd.proj.docs.cards.common.models.*
+import crowd.proj.docs.cards.common.repo.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
-import crowd.proj.docs.cards.common.helpers.asMkPlcError
-import crowd.proj.docs.cards.common.models.*
-import crowd.proj.docs.cards.common.repo.*
 
-
-@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-actual class RepoDocCardSql actual constructor(
+class RepoDocCardPostgres (
     properties: SqlProperties,
     private val randomUuid: () -> String
-) : IRepoDocCard, IDocCardRepoInitializable {
+) : DocCardRepoBase(), IRepoDocCard, IDocCardRepoInitializable {
 
 
     private val docCardTable = DocCardTable("${properties.schema}.${properties.table}")
@@ -29,7 +26,7 @@ actual class RepoDocCardSql actual constructor(
         properties.url, driver, properties.user, properties.password
     )
 
-    actual fun clear(): Unit = transaction(conn) {
+    fun clear(): Unit = transaction(conn) {
         docCardTable.deleteAll()
     }
 
@@ -60,10 +57,10 @@ actual class RepoDocCardSql actual constructor(
     private suspend inline fun transactionWrapper(crossinline block: () -> IDbDocCardResponse): IDbDocCardResponse =
         transactionWrapper(block) { DbDocCardResponseError(it.asMkPlcError()) }
 
-    actual override fun save(docCards: Collection<MkPlcDocCard>): Collection<MkPlcDocCard> =
+    override fun save(docCards: Collection<MkPlcDocCard>): Collection<MkPlcDocCard> =
         docCards.map { saveObj(it) }
 
-    actual override suspend fun createDocCard(rq: DbDocCardCreateRequest): IDbDocCardResponse = transactionWrapper {
+    override suspend fun createDocCard(rq: DbDocCardCreateRequest): IDbDocCardResponse = transactionWrapper {
         DbDocCardResponseOk(saveObj(rq.docCard))
     }
 
@@ -74,7 +71,7 @@ actual class RepoDocCardSql actual constructor(
         return DbDocCardResponseOk(docCardTable.from(res))
     }
 
-    actual override suspend fun readDocCard(rq: DbDocCardReadRequest): IDbDocCardResponse =
+    override suspend fun readDocCard(rq: DbDocCardReadRequest): IDbDocCardResponse =
         transactionWrapper { read(rq.id) }
 
     private suspend fun update(
@@ -97,7 +94,7 @@ actual class RepoDocCardSql actual constructor(
         }
 
 
-    actual override suspend fun updateDocCard(rq: DbDocCardUpdateRequest): IDbDocCardResponse =
+    override suspend fun updateDocCard(rq: DbDocCardUpdateRequest): IDbDocCardResponse =
         update(rq.docCard.id, rq.docCard.lock) {
             docCardTable.update({ docCardTable.id eq rq.docCard.id.asString() }) {
                 to(it, rq.docCard.copy(lock = MkPlcDocCardLock(randomUuid())), randomUuid)
@@ -105,12 +102,12 @@ actual class RepoDocCardSql actual constructor(
             read(rq.docCard.id)
         }
 
-    actual override suspend fun deleteDocCard(rq: DbDocCardDeleteRequest): IDbDocCardResponse = update(rq.id, rq.lock) {
+    override suspend fun deleteDocCard(rq: DbDocCardDeleteRequest): IDbDocCardResponse = update(rq.id, rq.lock) {
         docCardTable.deleteWhere { id eq rq.id.asString() }
         DbDocCardResponseOk(it)
     }
 
-    actual override suspend fun searchDocCard(rq: DbDocCardSearchRequest): IDbDocCardsResponse =
+    override suspend fun searchDocCard(rq: DbDocCardSearchRequest): IDbDocCardsResponse =
         transactionWrapper({
             val res = docCardTable.selectAll().where {
                 buildList {

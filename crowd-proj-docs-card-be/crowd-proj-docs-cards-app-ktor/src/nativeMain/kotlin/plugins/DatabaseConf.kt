@@ -9,7 +9,6 @@ actual fun Application.getDatabaseConf(type: DocCardDbType): IRepoDocCard {
     val dbSetting = environment.config.propertyOrNull(dbSettingPath)?.getString()?.lowercase()
     return when (dbSetting) {
         "in-memory", "inmemory", "memory", "mem" -> initInMemory()
-        "postgres", "postgresql", "pg", "sql", "psql" -> initPostgres()
         else -> throw IllegalArgumentException(
             "$dbSettingPath must be set in application.yml to one of: " +
                     "'inmemory', 'postgres', 'cassandra', 'gremlin'"
