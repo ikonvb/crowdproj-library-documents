@@ -73,7 +73,6 @@ kotlin {
 
                 implementation(libs.uuid)
                 implementation(projects.crowdProjDocsCardsCommonRepo)
-                implementation(projects.crowdProjDocsCardsPgsqlRepo)
 
                 implementation(project(":crowd-proj-docs-cards-api-logV1"))
                 implementation("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-common")
