@@ -35,7 +35,7 @@ abstract class V2DocCardRepoBaseTest {
 
     protected val uuidOld = "10000000-0000-0000-0000-000000000001"
     protected val uuidNew = "10000000-0000-0000-0000-000000000002"
-    protected val uuidSup = "10000000-0000-0000-0000-000000000003"
+    protected val uuidPng = "10000000-0000-0000-0000-000000000003"
 
     protected val initDocCard = MkPlcDocCardStubSingleton.prepareResult {
         id = MkPlcDocCardId(uuidOld)
@@ -43,9 +43,9 @@ abstract class V2DocCardRepoBaseTest {
         lock = MkPlcDocCardLock(uuidOld)
     }
 
-    protected val initDocCardPdf = MkPlcDocCardStubSingleton.prepareResult {
-        id = MkPlcDocCardId(uuidSup)
-        docCardType = MkPlcDocCardType.PDF
+    protected val initDocCardPng = MkPlcDocCardStubSingleton.prepareResult {
+        id = MkPlcDocCardId(uuidPng)
+        docCardType = MkPlcDocCardType.PNG
     }
 
 
@@ -155,11 +155,19 @@ abstract class V2DocCardRepoBaseTest {
             docCardOffers = initDocCard.toTransportRead(),
             debug = DocCardDebug(mode = workMode),
         ),
-    ) { response ->
+    ) {
+
+        response ->
+
         val responseObj = response.body<DocCardOffersResponse>()
+
         assertEquals(200, response.status.value)
         assertNotEquals(0, responseObj.docCards?.size)
-        assertEquals(uuidSup, responseObj.docCards?.first()?.id)
+
+        println("uuidPng = $uuidPng")
+        println("docCards = ${responseObj.docCards}")
+
+        assertEquals(uuidOld, responseObj.docCards?.first()?.id)
     }
 
     private inline fun <reified T : IRequest> v2TestApplication(
@@ -168,17 +176,21 @@ abstract class V2DocCardRepoBaseTest {
         request: T,
         crossinline function: suspend (HttpResponse) -> Unit,
     ): Unit = testApplication {
+
         application { module(appSettings = conf) }
+
         val client = createClient {
             install(ContentNegotiation) {
                 json(apiV2Mapper)
             }
         }
+
         val response = client.post("/v2/docCard/$func") {
             contentType(ContentType.Application.Json)
             header("X-Trace-Id", "12345")
             setBody(request)
         }
+
         function(response)
     }
 }

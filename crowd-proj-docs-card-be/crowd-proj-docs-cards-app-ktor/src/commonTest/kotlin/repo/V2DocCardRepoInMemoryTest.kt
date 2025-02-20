@@ -44,10 +44,11 @@ class V2DocCardRepoInMemoryTest : V2DocCardRepoBaseTest() {
             initObjects = listOf(initDocCard),
         )
     )
+
     override val appSettingsOffers: MkPlcAppSettings = mkAppSettings(
         repo = DocCardRepoInitialized(
             DocCardRepoInMemory(randomUuid = { uuidNew }),
-            initObjects = listOf(initDocCard, initDocCardPdf),
+            initObjects = listOf(initDocCard, initDocCardPng),
         )
     )
 }

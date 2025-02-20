@@ -11,7 +11,11 @@ fun MkPlcDocCardContext.fromTransport(request: IRequest) = when (request) {
     is DocCardUpdateRequest -> fromTransport(request)
     is DocCardDeleteRequest -> fromTransport(request)
     is DocCardSearchRequest -> fromTransport(request)
-    is DocCardOffersRequest -> fromTransport(request)
+    is DocCardOffersRequest -> {
+        println("request.docCardOffers = ${request.docCardOffers}")
+        fromTransport(request)
+    }
+
 }
 
 
@@ -20,6 +24,7 @@ private fun String?.toDocCardId() = this?.let {
 } ?: MkPlcDocCardId.NONE
 
 private fun String?.toDocCardLock() = this?.let { MkPlcDocCardLock(it) } ?: MkPlcDocCardLock.NONE
+
 private fun DocCardReadObject?.toInternal() = if (this != null) {
     MkPlcDocCard(id = id.toDocCardId())
 } else {

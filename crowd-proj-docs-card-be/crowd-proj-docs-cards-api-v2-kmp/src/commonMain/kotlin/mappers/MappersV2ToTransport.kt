@@ -1,9 +1,9 @@
 package ru.otus.crowd.proj.docs.api.v2.mappers
 
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.exceptions.UnknownMkPlcCommand
+import crowd.proj.docs.cards.common.models.*
 import ru.otus.crowd.proj.docs.be.api.v2.models.*
-import  crowd.proj.docs.cards.common.MkPlcDocCardContext
-import  crowd.proj.docs.cards.common.exceptions.UnknownMkPlcCommand
-import  crowd.proj.docs.cards.common.models.*
 
 fun MkPlcDocCardContext.toTransportDocCard(): IResponse = when (val cmd = command) {
     MkPlcDocCardCommand.CREATE -> toTransportCreate()
@@ -50,6 +50,7 @@ fun MkPlcDocCardContext.toTransportSearch() = DocCardSearchResponse(
 fun MkPlcDocCardContext.toTransportOffers() = DocCardOffersResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
+    docCard = mkPlcDocCardResponse.toTransportDocCard(),
     docCards = mkPlcDocCardsResponse.toTransportDocCard()
 )
 
@@ -62,6 +63,8 @@ fun List<MkPlcDocCard>.toTransportDocCard(): List<DocCardResponseObject>? = this
     .map { it.toTransportDocCard() }
     .toList()
     .takeIf { it.isNotEmpty() }
+
+
 
 private fun MkPlcDocCard.toTransportDocCard(): DocCardResponseObject = DocCardResponseObject(
     id = id.takeIf { it != MkPlcDocCardId.NONE }?.asString(),
@@ -97,11 +100,11 @@ internal fun MkPlcDocCardVisibility.toTransportDocCard(): DocCardVisibility? = w
 }
 
 internal fun MkPlcDocCardType.toTransportDocCard(): DocType? = when (this) {
-    MkPlcDocCardType.PDF -> DocType.IMAGE_SLASH_JPEG
+    MkPlcDocCardType.PDF -> DocType.APPLICATION_SLASH_PDF
     MkPlcDocCardType.PNG -> DocType.IMAGE_SLASH_PNG
     MkPlcDocCardType.JPEG -> DocType.IMAGE_SLASH_JPEG
     MkPlcDocCardType.MS_WORD -> DocType.APPLICATION_SLASH_MSWORD
-    MkPlcDocCardType.UNKNOWN -> DocType.APPLICATION_SLASH_PDF
+    MkPlcDocCardType.UNKNOWN -> null
 }
 
 private fun List<MkPlcDocCardError>.toTransportErrors(): List<Error>? = this
