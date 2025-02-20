@@ -9,7 +9,7 @@ import kotlin.time.Duration.Companion.minutes
 expect fun Application.getDatabaseConf(type: DocCardDbType): IRepoDocCard
 
 enum class DocCardDbType(val confName: String) {
-    PROD("prod"), TEST("test")
+    PROD("prod"), TEST("test"), STUB("stub");
 }
 
 fun Application.initInMemory(): IRepoDocCard {
