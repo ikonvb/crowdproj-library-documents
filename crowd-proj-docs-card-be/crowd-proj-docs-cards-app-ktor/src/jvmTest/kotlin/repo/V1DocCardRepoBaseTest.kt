@@ -159,10 +159,8 @@ abstract class V1DocCardRepoBaseTest {
         val responseObj = response.body<DocCardOffersResponse>()
         assertEquals(200, response.status.value)
         assertNotEquals(0, responseObj.docCards?.size)
-        assertEquals(uuidOld, responseObj.docCards?.first()?.id)
+        assertEquals(uuidImg, responseObj.docCards?.first()?.id)
     }
-
-
 
     private inline fun <reified T : IRequest> v1TestApplication(
         conf: MkPlcAppSettings,
