@@ -1,7 +1,7 @@
 import kotlinx.datetime.Clock
 import ru.otus.crowd.proj.docs.be.api.logV1.models.*
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
-import ru.otus.crowd.proj.docs.cards.common.models.*
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.models.*
 
 
 fun MkPlcDocCardContext.toLog(logId: String) = CommonLogModel(
@@ -26,7 +26,7 @@ private fun MkPlcDocCardContext.toMkPlcLog(): MkPlcDocCardLogModel? {
 
 private fun MkPlcDocCardFilter.toLog() = DocCardFilterLog(
     searchString = searchString.takeIf { it.isNotBlank() },
-    ownerId = ownerId.takeIf { it != MkPlcOwnerId.NONE }?.asString(),
+    ownerId = ownerId.takeIf { it != MkPlcDocCardOwnerId.NONE }?.asString(),
     docType = docCardType.takeIf { it != MkPlcDocCardType.UNKNOWN }?.name,
 )
 
@@ -41,8 +41,8 @@ private fun MkPlcDocCard.toLog() = DocCardLog(
     id = id.takeIf { it != MkPlcDocCardId.NONE }?.asString(),
     title = title.takeIf { it.isNotBlank() },
     description = description.takeIf { it.isNotBlank() },
-    visibility = visibility.takeIf { it != MkPlcVisibility.NONE }?.name,
-    ownerId = ownerId.takeIf { it != MkPlcOwnerId.NONE }?.asString(),
-    productId = productId.takeIf { it != MkPlcProductId.NONE }?.asString(),
+    visibility = visibility.takeIf { it != MkPlcDocCardVisibility.NONE }?.name,
+    ownerId = ownerId.takeIf { it != MkPlcDocCardOwnerId.NONE }?.asString(),
+    productId = productId.takeIf { it != MkPlcDocCardProductId.NONE }?.asString(),
     permissions = permissionsClient.takeIf { it.isNotEmpty() }?.map { it.name }?.toSet(),
 )

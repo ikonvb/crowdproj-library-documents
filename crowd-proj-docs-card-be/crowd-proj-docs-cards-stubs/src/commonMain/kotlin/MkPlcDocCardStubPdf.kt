@@ -1,16 +1,18 @@
 package ru.otus.crowd.proj.docs.cards.be.stubs
 
-import ru.otus.crowd.proj.docs.cards.common.models.*
+import crowd.proj.docs.cards.common.models.*
 
 object MkPlcDocCardStubPdf {
 
-    val DOC_CARD_DEMAND_PDF1: MkPlcDocCard
+    val DOC_CARD_PDF1: MkPlcDocCard
         get() = MkPlcDocCard(
             id = MkPlcDocCardId("111"),
             title = "Документ №33",
             description = "Документ об очень важном",
-            ownerId = MkPlcOwnerId("user-1"),
-            visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+            ownerId = MkPlcDocCardOwnerId("user-1"),
+            docCardType = MkPlcDocCardType.PDF,
+            visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
+            lock = MkPlcDocCardLock("123-234-abc-ABC"),
             permissionsClient = mutableSetOf(
                 MkPlcDocCardPermissionClient.READ,
                 MkPlcDocCardPermissionClient.UPDATE,
@@ -21,6 +23,6 @@ object MkPlcDocCardStubPdf {
             )
         )
 
-    val DOC_CARD_SUPPLY_PDF1 = DOC_CARD_DEMAND_PDF1.copy()
+    val DOC_CARD_PNG = DOC_CARD_PDF1.copy(docCardType = MkPlcDocCardType.PNG)
 
 }

@@ -26,6 +26,14 @@ subprojects {
 }
 
 tasks {
+
+    create("clean") {
+        group = "build"
+        gradle.includedBuilds.forEach {
+            dependsOn(it.task(":clean"))
+        }
+    }
+
     create("check") {
         group = "verification"
         dependsOn(gradle.includedBuild("crowd-proj-docs-card-be").task(":check"))

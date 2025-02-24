@@ -1,9 +1,9 @@
 package ru.otus.crowd.proj.docs.api.v2.mappers
 
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.exceptions.UnknownMkPlcCommand
+import crowd.proj.docs.cards.common.models.*
 import ru.otus.crowd.proj.docs.be.api.v2.models.*
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
-import ru.otus.crowd.proj.docs.cards.common.exceptions.UnknownMkPlcCommand
-import ru.otus.crowd.proj.docs.cards.common.models.*
 
 fun MkPlcDocCardContext.toTransportDocCard(): IResponse = when (val cmd = command) {
     MkPlcDocCardCommand.CREATE -> toTransportCreate()
@@ -50,6 +50,7 @@ fun MkPlcDocCardContext.toTransportSearch() = DocCardSearchResponse(
 fun MkPlcDocCardContext.toTransportOffers() = DocCardOffersResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
+    docCard = mkPlcDocCardResponse.toTransportDocCard(),
     docCards = mkPlcDocCardsResponse.toTransportDocCard()
 )
 
@@ -63,15 +64,16 @@ fun List<MkPlcDocCard>.toTransportDocCard(): List<DocCardResponseObject>? = this
     .toList()
     .takeIf { it.isNotEmpty() }
 
+
 private fun MkPlcDocCard.toTransportDocCard(): DocCardResponseObject = DocCardResponseObject(
     id = id.takeIf { it != MkPlcDocCardId.NONE }?.asString(),
     title = title.takeIf { it.isNotBlank() },
     description = description.takeIf { it.isNotBlank() },
-    ownerId = ownerId.takeIf { it != MkPlcOwnerId.NONE }?.asString(),
+    ownerId = ownerId.takeIf { it != MkPlcDocCardOwnerId.NONE }?.asString(),
     docType = docCardType.toTransportDocCard(),
     visibility = visibility.toTransportDocCard(),
     permissions = permissionsClient.toTransportDocCard(),
-    productId = productId.takeIf { it != MkPlcProductId.NONE }?.asString(),
+    productId = productId.takeIf { it != MkPlcDocCardProductId.NONE }?.asString(),
     lock = lock.takeIf { it != MkPlcDocCardLock.NONE }?.asString()
 )
 
@@ -89,20 +91,19 @@ private fun MkPlcDocCardPermissionClient.toTransportDocCard() = when (this) {
     MkPlcDocCardPermissionClient.DELETE -> DocCardPermissions.DELETE
 }
 
-private fun MkPlcVisibility.toTransportDocCard(): DocCardVisibility? = when (this) {
-    MkPlcVisibility.VISIBLE_PUBLIC -> DocCardVisibility.PUBLIC
-    MkPlcVisibility.VISIBLE_TO_GROUP -> DocCardVisibility.REGISTERED_ONLY
-    MkPlcVisibility.VISIBLE_TO_OWNER -> DocCardVisibility.OWNER_ONLY
-    MkPlcVisibility.NONE -> null
+internal fun MkPlcDocCardVisibility.toTransportDocCard(): DocCardVisibility? = when (this) {
+    MkPlcDocCardVisibility.VISIBLE_PUBLIC -> DocCardVisibility.PUBLIC
+    MkPlcDocCardVisibility.VISIBLE_TO_GROUP -> DocCardVisibility.REGISTERED_ONLY
+    MkPlcDocCardVisibility.VISIBLE_TO_OWNER -> DocCardVisibility.OWNER_ONLY
+    MkPlcDocCardVisibility.NONE -> null
 }
 
-private fun MkPlcDocCardType.toTransportDocCard(): DocType? = when (this) {
-    MkPlcDocCardType.PDF -> DocType.IMAGE_SLASH_JPEG
+internal fun MkPlcDocCardType.toTransportDocCard(): DocType? = when (this) {
+    MkPlcDocCardType.PDF -> DocType.APPLICATION_SLASH_PDF
     MkPlcDocCardType.PNG -> DocType.IMAGE_SLASH_PNG
     MkPlcDocCardType.JPEG -> DocType.IMAGE_SLASH_JPEG
     MkPlcDocCardType.MS_WORD -> DocType.APPLICATION_SLASH_MSWORD
-    MkPlcDocCardType.UNKNOWN -> DocType.APPLICATION_SLASH_PDF
-    MkPlcDocCardType.TXT -> DocType.APPLICATION_SLASH_MSWORD
+    MkPlcDocCardType.UNKNOWN -> null
 }
 
 private fun List<MkPlcDocCardError>.toTransportErrors(): List<Error>? = this

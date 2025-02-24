@@ -1,6 +1,6 @@
 package validation
 
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardCommand
+import crowd.proj.docs.cards.common.models.MkPlcDocCardCommand
 import kotlin.test.Test
 
 class BizValidationReadTest : BaseBizValidationTest() {

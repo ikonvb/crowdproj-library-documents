@@ -2,7 +2,9 @@ import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import io.ktor.plugin.features.*
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
 
 plugins {
@@ -66,6 +68,12 @@ kotlin {
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.ktor.serialization.json)
+                implementation(projects.crowdProjDocsCardsStubsRepo)
+                implementation(projects.crowdProjDocsCardsInmemoryRepo)
+
+                implementation(libs.uuid)
+                implementation(projects.crowdProjDocsCardsCommonRepo)
+
                 implementation(project(":crowd-proj-docs-cards-api-logV1"))
                 implementation("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-common")
                 implementation("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-kermit")
@@ -92,7 +100,11 @@ kotlin {
                 implementation(libs.ktor.serialization.jackson)
                 implementation(libs.ktor.server.calllogging)
                 implementation(libs.ktor.server.headers.default)
+                implementation(projects.crowdProjDocsCardsApiV2Kmp)
+                implementation(projects.crowdProjDocsCardsCassandraRepo)
                 implementation(libs.logback)
+                implementation(libs.testcontainers.cassandra)
+                implementation(libs.testcontainers.core)
                 implementation(project(":crowd-proj-docs-cards-api-v1-jackson"))
                 implementation(project(":crowd-proj-docs-cards-api-v1-mappers"))
                 implementation("ru.otus.crowd.proj.docs.cards.libs:crowd-proj-docs-card-lib-logging-logback")
@@ -107,18 +119,16 @@ kotlin {
     }
 }
 
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions.freeCompilerArgs.add("-Xskip-prerelease-check")
+}
+
 tasks {
 
     shadowJar {
         isZip64 = true
         configurations = listOf(project.configurations.runtimeClasspath.get())
     }
-
-    // Если ошибка: "Entry application.yaml is a duplicate but no duplicate handling strategy has been set."
-    // Возникает из-за наличия файлов как в common, так и в jvm платформе
-//    withType(ProcessResources::class) {
-//        duplicatesStrategy = DuplicatesStrategy.INCLUDE
-//    }
 
     val linkReleaseExecutableLinuxX64 by getting(KotlinNativeLink::class)
     val nativeFileX64 = linkReleaseExecutableLinuxX64.binary.outputFile

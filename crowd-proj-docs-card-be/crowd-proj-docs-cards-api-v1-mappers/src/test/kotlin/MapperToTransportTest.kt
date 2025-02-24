@@ -1,13 +1,13 @@
 package ru.otus.otuskotlin.marketplace.mappers.v1
 
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.exceptions.UnknownMkPlcCommand
+import crowd.proj.docs.cards.common.models.*
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import ru.otus.crowd.proj.docs.be.api.v1.models.*
 import ru.otus.crowd.proj.docs.cards.api.v1.mappers.*
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
-import ru.otus.crowd.proj.docs.cards.common.exceptions.UnknownMkPlcCommand
-import ru.otus.crowd.proj.docs.cards.common.models.*
 
 class MapperToTransportTest : FunSpec({
 
@@ -20,7 +20,7 @@ class MapperToTransportTest : FunSpec({
                 mkPlcDocCardResponse = MkPlcDocCard(
                     title = "title",
                     description = "desc",
-                    visibility = MkPlcVisibility.VISIBLE_PUBLIC,
+                    visibility = MkPlcDocCardVisibility.VISIBLE_PUBLIC,
                 ),
                 errors = mutableListOf(
                     MkPlcDocCardError(
@@ -108,10 +108,13 @@ class MapperToTransportTest : FunSpec({
 
         test("should return DocCardOffersResponse for OFFERS command") {
             context.command = MkPlcDocCardCommand.OFFERS
+
             val response = context.toTransportDocCard()
+
             response shouldBe DocCardOffersResponse(
                 result = ResponseResult.SUCCESS,
                 errors = listOf(Error("err", "group", "field", "message")),
+                docCard = DocCardResponseObject(title = "Test title", description = "Test description"),
                 docCards = listOf(DocCardResponseObject(title = "Test title", description = "Test description"))
             )
         }
@@ -190,6 +193,7 @@ class MapperToTransportTest : FunSpec({
             response shouldBe DocCardOffersResponse(
                 result = ResponseResult.SUCCESS,
                 errors = listOf(Error("err", "group", "field", "message")),
+                docCard = DocCardResponseObject(title = "Test title", description = "Test description"),
                 docCards = listOf(DocCardResponseObject(title = "Test title", description = "Test description"))
             )
         }

@@ -3,9 +3,9 @@ package stub
 import crowd.proj.docs.cards.biz.MkPlcDocCardProcessor
 import kotlinx.coroutines.test.runTest
 import ru.otus.crowd.proj.docs.cards.be.stubs.MkPlcDocCardStubSingleton
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
-import ru.otus.crowd.proj.docs.cards.common.models.*
-import ru.otus.crowd.proj.docs.cards.common.stubs.MkPlcDocCardStubs
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.models.*
+import crowd.proj.docs.cards.common.stubs.MkPlcDocCardStubs
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -28,10 +28,13 @@ class DocCardSearchStubTest {
         )
 
         processor.exec(ctx)
+
         assertTrue(ctx.mkPlcDocCardsResponse.size > 1)
         val first = ctx.mkPlcDocCardsResponse.firstOrNull() ?: fail("Empty response list")
+
         assertTrue(first.title.contains(filter.searchString))
         assertTrue(first.description.contains(filter.searchString))
+
         with(MkPlcDocCardStubSingleton.get()) {
             assertEquals(docCardType, first.docCardType)
             assertEquals(visibility, first.visibility)

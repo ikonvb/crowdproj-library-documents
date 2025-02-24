@@ -2,10 +2,10 @@ package validation
 
 import com.crowdproj.kotlin.cor.rootChain
 import kotlinx.coroutines.test.runTest
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCard
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardFilter
-import ru.otus.crowd.proj.docs.cards.common.models.MkPlcDocCardState
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.models.MkPlcDocCard
+import crowd.proj.docs.cards.common.models.MkPlcDocCardFilter
+import crowd.proj.docs.cards.common.models.MkPlcDocCardState
 import validation.fields.validateTitleHasContent
 import kotlin.test.Test
 import kotlin.test.assertEquals

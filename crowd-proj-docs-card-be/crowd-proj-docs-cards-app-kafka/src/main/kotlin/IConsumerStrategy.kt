@@ -1,6 +1,6 @@
 package ru.otus.crowd.proj.docs.be
 
-import ru.otus.crowd.proj.docs.cards.common.MkPlcDocCardContext
+import crowd.proj.docs.cards.common.MkPlcDocCardContext
 
 /**
  * Интерфейс стратегии для обслуживания версии API
